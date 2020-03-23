@@ -1,0 +1,2 @@
+rootProject.name='CSL_BlindDate'
+include ':app'
