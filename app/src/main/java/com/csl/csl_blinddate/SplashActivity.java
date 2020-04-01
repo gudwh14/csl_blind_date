@@ -18,9 +18,9 @@ public class SplashActivity extends AppCompatActivity {
 
         try {
             final Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-            /*Thread.sleep(1000);
+            Thread.sleep(1000);
             startActivity(intent);
-            finish();*/
+            finish();
         }
         catch (Exception e) {
             e.printStackTrace();
