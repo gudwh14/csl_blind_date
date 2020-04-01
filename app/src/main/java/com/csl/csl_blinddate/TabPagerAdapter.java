@@ -1,5 +1,7 @@
 package com.csl.csl_blinddate;
 
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -18,14 +20,11 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0 :
-                HomeTabFragment homeTabFragment = new HomeTabFragment();
-                return  homeTabFragment;
+                MainBoardFragment mainBoardFragment = new MainBoardFragment();
+                return  mainBoardFragment;
             case 1 :
-                ListTabFragment listTabFragment = new ListTabFragment();
-                return  listTabFragment;
-            case 2 :
-                ChatTabFragment chatTabFragment = new ChatTabFragment();
-                return  chatTabFragment;
+                SubBoardFragment subBoardFragment = new SubBoardFragment();
+                return subBoardFragment;
             default:
                 return null;
         }
@@ -34,5 +33,10 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return tabCount;
+    }
+
+    @Override
+    public Parcelable saveState() {
+        return null;
     }
 }
