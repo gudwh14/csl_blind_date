@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.tab3 :
                         getSupportFragmentManager().beginTransaction().replace(R.id.MainFrameLayout, chatTabFragment).commitAllowingStateLoss();
+                        return true;
                     default:
                         return false;
                 }

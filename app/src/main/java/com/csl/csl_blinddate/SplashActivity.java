@@ -17,14 +17,13 @@ public class SplashActivity extends AppCompatActivity {
 
 
         try {
-            final Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             Thread.sleep(1000);
-            startActivity(intent);
-            finish();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-
+        final Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
