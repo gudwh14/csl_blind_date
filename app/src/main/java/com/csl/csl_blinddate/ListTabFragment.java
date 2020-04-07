@@ -1,5 +1,6 @@
 package com.csl.csl_blinddate;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 
@@ -18,6 +20,7 @@ import android.widget.FrameLayout;
 public class ListTabFragment extends Fragment {
     RecyclerView listRecyclerView;
     ListAdapter listAdapter;
+    Button listWriteButton;
     public ListTabFragment() {
         // Required empty public constructor
     }
@@ -28,6 +31,7 @@ public class ListTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_tab, container, false);
+        // RecyclerView, Adapter 초기화
         listRecyclerView = view.findViewById(R.id.ListRecyclerView);
         listAdapter = new ListAdapter();
 
@@ -42,6 +46,16 @@ public class ListTabFragment extends Fragment {
         listAdapter.addItem(data);
         listAdapter.addItem(data2);
         listAdapter.notifyDataSetChanged();
+
+        //
+        listWriteButton = view.findViewById(R.id.ListWriteButton);
+        listWriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),ListWriteActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
