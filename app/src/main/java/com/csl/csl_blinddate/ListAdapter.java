@@ -1,5 +1,8 @@
 package com.csl.csl_blinddate;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ScaleDrawable;
 import android.view.LayoutInflater;
@@ -12,6 +15,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
 
@@ -45,16 +51,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView ListSchool_Text;
         private TextView ListCertify_Text;
-        private TextView ListMember_Text;
+        private Chip ListMember_Chip;
         private ImageView ListGender_Image;
-        private Button ListOpen_Button;
+        private MaterialButton ListOpen_Button;
         private Drawable drawable;
+
+        private boolean open;
+        private int id;
+        private Context context;
 
         ViewHolder(View itemView) {
             super(itemView);
             ListSchool_Text = itemView.findViewById(R.id.ListSchool_Text);
             ListCertify_Text = itemView.findViewById(R.id.ListCertify_Text);
-            ListMember_Text = itemView.findViewById(R.id.ListMember_Text);
+            ListMember_Chip = itemView.findViewById(R.id.ListMember_Chip);
             ListGender_Image = itemView.findViewById(R.id.ListGender_Image);
             ListOpen_Button = itemView.findViewById(R.id.ListOpen_Button);
 
@@ -62,6 +72,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
         void onBind(ListData data) {
             ListSchool_Text.setText(data.getSchool());
+            open = data.getOpen();
+            context = data.getContext();
+            id = data.getList_id();
 
             if(data.getCertification()) {
                 drawable = data.getContext().getResources().getDrawable(R.drawable.check_icon);
@@ -74,7 +87,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             drawable.setBounds(0,0,60,60);
             ListCertify_Text.setCompoundDrawables(drawable, null, null, null);
 
-            ListMember_Text.setText(data.getMember() + " : " + data.getMember());
+            ListMember_Chip.setText(data.getMember() + " : " + data.getMember());
 
             if(data.getGender()) {
                 ListGender_Image.setImageResource(R.drawable.boy_icon);
@@ -89,6 +102,25 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             else {
                 ListOpen_Button.setText("다음 기회에....");
             }
+
+            ListOpen_Button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(open) {
+                        Intent intent = new Intent(context,ListInformActivity.class);
+                        intent.putExtra("id",id);
+                        context.startActivity(intent);
+                    }
+                    else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("안내")
+                                .setMessage("한발 늦었네요....\n이미 다른 분들이 신청한 미팅 입니다")
+                                .setPositiveButton("확인",null)
+                                .create()
+                                .show();
+                    }
+                }
+            });
         }
     }
 }

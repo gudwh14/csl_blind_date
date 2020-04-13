@@ -41,14 +41,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="5" />
 
-        <Button
-            android:id="@+id/button2"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ListWriteButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:layout_weight="1.5"
-            android:background="@android:color/transparent"
-            android:textColor="#000000"
-            android:text="확인"/>
+            android:layout_height="match_parent"
+            android:text="확인"
+            app:cornerRadius="20dp"
+            app:rippleColor="#FF0000"/>
     </LinearLayout>
 
 
@@ -74,32 +74,34 @@
             android:orientation="horizontal" >
 
             <com.google.android.material.chip.ChipGroup
+                android:id="@+id/memberChipGroup"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip2"
+                    android:id="@+id/memberChip_2"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="2 : 2"
-                    android:textSize="15dp"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+                    android:textSize="15dp" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip3"
+                    android:id="@+id/memberChip_3"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="3 : 3"
-                    android:textSize="15dp"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+                    android:textSize="15dp" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip4"
+                    android:id="@+id/memberChip_4"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="4 : 4"
-                    android:textSize="15dp"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+                    android:textSize="15dp" />
             </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
         <Space
@@ -177,13 +179,6 @@
                     android:text="Item"
                     android:textSize="15dp"
                     style="@style/Widget.MaterialComponents.Chip.Filter"/>
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/trait_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Item"
-                    android:textSize="15dp"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
 
             </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
@@ -198,6 +193,13 @@
             <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/trait_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Item"
+                    android:textSize="15dp"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
                 <com.google.android.material.chip.Chip
                     android:id="@+id/trait_6"
                     android:layout_width="wrap_content"
@@ -214,20 +216,6 @@
                     style="@style/Widget.MaterialComponents.Chip.Filter"/>
                 <com.google.android.material.chip.Chip
                     android:id="@+id/trait_8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Item"
-                    android:textSize="15dp"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/trait_9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Item"
-                    android:textSize="15dp"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/trait_10"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Item"

@@ -5,10 +5,20 @@
     android:layout_height="match_parent"
     tools:context=".ChatTabFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="미팅 채팅방"
+        android:layout_margin="10dp"
+        android:textColor="#000000"
+        android:textSize="15dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatlistRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginTop="40dp" />
+
 
 </FrameLayout>

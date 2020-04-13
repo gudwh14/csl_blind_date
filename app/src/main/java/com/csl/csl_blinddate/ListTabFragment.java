@@ -1,8 +1,10 @@
 package com.csl.csl_blinddate;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,7 +32,11 @@ public class ListTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_list_tab, container, false);
+        final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.MaterialTheme);
+        LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
+
+        View view = localInflater.inflate(R.layout.fragment_list_tab, container, false);
+
         // RecyclerView, Adapter 초기화
         listRecyclerView = view.findViewById(R.id.ListRecyclerView);
         listAdapter = new ListAdapter();

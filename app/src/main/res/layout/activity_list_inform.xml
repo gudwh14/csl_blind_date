@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ListInformActivity"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <ImageButton
+        android:id="@+id/BoardWrite_CloseButton"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="?attr/selectableItemBackground"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/close_icon"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="코멘트"
+        android:textColor="#000000"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:text="TextView"
+        android:gravity="start"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="상대방의 성향"
+        android:textColor="#000000"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/trait_1"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Item"
+                android:textSize="15dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/trait_2"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Item"
+                android:textSize="15dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/trait_3"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Item"
+                android:textSize="15dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/trait_4"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Item"
+                android:textSize="15dp" />
+
+        </com.google.android.material.chip.ChipGroup>
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/trait_5"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Item"
+                android:textSize="15dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/trait_6"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Item"
+                android:textSize="15dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/trait_7"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Item"
+                android:textSize="15dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/trait_8"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Item"
+                android:textSize="15dp" />
+
+        </com.google.android.material.chip.ChipGroup>
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/view_background_shape"
+        android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="신청"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="한마디 남기기"
+            android:textColor="#000000"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/editText8"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="start"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:hint="이곳을 눌러서 작성해주세요"
+            android:background="@null"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="신청"
+                app:cornerRadius="20dp"
+                app:rippleColor="#FF0000"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

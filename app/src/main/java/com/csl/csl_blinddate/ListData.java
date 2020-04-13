@@ -9,6 +9,7 @@ public class ListData {
     private boolean gender;
     private boolean open;
     private Context context;
+    private int list_id = 1;  // 미팅 리스트 id
 
     public ListData(Context context,String school, boolean certification, int member, boolean gender, boolean open) {
         this.context = context;
@@ -61,5 +62,9 @@ public class ListData {
 
     public Context getContext() {
         return context;
+    }
+
+    public int getList_id() {
+        return list_id;
     }
 }

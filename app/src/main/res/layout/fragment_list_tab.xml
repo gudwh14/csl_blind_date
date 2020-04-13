@@ -3,20 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ListTabFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="미팅"
+        android:textColor="#000000"
+        android:textSize="15dp"
+        android:layout_margin="10dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ListRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/view_background_shape"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/ListWriteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="글작성"
-        android:layout_gravity="center_horizontal|bottom"/>
+        android:text="미팅 등록"
+        app:cornerRadius="20dp"
+        android:layout_gravity="center_horizontal|bottom"
+        app:rippleColor="#FF0000"
+        android:layout_margin="10dp"/>
 </FrameLayout>

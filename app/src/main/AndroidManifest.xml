@@ -2,18 +2,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.csl.csl_blinddate">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ListInformActivity"></activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:theme="@style/MaterialTheme" />
+        <activity android:name=".BoardWriteActivity" />
+        <activity
+            android:name=".BoardActivity"
+            android:theme="@style/MaterialTheme" />
         <activity
             android:name=".ListWriteActivity"
-            android:theme="@style/ChipTheme">
-        </activity>
-
+            android:theme="@style/MaterialTheme" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
@@ -23,7 +32,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="95c38f82b20115cdb69a459bffbfb96a" />
     </application>
 
 </manifest>
