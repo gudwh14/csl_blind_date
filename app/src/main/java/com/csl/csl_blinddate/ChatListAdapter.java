@@ -46,22 +46,34 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         private TextView chatlist_schoolText;
         private Chip chatlist_memberChip;
         private TextView chatlist_nameText;
-        Intent intent;
+        private String title;
 
-        ViewHolder(View itemView) {
+        ViewHolder(final View itemView) {
             super(itemView);
 
             chatlist_schoolText = itemView.findViewById(R.id.chatlist_schoolText);
             chatlist_memberChip = itemView.findViewById(R.id.chatlist_memeberChip);
             chatlist_nameText = itemView.findViewById(R.id.chatlist_nameText);
+
         }
 
         void onBind(ChatListData data) {
-            final Context context = data.getContext();
-            //intent = new Intent(context,BoardActivity.class);
             chatlist_schoolText.setText(data.getSchool());
             chatlist_memberChip.setText(data.getMember() + " : " + data.getMember());
             chatlist_nameText.setText(data.getName() + " 님");
+            title = data.getSchool() +" "+ data.getMember() + "명 미팅";
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION) {
+                        Intent intent = new Intent(view.getContext(), ChatActivity.class);
+                        intent.putExtra("title",title);
+                        view.getContext().startActivity(intent);
+                    }
+                }
+            });
         }
     }
 }

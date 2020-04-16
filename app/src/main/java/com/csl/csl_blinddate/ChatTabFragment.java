@@ -43,7 +43,7 @@ public class ChatTabFragment extends Fragment {
         chatListAdapter = new ChatListAdapter();
         chatlistRecyclerView.setAdapter(chatListAdapter);
 
-        ChatListData chatListData = new ChatListData(getContext(),"서울대학교","딱좋아",2);
+        ChatListData chatListData = new ChatListData("서울대학교","딱좋아",2);
         chatListAdapter.addItem(chatListData);
         chatListAdapter.notifyDataSetChanged();
 

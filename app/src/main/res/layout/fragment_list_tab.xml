@@ -16,7 +16,10 @@
         android:text="미팅"
         android:textColor="#000000"
         android:textSize="15dp"
-        android:layout_margin="10dp"/>
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:paddingStart="5dp"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ListRecyclerView"

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InFormActivity"
+    android:orientation="vertical"
+    android:layout_margin="10dp">
+
+
+    <TextView
+        android:id="@+id/textView35"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="내 정보"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:padding="5dp" />
+
+    <androidx.legacy.widget.Space
+        android:id="@+id/space2"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/view_background_shape"
+        android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/inform_nameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="oo님" />
+
+        <TextView
+            android:id="@+id/inform_schoolText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="xx대학교" />
+
+    </LinearLayout>
+
+    <androidx.legacy.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:orientation="vertical"
+        android:background="@drawable/view_background_shape"
+        android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/inform_myWritingText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="내가 쓴글 보러가기"
+            android:gravity="center_vertical"
+            android:textColor="#000000"
+            android:background="?attr/selectableItemBackground"/>
+
+        <TextView
+            android:id="@+id/inform_applyedText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="미팅 받은신청 목록"
+            android:gravity="center_vertical"
+            android:textColor="#000000"
+            android:background="?attr/selectableItemBackground"/>
+
+        <TextView
+            android:id="@+id/inform_applyingText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="미팅 보낸신청 목록"
+            android:textColor="#000000"
+            android:background="?attr/selectableItemBackground"/>
+
+        <TextView
+            android:id="@+id/inform_certifyText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="학교 인증"
+            android:textColor="#000000"
+            android:background="?attr/selectableItemBackground"/>
+    </LinearLayout>
+
+    <androidx.legacy.widget.Space
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="@drawable/view_background_shape"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/inform_questionText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="문의 하기"
+            android:textColor="#000000"
+            android:background="?attr/selectableItemBackground"/>
+
+        <TextView
+            android:id="@+id/inform_appText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="앱 버전"
+            android:textColor="#000000"
+            android:background="?attr/selectableItemBackground"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
