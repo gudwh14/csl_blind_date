@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".ApplyActivity"></activity>
+        <activity android:name=".ChatActivity" />
         <activity android:name=".InFormActivity" />
         <activity android:name=".ListInformActivity" />
         <activity
