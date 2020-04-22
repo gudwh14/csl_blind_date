@@ -1,19 +1,19 @@
-package com.csl.csl_blinddate;
+package com.csl.csl_blinddate.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
+import com.csl.csl_blinddate.BoardActivity;
+import com.csl.csl_blinddate.Data.HomeData;
+import com.csl.csl_blinddate.R;
 
 import java.util.ArrayList;
 
@@ -39,7 +39,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         return data.size();
     }
 
-    void addItem(HomeData data2) {
+    public void addItem(HomeData data2) {
         // 외부에서 item을 추가시킬 함수입니다.
         data.add(data2);
     }
@@ -65,7 +65,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
         void onBind(HomeData data) {
             final Context context = data.getContext();
-            intent = new Intent(context,BoardActivity.class);
+            intent = new Intent(context, BoardActivity.class);
             title = data.getHomeTitle();
             if(title.equals("OOTD")) {
                 imageView.setImageResource(R.drawable.photo_icon);

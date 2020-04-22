@@ -16,6 +16,7 @@ public class InFormActivity extends AppCompatActivity {
     TextView inform_certifyText;
     TextView inform_questionText;
     TextView inform_appText;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,12 @@ public class InFormActivity extends AppCompatActivity {
                     case R.id.inform_myWritingText :
                         break;
                     case R.id.inform_applyedText :
+                        intent = new Intent(InFormActivity.this, ApplyActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.inform_applyingText :
+                        intent = new Intent(InFormActivity.this, ApplyListActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.inform_certifyText :
                         break;

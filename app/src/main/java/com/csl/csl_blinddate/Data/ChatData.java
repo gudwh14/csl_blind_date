@@ -1,4 +1,4 @@
-package com.csl.csl_blinddate;
+package com.csl.csl_blinddate.Data;
 
 public class ChatData {
     private int chatID;

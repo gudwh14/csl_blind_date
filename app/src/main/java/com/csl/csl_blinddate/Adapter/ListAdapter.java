@@ -1,21 +1,21 @@
-package com.csl.csl_blinddate;
+package com.csl.csl_blinddate.Adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ScaleDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.csl.csl_blinddate.Data.ListData;
+import com.csl.csl_blinddate.ListInformActivity;
+import com.csl.csl_blinddate.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 
@@ -43,7 +43,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         return data.size();
     }
 
-    void addItem(ListData data2) {
+    public void addItem(ListData data2) {
         // 외부에서 item을 추가시킬 함수입니다.
         data.add(data2);
     }
@@ -107,7 +107,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     if(open) {
-                        Intent intent = new Intent(context,ListInformActivity.class);
+                        Intent intent = new Intent(context, ListInformActivity.class);
                         intent.putExtra("id",id);
                         context.startActivity(intent);
                     }

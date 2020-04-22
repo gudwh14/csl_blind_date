@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.csl.csl_blinddate.Adapter.HomeAdapter;
+import com.csl.csl_blinddate.Data.HomeData;
+
 
 /**
  * A simple {@link Fragment} subclass.

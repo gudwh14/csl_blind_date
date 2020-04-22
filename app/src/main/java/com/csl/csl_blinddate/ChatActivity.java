@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.csl.csl_blinddate.Adapter.ChatAdapter;
+import com.csl.csl_blinddate.Data.ChatData;
+
 public class ChatActivity extends AppCompatActivity {
 
     TextView chat_titleText;

@@ -12,6 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.csl.csl_blinddate.Adapter.ChatListAdapter;
+import com.csl.csl_blinddate.Data.ChatListData;
+
 
 /**
  * A simple {@link Fragment} subclass.

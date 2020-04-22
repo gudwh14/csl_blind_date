@@ -1,6 +1,5 @@
-package com.csl.csl_blinddate;
+package com.csl.csl_blinddate.Adapter;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.chip.Chip;
+import com.csl.csl_blinddate.Data.ChatData;
+import com.csl.csl_blinddate.R;
 
 import java.util.ArrayList;
 
@@ -35,7 +35,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         return data.size();
     }
 
-    void addItem(ChatData data2) {
+    public void addItem(ChatData data2) {
         // 외부에서 item을 추가시킬 함수입니다.
         data.add(data2);
     }
