@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,6 +53,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         private ImageView imageView;
         Intent intent;
         private String title;
+        private LinearLayout homeTitleLayout;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -61,6 +63,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             homePostText_2 = itemView.findViewById(R.id.homePostText_2);
             homePostText_3 = itemView.findViewById(R.id.homePostText_3);
             imageView = itemView.findViewById(R.id.homeimageView);
+            homeTitleLayout = itemView.findViewById(R.id.homeTitleLayout);
         }
 
         void onBind(HomeData data) {
@@ -71,7 +74,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 imageView.setImageResource(R.drawable.photo_icon);
             }
             homeTitleText.setText(" "+ data.getHomeTitle().toString());
-            homeTitleText.setOnClickListener(new View.OnClickListener() {
+
+            homeTitleLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     intent.putExtra("title",title);
