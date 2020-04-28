@@ -33,6 +33,9 @@ public class InFormActivity extends AppCompatActivity {
         inform_questionText = findViewById(R.id.inform_questionText);
         inform_appText = findViewById(R.id.inform_appText);
 
+        inform_nameText.setText(getIntent().getStringExtra("userID") + " 님");
+        inform_schoolText.setText(getIntent().getStringExtra("school"));
+
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
