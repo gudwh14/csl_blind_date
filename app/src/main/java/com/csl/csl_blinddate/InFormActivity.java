@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.csl.csl_blinddate.Data.UserData;
+
 public class InFormActivity extends AppCompatActivity {
     TextView inform_nameText;
     TextView inform_schoolText;
@@ -24,6 +26,8 @@ public class InFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_in_form);
         // View 초기화
 
+        UserData userData = getIntent().getParcelableExtra("userData");
+
         inform_nameText = findViewById(R.id.inform_nameText);
         inform_schoolText = findViewById(R.id.inform_schoolText);
         inform_myWritingText = findViewById(R.id.inform_myWritingText);
@@ -33,8 +37,8 @@ public class InFormActivity extends AppCompatActivity {
         inform_questionText = findViewById(R.id.inform_questionText);
         inform_appText = findViewById(R.id.inform_appText);
 
-        inform_nameText.setText(getIntent().getStringExtra("userID") + " 님");
-        inform_schoolText.setText(getIntent().getStringExtra("school"));
+        inform_nameText.setText(userData.getUserID() + " 님");
+        inform_schoolText.setText(userData.getSchool());
 
 
         View.OnClickListener onClickListener = new View.OnClickListener() {

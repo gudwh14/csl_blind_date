@@ -28,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
         listTabFragment = new ListTabFragment();
         chatTabFragment = new ChatTabFragment();
 
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("userData",getIntent().getParcelableExtra("userData"));
+        homeTabFragment.setArguments(bundle);
+        listTabFragment.setArguments(bundle);
+        chatTabFragment.setArguments(bundle);
+
         // 제일 처음 띄울 fragment 뷰 설정
         getSupportFragmentManager().beginTransaction().replace(R.id.MainFrameLayout, homeTabFragment).commitAllowingStateLoss();
 

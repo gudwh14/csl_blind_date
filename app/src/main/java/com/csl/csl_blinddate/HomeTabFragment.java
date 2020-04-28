@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.csl.csl_blinddate.Data.UserData;
 import com.google.android.material.tabs.TabLayout;
 
 
@@ -34,6 +35,8 @@ public class HomeTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_tab, container, false);
+
+        final Bundle bundle = getArguments();
         // HomeTabLayout 초기화
         HomeTabLayout = view.findViewById(R.id.HomeTabLayout);
         HomeTabLayout.addTab(HomeTabLayout.newTab().setText("전체"));
@@ -72,6 +75,7 @@ public class HomeTabFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(),InFormActivity.class);
+                intent.putExtra("userData",bundle.getParcelable("userData"));
                 startActivity(intent);
             }
         });

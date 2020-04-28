@@ -12,6 +12,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.csl.csl_blinddate.Data.RetrofitRepo;
+import com.csl.csl_blinddate.Data.UserData;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
@@ -71,12 +72,8 @@ public class SplashActivity extends AppCompatActivity {
                                     Intent intent;
                                     if(repo.isSuccess()) {
                                         intent = new Intent(SplashActivity.this,MainActivity.class);
-                                        intent.putExtra("userID",repo.getUserID());
-                                        intent.putExtra("school",repo.getSchool());
-                                        intent.putExtra("age",repo.getAge());
-                                        intent.putExtra("gender",repo.getGender());
-                                        intent.putExtra("mail",repo.getMail());
-                                        intent.putExtra("certification",repo.isCertification());
+                                        UserData userData = new UserData(repo.getUserID(),repo.getAge(),repo.getGender()+"",repo.getSchool(),repo.getMail(),repo.isCertification());
+                                        intent.putExtra("userData",userData);
                                         finish();
                                         startActivity(intent);
 
