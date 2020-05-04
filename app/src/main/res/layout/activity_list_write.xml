@@ -42,7 +42,7 @@
             android:layout_weight="5" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/ListWriteButton"
+            android:id="@+id/listWrite_okButton"
             android:layout_width="0dp"
             android:layout_weight="1.5"
             android:layout_height="match_parent"
@@ -116,7 +116,7 @@
             android:textStyle="bold"/>
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/listWrite_commentText"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:background="@null"
@@ -149,36 +149,42 @@
             android:orientation="horizontal" >
 
             <com.google.android.material.chip.ChipGroup
+                android:id="@+id/traitChipGroup_1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                app:singleSelection="false">
+
                 <com.google.android.material.chip.Chip
                     android:id="@+id/trait_1"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="잘 놀아요"
-                    android:textSize="15dp"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+                    android:textSize="15dp" />
+
                 <com.google.android.material.chip.Chip
                     android:id="@+id/trait_2"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="낯 가려요"
-                    android:textSize="15dp"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+                    android:textSize="15dp" />
+
                 <com.google.android.material.chip.Chip
                     android:id="@+id/trait_3"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="술 잘마셔요"
-                    android:textSize="15dp"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+                    android:textSize="15dp" />
+
                 <com.google.android.material.chip.Chip
                     android:id="@+id/trait_4"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Item"
-                    android:textSize="15dp"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+                    android:textSize="15dp" />
 
             </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
@@ -191,36 +197,42 @@
             android:orientation="horizontal" >
 
             <com.google.android.material.chip.ChipGroup
+                android:id="@+id/traitChipGroup_2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                app:singleSelection="false">
+
                 <com.google.android.material.chip.Chip
                     android:id="@+id/trait_5"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Item"
-                    android:textSize="15dp"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+                    android:textSize="15dp" />
+
                 <com.google.android.material.chip.Chip
                     android:id="@+id/trait_6"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Item"
-                    android:textSize="15dp"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+                    android:textSize="15dp" />
+
                 <com.google.android.material.chip.Chip
                     android:id="@+id/trait_7"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Item"
-                    android:textSize="15dp"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+                    android:textSize="15dp" />
+
                 <com.google.android.material.chip.Chip
                     android:id="@+id/trait_8"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Item"
-                    android:textSize="15dp"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"/>
+                    android:textSize="15dp" />
 
             </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
@@ -235,10 +247,10 @@
             android:layout_height="wrap_content"
             android:text="새내기 매칭"
             android:textColor="#000000"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/newbieCheckBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="새내기 매칭" />

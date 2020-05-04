@@ -6,18 +6,21 @@ public class ListData {
     private String school;
     private boolean certification;
     private int member;
-    private boolean gender;
-    private boolean open;
-    private Context context;
-    private int list_id = 1;  // 미팅 리스트 id
+    int age;
+    private String gender;
+    private boolean open;   //  true : open , false : close
+    private boolean newbie;
+    private int list_id;  // 미팅 리스트 id
 
-    public ListData(Context context,String school, boolean certification, int member, boolean gender, boolean open) {
-        this.context = context;
+    public ListData(int list_id,int age,String school, boolean certification, int member, String gender, boolean newbie, boolean open) {
+        this.list_id = list_id;
         this.school = school;
+        this.age = age;
         this.certification = certification;
         this.member = member;
         this.gender = gender;
         this.open = open;
+        this.newbie = newbie;
     }
 
     public String getSchool(){
@@ -28,7 +31,7 @@ public class ListData {
         this.certification = certification;
     }
 
-    public void setGender(boolean gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -44,7 +47,7 @@ public class ListData {
         this.school = school;
     }
 
-    public boolean getGender() {
+    public String getGender() {
         return gender;
     }
 
@@ -56,15 +59,19 @@ public class ListData {
         return certification;
     }
 
-    public boolean getOpen(){
+    public boolean isOpen() {
         return open;
     }
 
-    public Context getContext() {
-        return context;
+    public boolean isNewbie() {
+        return newbie;
     }
 
     public int getList_id() {
         return list_id;
+    }
+
+    public int getAge() {
+        return age;
     }
 }

@@ -19,5 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MSG"
-        android:textColor="#000000"/>
+        android:padding="8dp"
+        android:textSize="15dp"
+        android:background="@drawable/chat_background_shape"
+        android:textColor="#FFFFFF"/>
 </LinearLayout>

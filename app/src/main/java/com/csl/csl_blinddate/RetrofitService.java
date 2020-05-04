@@ -1,8 +1,11 @@
 package com.csl.csl_blinddate;
 
 import com.csl.csl_blinddate.Data.RetrofitRepo;
+import com.csl.csl_blinddate.Data.RetrofitRepoList;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -15,7 +18,7 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface RetrofitService {
-    String URL = "http://112.168.40.113/blinddate/";
+    String URL = "http://220.127.12.144/blinddate/";
 
 
     @GET("index.php")
@@ -39,5 +42,17 @@ public interface RetrofitService {
     Call<RetrofitRepo> RegisterData(
             @FieldMap HashMap<String, Object> param
             );
+
+    @FormUrlEncoded
+    @POST("ListWrite.php")
+    Call<RetrofitRepo> ListWriteData(
+            @FieldMap HashMap<String, Object> param
+    );
+
+    @FormUrlEncoded
+    @POST("ListRefresh.php")
+    Call<RetrofitRepoList> ListRefresh(
+            @FieldMap HashMap<String, Object> param
+    );
 
 }

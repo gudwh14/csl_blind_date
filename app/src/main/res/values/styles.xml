@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">#FD8A8A</item>
+        <item name="colorAccent">@color/pink2</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         // 상태바를 투명하게 만들기
@@ -18,7 +18,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">#FD8A8A</item>
+        <item name="colorAccent">@color/pink2</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         // 상태바를 투명하게 만들기

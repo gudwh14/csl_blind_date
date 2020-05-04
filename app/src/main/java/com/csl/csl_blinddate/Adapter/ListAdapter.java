@@ -3,6 +3,7 @@ package com.csl.csl_blinddate.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,9 +49,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         data.add(data2);
     }
 
+    public void clear() {
+        data.clear();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView ListSchool_Text;
         private TextView ListCertify_Text;
+        private TextView list_ageText;
         private Chip ListMember_Chip;
         private ImageView ListGender_Image;
         private MaterialButton ListOpen_Button;
@@ -62,6 +68,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
         ViewHolder(View itemView) {
             super(itemView);
+            list_ageText = itemView.findViewById(R.id.list_ageText);
             ListSchool_Text = itemView.findViewById(R.id.ListSchool_Text);
             ListCertify_Text = itemView.findViewById(R.id.ListCertify_Text);
             ListMember_Chip = itemView.findViewById(R.id.ListMember_Chip);
@@ -72,16 +79,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
         void onBind(ListData data) {
             ListSchool_Text.setText(data.getSchool());
-            open = data.getOpen();
-            context = data.getContext();
+            open = data.isOpen();
             id = data.getList_id();
+            context = itemView.getContext();
+
+            list_ageText.setText(data.getAge()+"살");
 
             if(data.getCertification()) {
-                drawable = data.getContext().getResources().getDrawable(R.drawable.check_icon);
+                drawable = context.getResources().getDrawable(R.drawable.check_icon);
                 ListCertify_Text.setText("인증");
             }
             else {
-                drawable = data.getContext().getResources().getDrawable(R.drawable.noncertify_icon);
+                drawable = context.getResources().getDrawable(R.drawable.noncertify_icon);
                 ListCertify_Text.setText("미 인증");
             }
             drawable.setBounds(0,0,60,60);
@@ -89,18 +98,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
             ListMember_Chip.setText(data.getMember() + " : " + data.getMember());
 
-            if(data.getGender()) {
+            if(data.getGender().equals("M")) {
                 ListGender_Image.setImageResource(R.drawable.boy_icon);
             }
             else {
                 ListGender_Image.setImageResource(R.drawable.girl_icon);
             }
 
-            if(data.getOpen()) {
-                ListOpen_Button.setText("Open");
+            if(open) {
+                ListOpen_Button.setText("신청");
             }
             else {
-                ListOpen_Button.setText("다음 기회에....");
+                ListOpen_Button.setText("닫힘");
+                ListOpen_Button.setBackgroundTintList(itemView.getResources().getColorStateList(R.color.grey));
             }
 
             ListOpen_Button.setOnClickListener(new View.OnClickListener() {

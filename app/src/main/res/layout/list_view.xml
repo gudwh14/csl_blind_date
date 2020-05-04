@@ -31,7 +31,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView30"
+                    android:id="@+id/list_ageText"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -75,9 +75,8 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/ListOpen_Button"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Open"
                     app:cornerRadius="20dp"
                     app:rippleColor="#FF0000" />

@@ -1,13 +1,35 @@
 package com.csl.csl_blinddate.Data;
 
+import com.google.gson.annotations.SerializedName;
+
 public class RetrofitRepo {
+    @SerializedName("kakaoID")
     private int kakaoID;
+    @SerializedName("userID")
     private String userID;
+    @SerializedName("meeting_id")
+    private int meeting_id;
+    @SerializedName("age")
     private int age;
-    private char gender;
+    @SerializedName("member")
+    private int member;
+    @SerializedName("gender")
+    private String gender;
+    @SerializedName("school")
     private String school;
+    @SerializedName("mail")
     private String mail;
+    @SerializedName("certification")
     private boolean certification;
+    @SerializedName("isWrite")
+    private boolean isWrite;
+    @SerializedName("isMatch")
+    private boolean isMatch;
+    @SerializedName("status")
+    private boolean status;
+    @SerializedName("newbie")
+    private boolean newbie;
+    @SerializedName("success")
     private boolean success;
 
     public boolean isSuccess() {
@@ -22,7 +44,7 @@ public class RetrofitRepo {
         return age;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
@@ -40,5 +62,29 @@ public class RetrofitRepo {
 
     public boolean isCertification() {
         return certification;
+    }
+
+    public boolean isMatch() {
+        return isMatch;
+    }
+
+    public boolean isWrite() {
+        return isWrite;
+    }
+
+    public int getMember() {
+        return member;
+    }
+
+    public int getMeeting_id() {
+        return meeting_id;
+    }
+
+    public boolean isNewbie() {
+        return newbie;
+    }
+
+    public boolean isStatus() {
+        return status;
     }
 }

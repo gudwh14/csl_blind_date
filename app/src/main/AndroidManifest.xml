@@ -9,11 +9,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
-        <activity android:name=".ApplyListActivity"></activity>
+        <activity android:name=".SchoolListActivity"></activity>
+        <activity android:name=".ApplyListActivity" />
         <activity android:name=".ApplyActivity" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".InFormActivity" />
