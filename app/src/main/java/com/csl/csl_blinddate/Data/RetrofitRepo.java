@@ -31,6 +31,10 @@ public class RetrofitRepo {
     private boolean newbie;
     @SerializedName("success")
     private boolean success;
+    @SerializedName("comment")
+    private  String comment;
+    @SerializedName("trait")
+    private boolean[] trait;
 
     public boolean isSuccess() {
         return success;
@@ -86,5 +90,13 @@ public class RetrofitRepo {
 
     public boolean isStatus() {
         return status;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public boolean[] getTrait() {
+        return trait;
     }
 }

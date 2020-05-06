@@ -3,7 +3,6 @@ package com.csl.csl_blinddate.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,6 +106,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
             if(open) {
                 ListOpen_Button.setText("신청");
+                ListOpen_Button.setBackgroundTintList(itemView.getResources().getColorStateList(R.color.pink2));
             }
             else {
                 ListOpen_Button.setText("닫힘");

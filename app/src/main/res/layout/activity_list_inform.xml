@@ -9,7 +9,7 @@
     android:padding="10dp">
 
     <ImageButton
-        android:id="@+id/BoardWrite_CloseButton"
+        android:id="@+id/listInForm_CloseButton"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:background="?attr/selectableItemBackground"
@@ -29,7 +29,7 @@
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/textView22"
+        android:id="@+id/listInForm_commentText"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:text="TextView"
@@ -57,7 +57,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/trait_1"
+                android:id="@+id/inform_trait_1"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -65,7 +65,7 @@
                 android:textSize="15dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/trait_2"
+                android:id="@+id/inform_trait_2"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -73,7 +73,7 @@
                 android:textSize="15dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/trait_3"
+                android:id="@+id/inform_trait_3"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -81,7 +81,7 @@
                 android:textSize="15dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/trait_4"
+                android:id="@+id/inform_trait_4"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -105,7 +105,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/trait_5"
+                android:id="@+id/inform_trait_5"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -113,7 +113,7 @@
                 android:textSize="15dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/trait_6"
+                android:id="@+id/inform_trait_6"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -121,7 +121,7 @@
                 android:textSize="15dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/trait_7"
+                android:id="@+id/inform_trait_7"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -129,7 +129,7 @@
                 android:textSize="15dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/trait_8"
+                android:id="@+id/inform_trait_8"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
