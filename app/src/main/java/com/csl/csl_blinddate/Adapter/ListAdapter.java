@@ -14,7 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.csl.csl_blinddate.Data.ListData;
+import com.csl.csl_blinddate.Data.UserData;
 import com.csl.csl_blinddate.ListInformActivity;
+import com.csl.csl_blinddate.ListTabFragment;
 import com.csl.csl_blinddate.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
@@ -61,6 +63,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         private MaterialButton ListOpen_Button;
         private Drawable drawable;
 
+
         private boolean open;
         private int id;
         private Context context;
@@ -81,6 +84,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             open = data.isOpen();
             id = data.getList_id();
             context = itemView.getContext();
+
 
             list_ageText.setText(data.getAge()+"살");
 

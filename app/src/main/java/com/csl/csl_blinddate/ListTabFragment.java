@@ -20,6 +20,7 @@ import com.csl.csl_blinddate.Adapter.ListAdapter;
 import com.csl.csl_blinddate.Data.ListData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.Data.RetrofitRepoList;
+import com.csl.csl_blinddate.Data.UserData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +43,7 @@ public class ListTabFragment extends Fragment {
     ListAdapter listAdapter;
     Button listWriteButton;
     SwipeRefreshLayout listSwipeLayout;
+    public UserData userData;
     public ListTabFragment() {
         // Required empty public constructor
     }
@@ -55,6 +57,8 @@ public class ListTabFragment extends Fragment {
         LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
 
         View view = localInflater.inflate(R.layout.fragment_list_tab, container, false);
+
+        userData = getArguments().getParcelable("userData");
 
         // RecyclerView, Adapter 초기화
         listRecyclerView = view.findViewById(R.id.ListRecyclerView);

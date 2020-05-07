@@ -183,7 +183,7 @@
                     style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Item"
+                    android:text="게임 잘해요"
                     android:textSize="15dp" />
 
             </com.google.android.material.chip.ChipGroup>

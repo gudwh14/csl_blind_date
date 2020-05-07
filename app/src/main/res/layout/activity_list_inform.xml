@@ -33,6 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:text="TextView"
+        android:textSize="15dp"
+        android:textColor="#000000"
         android:gravity="start"/>
 
     <Space
@@ -172,7 +174,7 @@
             android:textStyle="bold"/>
 
         <EditText
-            android:id="@+id/editText8"
+            android:id="@+id/listInForm_applyText"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:gravity="start"
@@ -195,12 +197,13 @@
                 android:layout_weight="5"/>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/listInForm_applyButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="신청"
                 app:cornerRadius="20dp"
-                app:rippleColor="#FF0000"/>
+                app:rippleColor="#FF0000" />
 
         </LinearLayout>
     </LinearLayout>
