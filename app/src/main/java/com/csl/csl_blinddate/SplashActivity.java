@@ -77,7 +77,7 @@ public class SplashActivity extends AppCompatActivity {
                                         userData = new UserData(repo.getUserID(),repo.getAge(),repo.getGender()+"",repo.getSchool(),repo.getMail(),repo.isCertification());
                                         intent.putExtra("userData",userData);
                                         startActivity(intent);
-                                        finish();
+                                        //finish();
 
                                     }
                                     else {

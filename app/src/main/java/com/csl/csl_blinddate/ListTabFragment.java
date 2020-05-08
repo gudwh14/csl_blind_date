@@ -97,6 +97,7 @@ public class ListTabFragment extends Fragment {
 
     public void refresh() {
         listAdapter.clear(); // adapter 초기화
+        listAdapter.notifyDataSetChanged();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -117,6 +118,7 @@ public class ListTabFragment extends Fragment {
                     listAdapter.addItem(listData);
                 }
                 listAdapter.notifyDataSetChanged();
+                //listRecyclerView.setAdapter(listAdapter);
             }
 
             @Override

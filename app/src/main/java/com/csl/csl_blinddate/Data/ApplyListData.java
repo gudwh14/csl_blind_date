@@ -3,14 +3,14 @@ package com.csl.csl_blinddate.Data;
 public class ApplyListData {
     private String school;
     private int member;
-    private String time;
+    private int date;
     private int status;  // 0 : 대기 , 1 : 거절, 2 수락
 
 
-    public ApplyListData(String school, int member, String time, int status) {
+    public ApplyListData(String school, int member, int date, int status) {
         this.school = school;
         this.member = member;
-        this.time = time;
+        this.date = date;
         this.status = status;
     }
 
@@ -26,7 +26,7 @@ public class ApplyListData {
         return status;
     }
 
-    public String getTime() {
-        return time;
+    public int getDate() {
+        return date;
     }
 }

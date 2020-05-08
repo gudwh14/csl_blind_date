@@ -7,11 +7,13 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
+    long time = 0;
     BottomNavigationView BottomNavView;
     HomeTabFragment homeTabFragment;
     ListTabFragment listTabFragment;
@@ -57,5 +59,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(System.currentTimeMillis()-time>=1000){
+            time=System.currentTimeMillis();
+            Toast.makeText(getApplicationContext(),"뒤로 가기 버튼을 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }else if(System.currentTimeMillis()-time<1000){
+            finishAffinity();
+            System.runFinalization();
+            System.exit(0);
+        }
     }
 }

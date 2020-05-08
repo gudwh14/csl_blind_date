@@ -27,6 +27,8 @@ public class RetrofitRepo {
     private boolean isMatch;
     @SerializedName("status")
     private boolean status;
+    @SerializedName("apply_status")
+    private int apply_status;
     @SerializedName("newbie")
     private boolean newbie;
     @SerializedName("success")
@@ -35,6 +37,8 @@ public class RetrofitRepo {
     private  String comment;
     @SerializedName("trait")
     private boolean[] trait;
+    @SerializedName("date")
+    private int date;
 
     public boolean isSuccess() {
         return success;
@@ -98,5 +102,13 @@ public class RetrofitRepo {
 
     public boolean[] getTrait() {
         return trait;
+    }
+
+    public int getDate() {
+        return date;
+    }
+
+    public int getApply_status() {
+        return apply_status;
     }
 }

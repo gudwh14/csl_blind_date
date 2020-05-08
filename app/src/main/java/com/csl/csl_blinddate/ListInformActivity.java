@@ -1,7 +1,9 @@
 package com.csl.csl_blinddate;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -100,7 +102,18 @@ public class ListInformActivity extends AppCompatActivity {
                             RetrofitRepo repo = response.body();
 
                             if(repo.isSuccess()) {
-                                Toast.makeText(ListInformActivity.this,"미팅 신청되었습니다 \n 내 미팅신청리시트 에서 신쳥현황을 확인 하실수있습니다.",Toast.LENGTH_SHORT).show();
+                                final AlertDialog.Builder builder = new AlertDialog.Builder(ListInformActivity.this);
+                                builder.setTitle("안내")
+                                        .setCancelable(false)
+                                        .setMessage("미팅 신청이 정상적으로 완료되었습니다.\n\n내 정보 > 미팅 보낸신청목록에서 신청현황을 확인하실수있습니다.")
+                                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                finish();
+                                            }
+                                        })
+                                        .create()
+                                        .show();
                             }
                             else {
                                 Toast.makeText(ListInformActivity.this,SplashActivity.userData.getUserID(),Toast.LENGTH_SHORT).show();
@@ -131,7 +144,7 @@ public class ListInformActivity extends AppCompatActivity {
                 .build();
 
         RetrofitService retrofitService = retrofit.create(RetrofitService.class);
-        Call<RetrofitRepo> call = retrofitService.ListApplyRefresh(data);
+        Call<RetrofitRepo> call = retrofitService.ListInFormRefresh(data);
         call.enqueue(new Callback<RetrofitRepo>() {
             @Override
             public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {

@@ -56,8 +56,14 @@ public interface RetrofitService {
     );
 
     @FormUrlEncoded
+    @POST("ListInFormRefresh.php")
+    Call<RetrofitRepo> ListInFormRefresh(
+            @FieldMap HashMap<String, Object> param
+    );
+
+    @FormUrlEncoded
     @POST("ListApplyRefresh.php")
-    Call<RetrofitRepo> ListApplyRefresh(
+    Call<RetrofitRepoList> ListApplyRefresh(
             @FieldMap HashMap<String, Object> param
     );
 

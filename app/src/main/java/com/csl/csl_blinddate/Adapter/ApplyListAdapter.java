@@ -45,6 +45,10 @@ public class ApplyListAdapter extends RecyclerView.Adapter<ApplyListAdapter.View
         data.add(data2);
     }
 
+    public void clear() {
+        data.clear();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView applyList_schoolText;
@@ -64,7 +68,7 @@ public class ApplyListAdapter extends RecyclerView.Adapter<ApplyListAdapter.View
         void onBind(ApplyListData data) {
             applyList_schoolText.setText(data.getSchool());
             applyList_memberChip.setText(data.getMember() + " : "+data.getMember());
-            applyList_timeText.setText(data.getTime());
+            applyList_timeText.setText(data.getDate()+"일전");
 
             switch (data.getStatus()) {
                 case 0 :

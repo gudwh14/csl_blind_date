@@ -8,6 +8,19 @@ import android.os.Bundle;
 
 import com.csl.csl_blinddate.Adapter.ApplyListAdapter;
 import com.csl.csl_blinddate.Data.ApplyListData;
+import com.csl.csl_blinddate.Data.RetrofitRepo;
+import com.csl.csl_blinddate.Data.RetrofitRepoList;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.csl.csl_blinddate.RetrofitService.URL;
 
 public class ApplyListActivity extends AppCompatActivity {
 
@@ -26,11 +39,41 @@ public class ApplyListActivity extends AppCompatActivity {
         applyList_RecyclerView.setLayoutManager(linearLayoutManager);
         applyList_RecyclerView.setAdapter(applyListAdapter);
 
-        ApplyListData applyListData = new ApplyListData("서강대학교",2,"1일전",1);
-        ApplyListData applyListData2 = new ApplyListData("단국대학교",3,"2일전",2);
-        applyListAdapter.addItem(applyListData);
-        applyListAdapter.addItem(applyListData2);
+        refresh();
+
+    }
+
+    public void refresh() {
+        // 통신
+        applyListAdapter.clear(); // Adapter 초기화
         applyListAdapter.notifyDataSetChanged();
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("userID",SplashActivity.userData.getUserID());
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+        Call<RetrofitRepoList> call = retrofitService.ListApplyRefresh(data);
+        call.enqueue(new Callback<RetrofitRepoList>() {
+            @Override
+            public void onResponse(Call<RetrofitRepoList> call, Response<RetrofitRepoList> response) {
+                ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
+                for(int temp =0; temp<arrayList.size(); temp++) {
+                    RetrofitRepo repo = arrayList.get(temp);
+                    ApplyListData applyListData = new ApplyListData(repo.getSchool(),repo.getMember(),repo.getDate(),repo.getApply_status());
+                    applyListAdapter.addItem(applyListData);
+                }
+                applyListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<RetrofitRepoList> call, Throwable t) {
+
+            }
+        });
 
     }
 }
