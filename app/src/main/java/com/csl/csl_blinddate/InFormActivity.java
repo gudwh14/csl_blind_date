@@ -26,7 +26,7 @@ public class InFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_in_form);
         // View 초기화
 
-        UserData userData = getIntent().getParcelableExtra("userData");
+        UserData userData = SplashActivity.userData;
 
         inform_nameText = findViewById(R.id.inform_nameText);
         inform_schoolText = findViewById(R.id.inform_schoolText);
@@ -48,7 +48,7 @@ public class InFormActivity extends AppCompatActivity {
                     case R.id.inform_myWritingText :
                         break;
                     case R.id.inform_applyedText :
-                        intent = new Intent(InFormActivity.this, ApplyActivity.class);
+                        intent = new Intent(InFormActivity.this, ApplyedListActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.inform_applyingText :

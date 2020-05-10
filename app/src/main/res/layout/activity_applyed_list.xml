@@ -4,59 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".ApplyedListActivity"
     android:orientation="vertical"
-    tools:context=".ApplyListActivity">
+    android:layout_margin="5dp">
 
     <ImageButton
         android:id="@+id/listInForm_CloseButton"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_margin="10dp"
         android:background="?attr/selectableItemBackground"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/close_icon"
-        android:layout_margin="15dp"/>
+        app:srcCompat="@drawable/back_icon"/>
 
     <TextView
-        android:id="@+id/textView28"
+        android:id="@+id/textView27"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="신청 현황"
-        android:textSize="15dp"
-        android:gravity="center"
         android:textColor="#000000"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp" />
-
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="50dp"
-        android:text="신청한 미팅의 현황을 볼수있습니다"
-        android:textColor="#000000"/>
-
-    <TextView
-        android:id="@+id/applyList_isEmptyText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="\n\n신청한 미팅이 없습니다\n\n"
-        android:textColor="#DB4455"
         android:textSize="15dp"
+        android:textStyle="bold"
         android:gravity="center"
-        android:background="@drawable/view_background_shape"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_margin="10dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/applyList_RecyclerView"
+        android:id="@+id/applyRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="10dp"
+        android:background="@drawable/view_background_shape"
+        android:layout_marginTop="50dp"
         android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/applyedList_isEmptyText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="\n\n들어온 신청이 없습니다\n\n"
+        android:textSize="15dp"
+        android:background="@drawable/view_background_shape"
+        android:textColor="#DB4455"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

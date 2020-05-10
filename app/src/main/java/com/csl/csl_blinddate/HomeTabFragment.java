@@ -23,7 +23,6 @@ import com.google.android.material.tabs.TabLayout;
 public class HomeTabFragment extends Fragment {
     TabLayout HomeTabLayout;
     ViewPager MainViewPager;
-    ImageView inform_Image;
 
     public HomeTabFragment() {
         // Required empty public constructor
@@ -70,15 +69,6 @@ public class HomeTabFragment extends Fragment {
 
         // 다른 View 초기화
 
-        inform_Image = view.findViewById(R.id.inform_Image);
-        inform_Image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(),InFormActivity.class);
-                intent.putExtra("userData",bundle.getParcelable("userData"));
-                startActivity(intent);
-            }
-        });
         return view;
     }
 

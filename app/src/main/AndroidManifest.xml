@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".SchoolListActivity"></activity>
         <activity android:name=".ApplyListActivity" />
-        <activity android:name=".ApplyActivity" />
+        <activity android:name=".ApplyedListActivity" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".InFormActivity" />
         <activity android:name=".ListInformActivity" />

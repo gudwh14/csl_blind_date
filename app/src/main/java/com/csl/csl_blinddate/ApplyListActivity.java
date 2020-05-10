@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.csl.csl_blinddate.Adapter.ApplyListAdapter;
 import com.csl.csl_blinddate.Data.ApplyListData;
@@ -26,19 +28,27 @@ public class ApplyListActivity extends AppCompatActivity {
 
     RecyclerView applyList_RecyclerView;
     ApplyListAdapter applyListAdapter;
+    TextView applyList_isEmptyText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply_list);
 
+        // View 초기화
         applyList_RecyclerView = findViewById(R.id.applyList_RecyclerView);
         applyListAdapter = new ApplyListAdapter();
+        applyList_isEmptyText = findViewById(R.id.applyList_isEmptyText);
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ApplyListActivity.this);
         applyList_RecyclerView.setLayoutManager(linearLayoutManager);
         applyList_RecyclerView.setAdapter(applyListAdapter);
 
+        applyList_isEmptyText.setVisibility(View.INVISIBLE);
+        applyList_RecyclerView.setVisibility(View.INVISIBLE);
+
+        // refresh()
         refresh();
 
     }
@@ -61,6 +71,12 @@ public class ApplyListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RetrofitRepoList> call, Response<RetrofitRepoList> response) {
                 ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
+                if(arrayList.size()==0) {
+                    applyList_isEmptyText.setVisibility(View.VISIBLE);
+                }
+                else {
+                    applyList_RecyclerView.setVisibility(View.VISIBLE);
+                }
                 for(int temp =0; temp<arrayList.size(); temp++) {
                     RetrofitRepo repo = arrayList.get(temp);
                     ApplyListData applyListData = new ApplyListData(repo.getSchool(),repo.getMember(),repo.getDate(),repo.getApply_status());

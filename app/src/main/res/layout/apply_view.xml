@@ -47,20 +47,26 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="5dp" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent"/>
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="5dp" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="코멘트"
+            android:textSize="15dp"
+            android:textColor="#000000"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/apply_commentText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="코멘트"
+            android:text="/코멘트/"
             android:textColor="#000000" />
 
         <LinearLayout

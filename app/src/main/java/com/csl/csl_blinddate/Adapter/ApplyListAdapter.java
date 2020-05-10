@@ -68,7 +68,13 @@ public class ApplyListAdapter extends RecyclerView.Adapter<ApplyListAdapter.View
         void onBind(ApplyListData data) {
             applyList_schoolText.setText(data.getSchool());
             applyList_memberChip.setText(data.getMember() + " : "+data.getMember());
-            applyList_timeText.setText(data.getDate()+"일전");
+
+            if(data.getDate()==0) {
+                applyList_timeText.setText("오늘");
+            }
+            else {
+                applyList_timeText.setText(data.getDate()+"일전");
+            }
 
             switch (data.getStatus()) {
                 case 0 :
