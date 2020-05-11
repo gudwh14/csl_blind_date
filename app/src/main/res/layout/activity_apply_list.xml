@@ -7,25 +7,24 @@
     android:orientation="vertical"
     tools:context=".ApplyListActivity">
 
-    <ImageButton
-        android:id="@+id/listInForm_CloseButton"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:background="?attr/selectableItemBackground"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/close_icon"
-        android:layout_margin="15dp"/>
-
-    <TextView
-        android:id="@+id/textView28"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/apply_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="신청 현황"
-        android:textSize="15dp"
-        android:gravity="center"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp" />
+        android:background="@null"
+        android:theme="?attr/actionBarTheme"
+        app:titleTextAppearance="@style/ToolbarTitleText" >
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="신청 현황"
+            android:layout_gravity="center"
+            android:textColor="#000000"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
 
 
     <TextView
@@ -33,8 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="50dp"
-        android:text="신청한 미팅의 현황을 볼수있습니다"
+        android:layout_marginTop="60dp"
+        android:text="신청한 미팅의 현황을 볼 수 있습니다"
         android:textColor="#000000"/>
 
     <TextView
@@ -46,7 +45,7 @@
         android:textSize="15dp"
         android:gravity="center"
         android:background="@drawable/view_background_shape"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"/>
@@ -55,7 +54,7 @@
         android:id="@+id/applyList_RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"/>

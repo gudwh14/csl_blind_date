@@ -31,7 +31,7 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
 
             <TextView
                 android:id="@+id/apply_ageText"
@@ -80,19 +80,20 @@
                 android:layout_weight="4.5" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/apply_refuseButton"
+                android:id="@+id/apply_acceptButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="수락"
-                app:cornerRadius="20dp" />
+                app:cornerRadius="20dp"
+                android:backgroundTint="#4B89DC"/>
 
             <Space
                 android:layout_width="10dp"
                 android:layout_height="match_parent" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/apply_acceptButton"
+                android:id="@+id/apply_refuseButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

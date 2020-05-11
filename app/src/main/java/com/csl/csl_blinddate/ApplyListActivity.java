@@ -1,10 +1,12 @@
 package com.csl.csl_blinddate;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -34,6 +36,12 @@ public class ApplyListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply_list);
+        // toolbar
+        Toolbar toolbar = findViewById(R.id.apply_toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // View 초기화
         applyList_RecyclerView = findViewById(R.id.applyList_RecyclerView);
@@ -87,9 +95,18 @@ public class ApplyListActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RetrofitRepoList> call, Throwable t) {
-
+                t.printStackTrace();
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home :
+                finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

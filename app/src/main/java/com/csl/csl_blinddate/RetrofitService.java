@@ -73,4 +73,17 @@ public interface RetrofitService {
             @FieldMap HashMap<String, Object> param
     );
 
+    @FormUrlEncoded
+    @POST("ListApplyedRefresh.php")
+    Call<RetrofitRepoList> ListApplyedRefresh(
+            @FieldMap HashMap<String, Object> param
+    );
+
+    @FormUrlEncoded
+    @POST("ApplySelect.php")
+    Call<RetrofitRepo> ApplySelect(
+            @FieldMap HashMap<String, Object> param
+    );
+
+
 }

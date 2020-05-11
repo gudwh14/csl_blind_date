@@ -9,6 +9,8 @@ public class RetrofitRepo {
     private String userID;
     @SerializedName("meeting_id")
     private int meeting_id;
+    @SerializedName("apply_id")
+    private  int apply_id;
     @SerializedName("age")
     private int age;
     @SerializedName("member")
@@ -110,5 +112,9 @@ public class RetrofitRepo {
 
     public int getApply_status() {
         return apply_status;
+    }
+
+    public int getApply_id() {
+        return apply_id;
     }
 }

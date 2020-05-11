@@ -6,15 +6,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.csl.csl_blinddate.Data.ApplyData;
 import com.csl.csl_blinddate.Data.ChatData;
+import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.R;
+import com.csl.csl_blinddate.RetrofitService;
+import com.csl.csl_blinddate.SplashActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.csl.csl_blinddate.RetrofitService.URL;
 
 public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> {
     private ArrayList<ApplyData> data = new ArrayList<>();
@@ -43,6 +56,10 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
         data.add(data2);
     }
 
+    public void clear() {
+        data.clear();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView apply_ageText;
         TextView apply_schoolText;
@@ -50,6 +67,7 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
         Button apply_refuseButton;
         Button apply_acceptButton;
         private Drawable drawable;
+        int apply_id;
 
         ViewHolder(final View itemView) {
             super(itemView);
@@ -61,6 +79,7 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
         }
 
         void onBind(ApplyData data) {
+            apply_id = data.getApply_id();
             apply_ageText.setText("나이  : "+data.getAge());
 
             apply_schoolText.setText(data.getSchool());
@@ -74,6 +93,57 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
             apply_schoolText.setCompoundDrawables(null, null, drawable, null);
 
             apply_commentText.setText(data.getComment());
+
+            apply_acceptButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    select(true);
+                }
+            });
+
+            apply_refuseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    select(false);
+                }
+            });
+        }
+
+        void select(final boolean selection) {
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("userID_A", SplashActivity.userData.getUserID());
+            data.put("apply_id", apply_id);
+            data.put("selection",selection);
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+            Call<RetrofitRepo> call = retrofitService.ApplySelect(data);
+            call.enqueue(new Callback<RetrofitRepo>() {
+                @Override
+                public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
+                    RetrofitRepo repo = response.body();
+                    if(repo.isSuccess()) {
+                        if(selection) {
+                            Toast.makeText(itemView.getContext(),"수락 하였습니다",Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(itemView.getContext(),"거절 하였습니다",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
+                        Toast.makeText(itemView.getContext(),"서버통신 에러",Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RetrofitRepo> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
         }
     }
 }
