@@ -85,5 +85,23 @@ public interface RetrofitService {
             @FieldMap HashMap<String, Object> param
     );
 
+    @FormUrlEncoded
+    @POST("ChatListRefresh.php")
+    Call<RetrofitRepoList> ChatListRefresh(
+            @FieldMap HashMap<String, Object> param
+    );
+
+    @FormUrlEncoded
+    @POST("ChatInsert.php")
+    Call<RetrofitRepo> ChatInsert(
+            @FieldMap HashMap<String, Object> param
+    );
+
+    @FormUrlEncoded
+    @POST("ChatRefresh.php")
+    Call<RetrofitRepoList> ChatRefresh(
+            @FieldMap HashMap<String, Object> param
+    );
+
 
 }

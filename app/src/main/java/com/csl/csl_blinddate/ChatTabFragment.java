@@ -14,6 +14,19 @@ import android.view.ViewGroup;
 
 import com.csl.csl_blinddate.Adapter.ChatListAdapter;
 import com.csl.csl_blinddate.Data.ChatListData;
+import com.csl.csl_blinddate.Data.RetrofitRepo;
+import com.csl.csl_blinddate.Data.RetrofitRepoList;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.csl.csl_blinddate.RetrofitService.URL;
 
 
 /**
@@ -46,10 +59,43 @@ public class ChatTabFragment extends Fragment {
         chatListAdapter = new ChatListAdapter();
         chatlistRecyclerView.setAdapter(chatListAdapter);
 
-        ChatListData chatListData = new ChatListData("서울대학교","딱좋아",2);
-        chatListAdapter.addItem(chatListData);
-        chatListAdapter.notifyDataSetChanged();
+        // refresh
+        refresh();
 
         return view;
+    }
+
+    public void refresh() {
+        chatListAdapter.clear(); // 초기화
+        chatListAdapter.notifyDataSetChanged();
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("userID",SplashActivity.userData.getUserID());
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+        Call<RetrofitRepoList> call = retrofitService.ChatListRefresh(data);
+        call.enqueue(new Callback<RetrofitRepoList>() {
+            @Override
+            public void onResponse(Call<RetrofitRepoList> call, Response<RetrofitRepoList> response) {
+                ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
+
+                for(int temp = 0; temp<arrayList.size(); temp++) {
+                    RetrofitRepo repo = arrayList.get(temp);
+                    ChatListData chatListData = new ChatListData(repo.getMeeting_id(),repo.getSchool(),repo.getUserID(),repo.getMember());
+                    chatListAdapter.addItem(chatListData);
+                }
+                chatListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<RetrofitRepoList> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }

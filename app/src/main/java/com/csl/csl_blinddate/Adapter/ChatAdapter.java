@@ -40,6 +40,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         data.add(data2);
     }
 
+    public void clear() {
+        data.clear();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView userID;
         private TextView chatMsg;

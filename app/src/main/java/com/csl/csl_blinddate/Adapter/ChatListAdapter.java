@@ -44,6 +44,10 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         data.add(data2);
     }
 
+    public void clear() {
+        data.clear();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView chatlist_schoolText;
         private Chip chatlist_memberChip;
@@ -63,7 +67,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             chatlist_schoolText.setText(data.getSchool());
             chatlist_memberChip.setText(data.getMember() + " : " + data.getMember());
             chatlist_nameText.setText(data.getName() + " 님");
-            title = data.getSchool() +" "+ data.getMember() + "명 미팅";
+            title = data.getSchool() +" "+ data.getMember() +" : " + data.getMember() +" 미팅";
+            final int meeting_id = data.getList_id();
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,6 +77,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                     if(pos != RecyclerView.NO_POSITION) {
                         Intent intent = new Intent(view.getContext(), ChatActivity.class);
                         intent.putExtra("title",title);
+                        intent.putExtra("meeting_id",meeting_id);
                         view.getContext().startActivity(intent);
                     }
                 }
