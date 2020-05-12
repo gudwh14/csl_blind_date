@@ -1,6 +1,7 @@
 package com.csl.csl_blinddate;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,8 +22,12 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        chat_titleText = findViewById(R.id.chat_titleText);
-        chat_titleText.setText(getIntent().getStringExtra("title"));
+        Toolbar chat_toolbar = findViewById(R.id.chat_toolbar);
+        setSupportActionBar(chat_toolbar);
+
+        getSupportActionBar().setTitle(getIntent().getStringExtra("title"));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         chatRecyclerView = findViewById(R.id.chatRecyclerView);
         chatAdapter = new ChatAdapter();

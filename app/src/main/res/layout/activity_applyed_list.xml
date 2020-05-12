@@ -28,11 +28,16 @@
             />
     </androidx.appcompat.widget.Toolbar>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#66bdbdbd"
+        android:layout_marginTop="?attr/actionBarSize"/>
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="match_parent"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="70dp"
         android:layout_height="wrap_content"
         android:text="신청받은 리스트를 확인할 수 있습니다"
         android:gravity="center"
