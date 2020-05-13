@@ -1,20 +1,20 @@
 package com.csl.csl_blinddate.Data;
 
 public class ChatData {
-    private int chatID;
     private String userID;
     private String chatMsg;
+    private String time;
     private boolean myText;
 
-    public ChatData(int chatID,String userID,String chatMsg,boolean myText){
-        this.chatID = chatID;
+    public ChatData(String userID,String chatMsg,String time,boolean myText){
         this.userID = userID;
         this.chatMsg = chatMsg;
+        this.time = time;
         this.myText = myText;
     }
 
-    public int getChatID() {
-        return chatID;
+    public String getTime() {
+        return time;
     }
 
     public String getChatMsg() {

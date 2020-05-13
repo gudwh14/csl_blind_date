@@ -30,7 +30,7 @@
             android:textSize="14dp" />
 
         <TextView
-            android:id="@+id/textView16"
+            android:id="@+id/chat_timeView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="오후 12:54"

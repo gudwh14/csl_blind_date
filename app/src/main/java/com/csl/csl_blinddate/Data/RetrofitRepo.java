@@ -41,6 +41,10 @@ public class RetrofitRepo {
     private boolean[] trait;
     @SerializedName("date")
     private int date;
+    @SerializedName("chatMSG")
+    private String chatMSG;
+    @SerializedName("time")
+    private String time;
 
     public boolean isSuccess() {
         return success;
@@ -116,5 +120,13 @@ public class RetrofitRepo {
 
     public int getApply_id() {
         return apply_id;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getChatMSG() {
+        return chatMSG;
     }
 }
