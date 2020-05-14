@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".BoardWriteActivity"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:layout_margin="10dp">
 
 
     <LinearLayout
@@ -20,7 +21,7 @@
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackground"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/close_icon" />
+            app:srcCompat="@drawable/close_icon"/>
 
         <Space
             android:layout_width="wrap_content"
@@ -34,6 +35,7 @@
             android:layout_weight="1.5"
             android:gravity="center_vertical"
             android:text="글 쓰기"
+            android:textSize="15dp"
             android:textColor="#000000"
             android:textStyle="bold" />
 
@@ -42,14 +44,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="5" />
 
-        <Button
-            android:id="@+id/button2"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/boardWrite_writeButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.5"
-            android:background="@android:color/transparent"
             android:text="확인"
-            android:textColor="#000000" />
+            app:cornerRadius="20dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -58,11 +59,12 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/boardWrite_titleText"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:ems="10"
+            android:textStyle="bold"
             android:inputType="textPersonName"
             android:hint="제목을 입력해 주세요"/>
 
@@ -71,7 +73,7 @@
             android:layout_height="10dp" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/boardWrite_mainText"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
@@ -82,4 +84,5 @@
             android:gravity="start"
             android:background="@null"/>
     </LinearLayout>
+
 </LinearLayout>

@@ -11,6 +11,8 @@ public class RetrofitRepo {
     private int meeting_id;
     @SerializedName("apply_id")
     private  int apply_id;
+    @SerializedName("board_id")
+    private  int board_id;
     @SerializedName("age")
     private int age;
     @SerializedName("member")
@@ -45,6 +47,14 @@ public class RetrofitRepo {
     private String chatMSG;
     @SerializedName("time")
     private String time;
+    @SerializedName("title")
+    private String title;
+    @SerializedName("mainText")
+    private String mainText;
+    @SerializedName("up")
+    private int up;
+    @SerializedName("comments")
+    private int comments;
 
     public boolean isSuccess() {
         return success;
@@ -128,5 +138,25 @@ public class RetrofitRepo {
 
     public String getChatMSG() {
         return chatMSG;
+    }
+
+    public int getBoard_id() {
+        return board_id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getMainText() {
+        return mainText;
+    }
+
+    public int getUp() {
+        return up;
+    }
+
+    public int getComments() {
+        return comments;
     }
 }

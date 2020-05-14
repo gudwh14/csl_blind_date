@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import gun0912.tedkeyboardobserver.BaseKeyboardObserver;
-import gun0912.tedkeyboardobserver.TedKeyboardObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -80,16 +78,7 @@ public class ChatActivity extends AppCompatActivity {
         //refresh
         refresh();
 
-        /*TedKeyboardObserver tedKeyboardObserver = new TedKeyboardObserver(this);
-        tedKeyboardObserver.listen(new BaseKeyboardObserver.OnKeyboardListener() {
-            @Override
-            public void onKeyboardChange(boolean b) {
-                if(b) {
-                    chatRecyclerView.scrollToPosition(chatAdapter.getItemCount()-1);
-                }
-            }
-        }); */
-
+        //
         chatRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {

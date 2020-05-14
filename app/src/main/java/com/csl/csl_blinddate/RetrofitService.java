@@ -103,5 +103,17 @@ public interface RetrofitService {
             @FieldMap HashMap<String, Object> param
     );
 
+    @FormUrlEncoded
+    @POST("BoardWrite.php")
+    Call<RetrofitRepo> BoardWrite(
+            @FieldMap HashMap<String, Object> param
+    );
+
+    @FormUrlEncoded
+    @POST("BoardRefresh.php")
+    Call<RetrofitRepoList> BoardRefresh(
+            @FieldMap HashMap<String, Object> param
+    );
+
 
 }
