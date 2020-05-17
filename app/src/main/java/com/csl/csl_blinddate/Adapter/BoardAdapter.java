@@ -1,6 +1,7 @@
 package com.csl.csl_blinddate.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.csl.csl_blinddate.BoardViewActivity;
+import com.csl.csl_blinddate.ChatActivity;
 import com.csl.csl_blinddate.Data.ApplyData;
 import com.csl.csl_blinddate.Data.BoardData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
@@ -77,6 +80,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         private Drawable up_drawable;
         private Drawable comments_drawable;
         int board_id;
+        String board_title;
 
         ViewHolder(final View itemView) {
             super(itemView);
@@ -96,6 +100,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
         void onBind(BoardData data) {
             Date time = new Date();
+            board_title = data.getBoard_title();
+
             String str_time = simpleDateFormat.format(time);
             String[] n_time = str_time.split(" ");
             String[] b_time = data.getTime().split(" ");
@@ -107,7 +113,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             }
 
             board_id = data.getBoard_id();
-            if(data.getBoard_title().equals("익명게시판")) {
+            if(board_title.equals("익명게시판")) {
                 board_userText.setText("익명");
             }
             else {
@@ -120,6 +126,19 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
             board_upText.setCompoundDrawables(up_drawable,null,null,null);
             board_commentsText.setCompoundDrawables(comments_drawable,null,null,null);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION) {
+                        Intent intent = new Intent(view.getContext(), BoardViewActivity.class);
+                        intent.putExtra("title",board_title);
+                        intent.putExtra("board_id",board_id);
+                        view.getContext().startActivity(intent);
+                    }
+                }
+            });
         }
 
     }

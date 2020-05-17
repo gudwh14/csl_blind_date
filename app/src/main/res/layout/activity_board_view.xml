@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BoardViewActivity"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/boardView_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:theme="?attr/actionBarTheme"
+        app:titleTextAppearance="@style/ToolbarTitleText"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+
+            <TextView
+                android:id="@+id/boardView_titleText"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="글 제목"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/boardView_upText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 좋아요"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:background="@drawable/grey_background_shape"/>
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/boardView_favoriteText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 즐겨찾기"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:background="@drawable/grey_background_shape"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/boardView_userText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="작성자" />
+
+            <TextView
+                android:id="@+id/boardView_timeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="글 작성일" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+        <TextView
+            android:id="@+id/boardView_mainText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="글내용"
+            android:textColor="#000000"
+            android:textSize="15dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/boardView_up_countText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text=" 0"
+                android:textColor="#DB4455" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/boardView_favorite_countText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text=" 1"
+                android:textColor="#FFC107" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

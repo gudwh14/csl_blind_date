@@ -68,7 +68,6 @@ public class ListWriteActivity extends AppCompatActivity {
         memberChip_3 = findViewById(R.id.memberChip_3);
         memberChip_4 = findViewById(R.id.memberChip_4);
 
-        final UserData userData = getIntent().getParcelableExtra("userData");
 
         // CloseButton 클릭 리스너
         ListWrite_CloseButton.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +108,7 @@ public class ListWriteActivity extends AppCompatActivity {
                 else {
                     // 통신
                     HashMap<String, Object> data = new HashMap<>();
-                    data.put("userID",userData.getUserID());
+                    data.put("userID",SplashActivity.userData.getUserID());
                     data.put("comment",comment);
                     data.put("member",member);
                     data.put("trait0",trait[0]);

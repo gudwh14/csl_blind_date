@@ -58,7 +58,6 @@ public class ListTabFragment extends Fragment {
 
         View view = localInflater.inflate(R.layout.fragment_list_tab, container, false);
 
-        userData = getArguments().getParcelable("userData");
 
         // RecyclerView, Adapter 초기화
         listRecyclerView = view.findViewById(R.id.ListRecyclerView);
@@ -87,7 +86,6 @@ public class ListTabFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),ListWriteActivity.class);
-                intent.putExtra("userData",getArguments().getParcelable("userData"));
                 startActivity(intent);
             }
         });

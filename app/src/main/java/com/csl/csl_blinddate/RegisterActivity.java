@@ -129,7 +129,6 @@ public class RegisterActivity extends AppCompatActivity {
                                     if (repo.isSuccess()) {
                                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                         UserData userData = new UserData(userID,age,gender,school,mail,certification);
-                                        intent.putExtra("userData",userData);
                                         startActivity(intent);
                                         finish();
                                     } else {

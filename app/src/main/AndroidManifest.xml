@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.csl.csl_blinddate">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -13,11 +11,13 @@
         android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SchoolListActivity"></activity>
+        <activity android:name=".BoardViewActivity"></activity>
+        <activity android:name=".SchoolListActivity" />
         <activity android:name=".ApplyListActivity" />
         <activity android:name=".ApplyedListActivity" />
-        <activity android:name=".ChatActivity"
-            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".ChatActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".InFormActivity" />
         <activity android:name=".ListInformActivity" />
         <activity
@@ -45,5 +45,7 @@
             android:name="com.kakao.sdk.AppKey"
             android:value="95c38f82b20115cdb69a459bffbfb96a" />
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

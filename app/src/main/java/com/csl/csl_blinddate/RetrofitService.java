@@ -18,7 +18,7 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface RetrofitService {
-    String URL = "http://121.137.115.129/blinddate/";
+    String URL = "http://112.186.52.39/blinddate/";
 
 
     @GET("index.php")
@@ -115,5 +115,10 @@ public interface RetrofitService {
             @FieldMap HashMap<String, Object> param
     );
 
+    @FormUrlEncoded
+    @POST("BoardViewRefresh.php")
+    Call<RetrofitRepo> BoardViewRefresh(
+            @FieldMap HashMap<String, Object> param
+    );
 
 }
