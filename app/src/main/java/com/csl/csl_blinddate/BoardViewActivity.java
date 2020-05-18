@@ -13,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -216,5 +217,15 @@ public class BoardViewActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home :
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.csl.csl_blinddate.BoardActivity;
+import com.csl.csl_blinddate.BoardViewActivity;
 import com.csl.csl_blinddate.Data.HomeData;
 import com.csl.csl_blinddate.R;
 
@@ -45,6 +47,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         data.add(data2);
     }
 
+    public void clear() {
+        data.clear();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView homeTitleText;
         private TextView homePostText_1;
@@ -54,6 +60,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         Intent intent;
         private String title;
         private LinearLayout homeTitleLayout;
+        Context context;
+        int board_id_1,board_id_2,board_id_3;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -67,9 +75,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         }
 
         void onBind(HomeData data) {
-            final Context context = data.getContext();
+            context = itemView.getContext();
             intent = new Intent(context, BoardActivity.class);
             title = data.getHomeTitle();
+            board_id_1 = data.getHomePost_1_id();
+            board_id_2 = data.getHomePost_2_id();
+            board_id_3 = data.getHomePost_3_id();
             if(title.equals("OOTD")) {
                 imageView.setImageResource(R.drawable.photo_icon);
             }
@@ -82,26 +93,37 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                     context.startActivity(intent);
                 }
             });
+            View.OnClickListener clickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int id = 0;
+                    Intent intent = new Intent(view.getContext(), BoardViewActivity.class);
+                    intent.putExtra("title", title);
+                    switch (view.getId()) {
+                        case R.id.homePostText_1:
+                            id = board_id_1;
+                            intent.putExtra("board_id", board_id_1);
+                            break;
+                        case R.id.homePostText_2 :
+                            id = board_id_2;
+                            intent.putExtra("board_id", board_id_2);
+                            break;
+                        case R.id.homePostText_3 :
+                            id = board_id_3;
+                            intent.putExtra("board_id", board_id_3);
+                            break;
+                    }
+                    if(id != 0) {
+                        view.getContext().startActivity(intent);
+                    }
+                }
+            };
             homePostText_1.setText(data.getHomePost_1().toString());
-            homePostText_1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                }
-            });
+            homePostText_1.setOnClickListener(clickListener);
             homePostText_2.setText(data.getHomePost_2().toString());
-            homePostText_2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
+            homePostText_2.setOnClickListener(clickListener);
             homePostText_3.setText(data.getHomePost_3().toString());
-            homePostText_3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
+            homePostText_3.setOnClickListener(clickListener);
         }
     }
 }

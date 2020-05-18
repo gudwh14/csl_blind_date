@@ -59,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
+            android:textSize="13dp"
             android:background="?attr/selectableItemBackground"/>
         <Space
             android:layout_width="match_parent"
@@ -68,6 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
+            android:textSize="13dp"
             android:background="?attr/selectableItemBackground"/>
         <Space
             android:layout_width="match_parent"
@@ -76,6 +78,7 @@
             android:id="@+id/homePostText_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="13dp"
             android:text="TextView"
             android:background="?attr/selectableItemBackground"/>
     </LinearLayout>

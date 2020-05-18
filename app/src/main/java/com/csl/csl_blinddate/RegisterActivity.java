@@ -127,8 +127,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
                                     RetrofitRepo repo = response.body();
                                     if (repo.isSuccess()) {
-                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                        UserData userData = new UserData(userID,age,gender,school,mail,certification);
+                                        Intent intent = new Intent(RegisterActivity.this, SplashActivity.class);
                                         startActivity(intent);
                                         finish();
                                     } else {

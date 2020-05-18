@@ -1,20 +1,35 @@
 package com.csl.csl_blinddate.Adapter;
 
+import android.app.AlertDialog;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
+import com.csl.csl_blinddate.BoardViewActivity;
 import com.csl.csl_blinddate.Data.CommentData;
+import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.R;
+import com.csl.csl_blinddate.RetrofitService;
+import com.csl.csl_blinddate.SplashActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import static com.csl.csl_blinddate.RetrofitService.URL;
 
 public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<CommentData> data = new ArrayList<>();
@@ -74,6 +89,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView comment_upText;
         TextView comment_commentText;
         ImageView comment_upImage;
+        ImageView comment_replyImage;
         private Drawable drawable;
 
         ViewHolder(final View itemView) {
@@ -84,6 +100,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             comment_upText = itemView.findViewById(R.id.comment_upText);
             comment_commentText = itemView.findViewById(R.id.comment_commentText);
             comment_upImage = itemView.findViewById(R.id.comment_upImage);
+            comment_replyImage = itemView.findViewById(R.id.comment_replyImage);
 
             drawable = itemView.getContext().getResources().getDrawable(R.drawable.heart_icon);
             drawable.setBounds(0,0,40,40);
@@ -91,6 +108,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         void onBind(CommentData data) {
+            final int comment_id = data.getComment_id();
             String[] time = data.getTime().split(" ");
             comment_userText.setText(data.getUserID());
             comment_upText.setCompoundDrawables(drawable,null,null,null);
@@ -98,6 +116,60 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             comment_commentText.setText(data.getComment());
             comment_timeText.setText(time[1] + " " + time[2]);
+
+            comment_replyImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    View layout = LayoutInflater.from(view.getContext()).inflate(R.layout.reply,null);
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setMessage("답글")
+                            .setView(layout);
+
+                    final AlertDialog alertDialog = builder.create();
+
+                    ImageView replyView_commentSendView = layout.findViewById(R.id.replyView_commentSendView);
+                    final EditText replyView_commentText = layout.findViewById(R.id.replyView_commentText);
+
+                    replyView_commentSendView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String comment = replyView_commentText.getText().toString();
+                            if(comment.trim().equals("")) {
+                                Toast.makeText(view.getContext(),"답글을 입력해주세요",Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                HashMap<String, Object> data = new HashMap<>();
+                                data.put("comment_id",comment_id);
+                                data.put("userID", SplashActivity.userData.getUserID());
+                                data.put("comment",comment);
+
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(URL)
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+                                Call<RetrofitRepo> call = retrofitService.ReplyInsert(data);
+                                call.enqueue(new Callback<RetrofitRepo>() {
+                                    @Override
+                                    public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
+                                        RetrofitRepo repo = response.body();
+                                        if(repo.isSuccess()) {
+                                            alertDialog.dismiss();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<RetrofitRepo> call, Throwable t) {
+                                        t.printStackTrace();
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                    alertDialog.show();
+                }
+            });
         }
     }
 

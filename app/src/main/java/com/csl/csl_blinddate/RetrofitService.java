@@ -133,4 +133,16 @@ public interface RetrofitService {
             @FieldMap HashMap<String, Object> param
     );
 
+    @FormUrlEncoded
+    @POST("ReplyInsert.php")
+    Call<RetrofitRepo> ReplyInsert(
+            @FieldMap HashMap<String, Object> param
+    );
+
+    @FormUrlEncoded
+    @POST("MainBoardRefresh.php")
+    Call<RetrofitRepoList> MainBoardRefresh(
+            @FieldMap HashMap<String, Object> param
+    );
+
 }
