@@ -19,7 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="15dp">
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,12 +65,19 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:srcCompat="@drawable/user_icon" />
+
             <TextView
                 android:id="@+id/boardView_userText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="작성자" />
+                android:text="작성자"
+                android:layout_marginStart="5dp"/>
 
             <TextView
                 android:id="@+id/boardView_timeText"
@@ -116,8 +124,40 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/boardView_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@drawable/my_chat_background_shape"
+        android:padding="5dp"
+        android:layout_margin="10dp">
+
+        <EditText
+            android:id="@+id/boardView_commentText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@null"
+            android:ems="10"
+            android:hint="댓글을 입력하세요"
+            android:inputType="textMultiLine"
+            android:layout_marginStart="10dp"/>
+
+        <ImageView
+            android:id="@+id/boardView_commentSendView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/send_icon"
+            android:padding="3dp"/>
+    </LinearLayout>
 
 </LinearLayout>

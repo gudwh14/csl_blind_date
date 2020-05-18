@@ -57,6 +57,10 @@ public class RetrofitRepo {
     private int comments;
     @SerializedName("favorite")
     private int favorite;
+    @SerializedName("reply")
+    private boolean reply;
+    @SerializedName("id")
+    private int id;
 
     public boolean isSuccess() {
         return success;
@@ -164,5 +168,13 @@ public class RetrofitRepo {
 
     public int getFavorite() {
         return favorite;
+    }
+
+    public boolean isReply() {
+        return reply;
+    }
+
+    public int getId() {
+        return id;
     }
 }

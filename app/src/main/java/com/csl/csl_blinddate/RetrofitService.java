@@ -121,4 +121,16 @@ public interface RetrofitService {
             @FieldMap HashMap<String, Object> param
     );
 
+    @FormUrlEncoded
+    @POST("CommentInsert.php")
+    Call<RetrofitRepo> CommentInsert(
+            @FieldMap HashMap<String, Object> param
+    );
+
+    @FormUrlEncoded
+    @POST("CommentRefresh.php")
+    Call<RetrofitRepoList> CommentRefresh(
+            @FieldMap HashMap<String, Object> param
+    );
+
 }
