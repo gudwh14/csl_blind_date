@@ -145,4 +145,10 @@ public interface RetrofitService {
             @FieldMap HashMap<String, Object> param
     );
 
+    @FormUrlEncoded
+    @POST("BoardDetailInsert.php")
+    Call<RetrofitRepo> BoardDetailInsert(
+            @FieldMap HashMap<String, Object> param
+    );
+
 }

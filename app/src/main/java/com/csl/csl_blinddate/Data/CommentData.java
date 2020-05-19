@@ -1,6 +1,7 @@
 package com.csl.csl_blinddate.Data;
 
 public class CommentData {
+    private int board_id;
     private int comment_id;
     private String userID;
     private String time;
@@ -8,7 +9,8 @@ public class CommentData {
     private String comment;
     private boolean reply; // 0 : comment , 1 : reply
 
-    public CommentData(int comment_id, String userID, String time, int up, String comment, boolean reply) {
+    public CommentData(int board_id, int comment_id, String userID, String time, int up, String comment, boolean reply) {
+        this.board_id = board_id;
         this.comment_id = comment_id;
         this.userID = userID;
         this.time = time;
@@ -39,5 +41,9 @@ public class CommentData {
 
     public boolean isReply() {
         return reply;
+    }
+
+    public int getBoard_id() {
+        return board_id;
     }
 }

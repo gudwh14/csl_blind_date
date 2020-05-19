@@ -63,6 +63,10 @@ public class RetrofitRepo {
     private int id;
     @SerializedName("board_title")
     private String board_title;
+    @SerializedName("isFavorite")
+    private boolean isFavorite;
+    @SerializedName("isBoardUp")
+    private boolean isBoardUp;
 
     public boolean isSuccess() {
         return success;
@@ -182,5 +186,13 @@ public class RetrofitRepo {
 
     public String getBoard_title() {
         return board_title;
+    }
+
+    public boolean isBoardUP() {
+        return isBoardUp;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
     }
 }

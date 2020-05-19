@@ -109,6 +109,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         void onBind(CommentData data) {
             final int comment_id = data.getComment_id();
+            final int board_id = data.getBoard_id();
             String[] time = data.getTime().split(" ");
             comment_userText.setText(data.getUserID());
             comment_upText.setCompoundDrawables(drawable,null,null,null);
@@ -139,6 +140,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             }
                             else {
                                 HashMap<String, Object> data = new HashMap<>();
+                                data.put("board_id",board_id);
                                 data.put("comment_id",comment_id);
                                 data.put("userID", SplashActivity.userData.getUserID());
                                 data.put("comment",comment);
