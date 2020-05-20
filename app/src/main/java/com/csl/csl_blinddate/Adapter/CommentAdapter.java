@@ -1,6 +1,7 @@
 package com.csl.csl_blinddate.Adapter;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.view.LayoutInflater;
@@ -115,7 +116,17 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 anonymous = true;
             }
             String[] time = data.getTime().split(" ");
-            comment_userText.setText(data.getUserID());
+            if(data.isWriter()) {
+                comment_userText.setText("글쓴이");
+                comment_userText.setTextColor(Color.parseColor("#FF486297"));
+            }
+            else {
+                if (data.isAnonymous()) {
+                    comment_userText.setText("익명" + data.getAnony_count());
+                } else {
+                    comment_userText.setText(data.getUserID());
+                }
+            }
             comment_upText.setCompoundDrawables(drawable,null,null,null);
             comment_upText.setText(" " + data.getUp());
 
@@ -204,7 +215,17 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         void onBind(CommentData data) {
             String[] time = data.getTime().split(" ");
-            reply_userText.setText(data.getUserID());
+            if(data.isWriter()) {
+                reply_userText.setText("글쓴이");
+                reply_userText.setTextColor(Color.parseColor("#FF486297"));
+            }
+            else {
+                if (data.isAnonymous()) {
+                    reply_userText.setText("익명" + data.getAnony_count());
+                } else {
+                    reply_userText.setText(data.getUserID());
+                }
+            }
             reply_upText.setCompoundDrawables(drawable,null,null,null);
             reply_upText.setText(" " + data.getUp());
 

@@ -40,7 +40,7 @@ public class InFormActivity extends AppCompatActivity {
         inform_questionText = findViewById(R.id.inform_questionText);
         inform_appText = findViewById(R.id.inform_appText);
 
-        inform_nameText.setText(userData.getUserID() + " 님");
+        inform_nameText.setText(userData.getUserID());
         inform_schoolText.setText(userData.getSchool());
 
 

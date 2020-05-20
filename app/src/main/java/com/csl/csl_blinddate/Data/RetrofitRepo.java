@@ -67,6 +67,12 @@ public class RetrofitRepo {
     private boolean isFavorite;
     @SerializedName("isBoardUp")
     private boolean isBoardUp;
+    @SerializedName("anonymous")
+    private boolean anonymous;
+    @SerializedName("anony_count")
+    private int anony_count;
+    @SerializedName("writer")
+    private boolean writer;
 
     public boolean isSuccess() {
         return success;
@@ -194,5 +200,17 @@ public class RetrofitRepo {
 
     public boolean isFavorite() {
         return isFavorite;
+    }
+
+    public int getAnony_count() {
+        return anony_count;
+    }
+
+    public boolean isAnonymous() {
+        return anonymous;
+    }
+
+    public boolean isWriter() {
+        return writer;
     }
 }

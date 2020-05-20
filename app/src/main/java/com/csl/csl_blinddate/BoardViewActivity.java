@@ -281,7 +281,7 @@ public class BoardViewActivity extends AppCompatActivity {
 
                 for (int temp = 0; temp < arrayList.size(); temp++) {
                     RetrofitRepo repo = arrayList.get(temp);
-                    CommentData commentData = new CommentData(title,getIntent().getIntExtra("board_id",0),repo.getId(),repo.getUserID(),repo.getTime(),repo.getUp(),repo.getComment(),repo.isReply());
+                    CommentData commentData = new CommentData(title,getIntent().getIntExtra("board_id",0),repo.getId(),repo.getUserID(),repo.getTime(),repo.getUp(),repo.getComment(),repo.isReply(),repo.isAnonymous(),repo.getAnony_count(),repo.isWriter());
                     commentAdapter.addItem(commentData);
                 }
                 commentAdapter.notifyDataSetChanged();
