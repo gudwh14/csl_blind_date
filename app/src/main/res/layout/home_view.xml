@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:padding="7dp"
-    android:background="@drawable/view_background_shape">
+    android:background="@drawable/grey_background_shape">
 
     <LinearLayout
         android:id="@+id/homeTitleLayout"

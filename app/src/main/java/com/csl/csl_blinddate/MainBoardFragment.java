@@ -11,9 +11,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.csl.csl_blinddate.Adapter.HomeAdapter;
 import com.csl.csl_blinddate.Data.HomeData;
@@ -83,54 +85,55 @@ public class MainBoardFragment extends Fragment {
                 int board1=0 ,board2 = 0,board3 = 0;
                 for(int temp = 0; temp < arrayList.size(); temp++) {
                     RetrofitRepo repo = arrayList.get(temp);
+                    String title = repo.getTitle();
 
                     if(repo.getBoard_title().equals(board_title_1)) {
                         if(board1 == 0) {
-                            homeData_1.setHomePost_1(repo.getTitle());
+                            homeData_1.setHomePost_1(title);
                             homeData_1.setHomePost_1_id(repo.getBoard_id());
                             board1++;
                         }
                         else if(board1 == 1){
-                            homeData_1.setHomePost_2(repo.getTitle());
+                            homeData_1.setHomePost_2(title);
                             homeData_1.setHomePost_2_id(repo.getBoard_id());
                             board1++;
                         }
                         else if(board1 == 2) {
-                            homeData_1.setHomePost_3(repo.getTitle());
+                            homeData_1.setHomePost_3(title);
                             homeData_1.setHomePost_3_id(repo.getBoard_id());
                             board1++;
                         }
                     }
                     else if(repo.getBoard_title().equals(board_title_2)) {
                         if(board2 == 0) {
-                            homeData_2.setHomePost_1(repo.getTitle());
+                            homeData_2.setHomePost_1(title);
                             homeData_2.setHomePost_1_id(repo.getBoard_id());
                             board1++;
                         }
                         else if(board2 == 1){
-                            homeData_2.setHomePost_2(repo.getTitle());
+                            homeData_2.setHomePost_2(title);
                             homeData_2.setHomePost_2_id(repo.getBoard_id());
                             board1++;
                         }
                         else if(board2 == 2) {
-                            homeData_2.setHomePost_3(repo.getTitle());
+                            homeData_2.setHomePost_3(title);
                             homeData_2.setHomePost_3_id(repo.getBoard_id());
                             board1++;
                         }
                     }
                     else if(repo.getBoard_title().equals(board_title_3)) {
                         if(board3 == 0) {
-                            homeData_3.setHomePost_1(repo.getTitle());
+                            homeData_3.setHomePost_1(title);
                             homeData_3.setHomePost_1_id(repo.getBoard_id());
                             board1++;
                         }
                         else if(board3 == 1){
-                            homeData_3.setHomePost_2(repo.getTitle());
+                            homeData_3.setHomePost_2(title);
                             homeData_3.setHomePost_2_id(repo.getBoard_id());
                             board1++;
                         }
                         else if(board3 == 2) {
-                            homeData_3.setHomePost_3(repo.getTitle());
+                            homeData_3.setHomePost_3(title);
                             homeData_3.setHomePost_3_id(repo.getBoard_id());
                             board1++;
                         }

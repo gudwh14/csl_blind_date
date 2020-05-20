@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.csl.csl_blinddate.Data.UserData;
@@ -12,10 +13,11 @@ import com.csl.csl_blinddate.Data.UserData;
 public class InFormActivity extends AppCompatActivity {
     TextView inform_nameText;
     TextView inform_schoolText;
-    TextView inform_myWritingText;
-    TextView inform_applyedText;
-    TextView inform_applyingText;
-    TextView inform_certifyText;
+    LinearLayout inform_favoriteText;
+    LinearLayout inform_myWritingText;
+    LinearLayout inform_applyedText;
+    LinearLayout inform_applyingText;
+    LinearLayout inform_certifyText;
     TextView inform_questionText;
     TextView inform_appText;
     Intent intent;
@@ -30,6 +32,7 @@ public class InFormActivity extends AppCompatActivity {
 
         inform_nameText = findViewById(R.id.inform_nameText);
         inform_schoolText = findViewById(R.id.inform_schoolText);
+        inform_favoriteText = findViewById(R.id.inform_favoriteText);
         inform_myWritingText = findViewById(R.id.inform_myWritingText);
         inform_applyedText = findViewById(R.id.inform_applyedText);
         inform_applyingText = findViewById(R.id.inform_applyingText);
@@ -45,7 +48,15 @@ public class InFormActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 switch (view.getId()) {
+                    case R.id.inform_favoriteText :
+                        intent = new Intent(InFormActivity.this,CommonBoardActivity.class);
+                        intent.putExtra("code",0);
+                        startActivity(intent);
+                        break;
                     case R.id.inform_myWritingText :
+                        intent = new Intent(InFormActivity.this,CommonBoardActivity.class);
+                        intent.putExtra("code",1);
+                        startActivity(intent);
                         break;
                     case R.id.inform_applyedText :
                         intent = new Intent(InFormActivity.this, ApplyedListActivity.class);
@@ -67,6 +78,7 @@ public class InFormActivity extends AppCompatActivity {
             }
         };
 
+        inform_favoriteText.setOnClickListener(onClickListener);
         inform_myWritingText.setOnClickListener(onClickListener);
         inform_applyedText.setOnClickListener(onClickListener);
         inform_applyingText.setOnClickListener(onClickListener);

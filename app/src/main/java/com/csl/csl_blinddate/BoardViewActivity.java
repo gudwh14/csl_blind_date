@@ -53,15 +53,15 @@ public class BoardViewActivity extends AppCompatActivity {
 
     int favorite = 0, up = 0;
     int board_id;
-
+    String title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_view);
-
+        title = getIntent().getStringExtra("title");
         // toolbar
         Toolbar toolbar = findViewById(R.id.boardView_toolbar);
-        toolbar.setTitle(getIntent().getStringExtra("title"));
+        toolbar.setTitle(title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -224,10 +224,15 @@ public class BoardViewActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"내용을 입력하세요",Toast.LENGTH_SHORT).show();
         }
         else {
+            boolean anonymous = false;
+            if(title.equals("익명게시판")) {
+                anonymous = true;
+            }
             HashMap<String, Object> data = new HashMap<>();
             data.put("board_id",board_id);
             data.put("userID",SplashActivity.userData.getUserID());
             data.put("comment",comment);
+            data.put("anonymous",anonymous);
 
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(URL)
@@ -276,7 +281,7 @@ public class BoardViewActivity extends AppCompatActivity {
 
                 for (int temp = 0; temp < arrayList.size(); temp++) {
                     RetrofitRepo repo = arrayList.get(temp);
-                    CommentData commentData = new CommentData(getIntent().getIntExtra("board_id",0),repo.getId(),repo.getUserID(),repo.getTime(),repo.getUp(),repo.getComment(),repo.isReply());
+                    CommentData commentData = new CommentData(title,getIntent().getIntExtra("board_id",0),repo.getId(),repo.getUserID(),repo.getTime(),repo.getUp(),repo.getComment(),repo.isReply());
                     commentAdapter.addItem(commentData);
                 }
                 commentAdapter.notifyDataSetChanged();

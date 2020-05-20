@@ -91,6 +91,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ImageView comment_upImage;
         ImageView comment_replyImage;
         private Drawable drawable;
+        boolean anonymous = false;
 
         ViewHolder(final View itemView) {
             super(itemView);
@@ -110,6 +111,9 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         void onBind(CommentData data) {
             final int comment_id = data.getComment_id();
             final int board_id = data.getBoard_id();
+            if(data.getBoard_title().equals("익명게시판")) {
+                anonymous = true;
+            }
             String[] time = data.getTime().split(" ");
             comment_userText.setText(data.getUserID());
             comment_upText.setCompoundDrawables(drawable,null,null,null);
@@ -144,6 +148,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                 data.put("comment_id",comment_id);
                                 data.put("userID", SplashActivity.userData.getUserID());
                                 data.put("comment",comment);
+                                data.put("anonymous",anonymous);
 
                                 Retrofit retrofit = new Retrofit.Builder()
                                         .baseUrl(URL)

@@ -7,12 +7,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +39,7 @@ import static com.csl.csl_blinddate.RetrofitService.URL;
 public class ChatActivity extends AppCompatActivity {
 
     EditText chat_msgText;
-    MaterialButton chat_sendButton;
+    ImageView chat_sendButton;
     RecyclerView chatRecyclerView;
     ChatAdapter chatAdapter;
 
@@ -99,6 +101,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        // 중요
         chatRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             AtomicInteger state = new AtomicInteger(RecyclerView.SCROLL_STATE_IDLE);
             @Override
@@ -209,11 +212,22 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.chat_toolbar_menu, menu);
+
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.exit :
+                break;
             case android.R.id.home :
                 finish();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

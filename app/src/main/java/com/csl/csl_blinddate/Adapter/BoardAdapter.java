@@ -3,6 +3,7 @@ package com.csl.csl_blinddate.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,6 +120,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             else {
                 board_userText.setText(data.getUserID());
             }
+
             board_titleText.setText(data.getTitle());
 
             board_upText.setText(" "+data.getUp());

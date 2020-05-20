@@ -62,6 +62,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         private LinearLayout homeTitleLayout;
         Context context;
         int board_id_1,board_id_2,board_id_3;
+        String homePost_1,homePost_2,homePost_3;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -81,6 +82,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             board_id_1 = data.getHomePost_1_id();
             board_id_2 = data.getHomePost_2_id();
             board_id_3 = data.getHomePost_3_id();
+
+            homePost_1 = data.getHomePost_1();
+            homePost_2 = data.getHomePost_2();
+            homePost_3 = data.getHomePost_3();
+
+
             if(title.equals("OOTD")) {
                 imageView.setImageResource(R.drawable.photo_icon);
             }
@@ -118,11 +125,27 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                     }
                 }
             };
-            homePostText_1.setText(data.getHomePost_1().toString());
+
+            if(homePost_1.equals("")) {
+                homePostText_1.setText("등록된 글이 없습니다");
+            }
+            else {
+                homePostText_1.setText(homePost_1);
+            }
             homePostText_1.setOnClickListener(clickListener);
-            homePostText_2.setText(data.getHomePost_2().toString());
+            if(homePost_2.equals("")) {
+                homePostText_2.setText("등록된 글이 없습니다");
+            }
+            else {
+                homePostText_2.setText(homePost_1);
+            }
             homePostText_2.setOnClickListener(clickListener);
-            homePostText_3.setText(data.getHomePost_3().toString());
+            if(homePost_3.equals("")) {
+                homePostText_3.setText("등록된 글이 없습니다");
+            }
+            else {
+                homePostText_3.setText(homePost_1);
+            }
             homePostText_3.setOnClickListener(clickListener);
         }
     }

@@ -151,4 +151,11 @@ public interface RetrofitService {
             @FieldMap HashMap<String, Object> param
     );
 
+    @FormUrlEncoded
+    @POST("CommonBoardRefresh.php")
+    Call<RetrofitRepoList> CommonBoardRefresh(
+            @FieldMap HashMap<String, Object> param
+    );
+
+
 }
