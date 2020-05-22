@@ -73,6 +73,8 @@ public class RetrofitRepo {
     private int anony_count;
     @SerializedName("writer")
     private boolean writer;
+    @SerializedName("isCommentUp")
+    private boolean isCommentUp;
 
     public boolean isSuccess() {
         return success;
@@ -212,5 +214,9 @@ public class RetrofitRepo {
 
     public boolean isWriter() {
         return writer;
+    }
+
+    public boolean isCommentUp() {
+        return isCommentUp;
     }
 }

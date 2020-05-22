@@ -2,9 +2,12 @@ package com.csl.csl_blinddate;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -30,20 +33,26 @@ import static com.csl.csl_blinddate.RetrofitService.URL;
 public class ListInformActivity extends AppCompatActivity {
 
     int id;
-    ImageButton listInForm_CloseButton;
     TextView listInForm_commentText;
     Chip inform_trait_1,inform_trait_2,inform_trait_3,inform_trait_4,inform_trait_5,inform_trait_6,inform_trait_7,inform_trait_8;
     EditText listInForm_applyText;
     MaterialButton listInForm_applyButton;
+    String userID = UserData.getInstance().getUserID();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_inform);
 
+        //toolbar
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("신청");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // view 초기화
         id = getIntent().getIntExtra("id",0);
-        listInForm_CloseButton = findViewById(R.id.listInForm_CloseButton);
         listInForm_commentText = findViewById(R.id.listInForm_commentText);
         listInForm_applyText = findViewById(R.id.listInForm_applyText);
         listInForm_applyButton = findViewById(R.id.listInForm_applyButton);
@@ -68,13 +77,6 @@ public class ListInformActivity extends AppCompatActivity {
 
         //  클릭 리스너
 
-        listInForm_CloseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
         // applyButton
 
         listInForm_applyButton.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +89,7 @@ public class ListInformActivity extends AppCompatActivity {
                 else {
                     // 통신
                     HashMap<String, Object> data = new HashMap<>();
-                    data.put("userID",SplashActivity.userData.getUserID());
+                    data.put("userID",userID);
                     data.put("id",id);
                     data.put("comment",applyText);
                     Retrofit retrofit = new Retrofit.Builder()
@@ -116,7 +118,7 @@ public class ListInformActivity extends AppCompatActivity {
                                         .show();
                             }
                             else {
-                                Toast.makeText(ListInformActivity.this,SplashActivity.userData.getUserID(),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ListInformActivity.this,UserData.getInstance().getUserID(),Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -231,5 +233,62 @@ public class ListInformActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.list_toolbar_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.remove :
+                AlertDialog.Builder builder = new AlertDialog.Builder(ListInformActivity.this);
+                builder.setMessage("등록한 미팅을 삭제 합니다")
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                HashMap<String, Object> data = new HashMap<>();
+                                data.put("id",id);
+                                data.put("userID",userID);
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(URL)
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+                                Call<RetrofitRepo> call = retrofitService.ListRemove(data);
+                                call.enqueue(new Callback<RetrofitRepo>() {
+                                    @Override
+                                    public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
+                                        RetrofitRepo repo = response.body();
+                                        if(repo.isSuccess()){
+                                            Toast.makeText(ListInformActivity.this,"삭제 완료",Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        }
+                                        else {
+                                            Toast.makeText(ListInformActivity.this,"해당 미팅 작성자가 아닙니다",Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<RetrofitRepo> call, Throwable t) {
+                                        t.printStackTrace();
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("취소",null)
+                        .create()
+                        .show();
+                break;
+            case android.R.id.home :
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

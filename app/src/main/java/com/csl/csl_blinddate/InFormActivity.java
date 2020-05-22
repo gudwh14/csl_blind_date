@@ -28,8 +28,6 @@ public class InFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_in_form);
         // View 초기화
 
-        UserData userData = SplashActivity.userData;
-
         inform_nameText = findViewById(R.id.inform_nameText);
         inform_schoolText = findViewById(R.id.inform_schoolText);
         inform_favoriteText = findViewById(R.id.inform_favoriteText);
@@ -40,8 +38,8 @@ public class InFormActivity extends AppCompatActivity {
         inform_questionText = findViewById(R.id.inform_questionText);
         inform_appText = findViewById(R.id.inform_appText);
 
-        inform_nameText.setText(userData.getUserID());
-        inform_schoolText.setText(userData.getSchool());
+        inform_nameText.setText(UserData.getInstance().getUserID());
+        inform_schoolText.setText(UserData.getInstance().getSchool());
 
 
         View.OnClickListener onClickListener = new View.OnClickListener() {

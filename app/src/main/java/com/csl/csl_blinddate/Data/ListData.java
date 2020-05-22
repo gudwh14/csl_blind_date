@@ -4,16 +4,18 @@ import android.content.Context;
 
 public class ListData {
     private String school;
+    private String userID;
     private boolean certification;
     private int member;
     int age;
     private String gender;
-    private boolean open;   //  true : open , false : close
+    private boolean open;   // 0 : open , 1 : close
     private boolean newbie;
     private int list_id;  // 미팅 리스트 id
 
-    public ListData(int list_id,int age,String school, boolean certification, int member, String gender, boolean newbie, boolean open) {
+    public ListData(int list_id,int age,String userID, String school, boolean certification, int member, String gender, boolean newbie, boolean open) {
         this.list_id = list_id;
+        this.userID = userID;
         this.school = school;
         this.age = age;
         this.certification = certification;
@@ -73,5 +75,9 @@ public class ListData {
 
     public int getAge() {
         return age;
+    }
+
+    public String getUserID() {
+        return userID;
     }
 }

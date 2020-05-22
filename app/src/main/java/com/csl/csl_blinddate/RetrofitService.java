@@ -157,5 +157,21 @@ public interface RetrofitService {
             @FieldMap HashMap<String, Object> param
     );
 
+    @FormUrlEncoded
+    @POST("ListRemove.php")
+    Call<RetrofitRepo> ListRemove(
+            @FieldMap HashMap<String, Object> param
+    );
 
+    @FormUrlEncoded
+    @POST("ChatRemove.php")
+    Call<RetrofitRepo> ChatRemove(
+            @FieldMap HashMap<String, Object> param
+    );
+
+    @FormUrlEncoded
+    @POST("HotListRefresh.php")
+    Call<RetrofitRepoList> HotListRefresh(
+            @FieldMap HashMap<String, Object> param
+    );
 }

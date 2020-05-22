@@ -16,6 +16,7 @@ import com.csl.csl_blinddate.Adapter.ChatListAdapter;
 import com.csl.csl_blinddate.Data.ChatListData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.Data.RetrofitRepoList;
+import com.csl.csl_blinddate.Data.UserData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,7 +71,7 @@ public class ChatTabFragment extends Fragment {
         chatListAdapter.notifyDataSetChanged();
 
         HashMap<String, Object> data = new HashMap<>();
-        data.put("userID",SplashActivity.userData.getUserID());
+        data.put("userID", UserData.getInstance().getUserID());
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL)

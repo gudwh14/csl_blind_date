@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.csl.csl_blinddate.Data.RetrofitRepo;
+import com.csl.csl_blinddate.Data.UserData;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.HashMap;
@@ -72,7 +73,7 @@ public class BoardWriteActivity extends AppCompatActivity {
                 }
                 else { // input 통신
                     HashMap<String, Object> data = new HashMap<>();
-                    data.put("userID",SplashActivity.userData.getUserID());
+                    data.put("userID",UserData.getInstance().getUserID());
                     data.put("board_title",board_title);
                     data.put("title",title);
                     data.put("mainText",mainText);

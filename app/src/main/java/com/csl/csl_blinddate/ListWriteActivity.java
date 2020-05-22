@@ -8,6 +8,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.csl.csl_blinddate.Data.RetrofitRepo;
@@ -43,6 +44,7 @@ public class ListWriteActivity extends AppCompatActivity {
     int member,chip_temp;
     String comment;
     boolean newbie;
+    LinearLayout newbie_layout;
     boolean[] trait;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,11 @@ public class ListWriteActivity extends AppCompatActivity {
         memberChip_3 = findViewById(R.id.memberChip_3);
         memberChip_4 = findViewById(R.id.memberChip_4);
 
+        newbie_layout = findViewById(R.id.newbie_layout);
 
+        if (UserData.getInstance().getAge() != 20) {
+            newbie_layout.setVisibility(View.INVISIBLE);
+        }
         // CloseButton 클릭 리스너
         ListWrite_CloseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +114,7 @@ public class ListWriteActivity extends AppCompatActivity {
                 else {
                     // 통신
                     HashMap<String, Object> data = new HashMap<>();
-                    data.put("userID",SplashActivity.userData.getUserID());
+                    data.put("userID",UserData.getInstance().getUserID());
                     data.put("comment",comment);
                     data.put("member",member);
                     data.put("trait0",trait[0]);

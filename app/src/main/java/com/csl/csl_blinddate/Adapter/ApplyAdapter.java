@@ -1,5 +1,7 @@
 package com.csl.csl_blinddate.Adapter;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.csl.csl_blinddate.Data.ApplyData;
 import com.csl.csl_blinddate.Data.ChatData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
+import com.csl.csl_blinddate.Data.UserData;
 import com.csl.csl_blinddate.R;
 import com.csl.csl_blinddate.RetrofitService;
 import com.csl.csl_blinddate.SplashActivity;
@@ -97,7 +100,17 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
             apply_acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    select(true);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setMessage("수락시 미팅이 '닫힘'상태로 전환됩니다")
+                            .setPositiveButton("수락", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    select(true);
+                                }
+                            })
+                            .setNegativeButton("취소",null)
+                            .create()
+                            .show();
                 }
             });
 
@@ -111,7 +124,7 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
 
         void select(final boolean selection) {
             HashMap<String, Object> data = new HashMap<>();
-            data.put("userID_A", SplashActivity.userData.getUserID());
+            data.put("userID_A", UserData.getInstance().getUserID());
             data.put("apply_id", apply_id);
             data.put("selection",selection);
 

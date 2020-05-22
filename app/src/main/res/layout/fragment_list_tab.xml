@@ -1,35 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/listTab_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ListTabFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
 
+    <CheckBox
+        android:id="@+id/list_newbieCheckBox"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/newbie_selector"
+        android:button="@null"
+        android:text="" />
+
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:paddingStart="5dp"
         android:text="미팅"
         android:textColor="#000000"
         android:textSize="15dp"
-        android:textStyle="bold"
-        android:layout_margin="10dp"
-        android:layout_gravity="center_horizontal"
-        android:paddingStart="5dp"
-        />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView31"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="오늘의 미팅을 확인해 보세요"
         android:layout_gravity="center_horizontal"
-        android:textColor="#000000"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="50dp"
+        android:text="오늘의 미팅을 확인해 보세요"
+        android:textColor="#000000" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/listSwipeLayout"
@@ -51,9 +62,9 @@
         android:id="@+id/ListWriteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_margin="10dp"
         android:text="미팅 등록"
         app:cornerRadius="20dp"
-        android:layout_gravity="center_horizontal|bottom"
-        app:rippleColor="#FF0000"
-        android:layout_margin="10dp"/>
+        app:rippleColor="#FF0000" />
 </FrameLayout>

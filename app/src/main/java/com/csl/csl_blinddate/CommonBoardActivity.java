@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import com.csl.csl_blinddate.Adapter.BoardAdapter;
 import com.csl.csl_blinddate.Data.BoardData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.Data.RetrofitRepoList;
+import com.csl.csl_blinddate.Data.UserData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,7 +66,7 @@ public class CommonBoardActivity extends AppCompatActivity {
         boardAdapter.notifyDataSetChanged();
 
         HashMap<String,Object> data = new HashMap<>();
-        data.put("userID",SplashActivity.userData.getUserID());
+        data.put("userID", UserData.getInstance().getUserID());
         data.put("code",code);
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -92,5 +94,16 @@ public class CommonBoardActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home :
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

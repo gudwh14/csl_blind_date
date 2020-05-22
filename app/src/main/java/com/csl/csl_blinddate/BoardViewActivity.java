@@ -26,6 +26,7 @@ import com.csl.csl_blinddate.Adapter.CommentAdapter;
 import com.csl.csl_blinddate.Data.CommentData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.Data.RetrofitRepoList;
+import com.csl.csl_blinddate.Data.UserData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +51,13 @@ public class BoardViewActivity extends AppCompatActivity {
     CommentAdapter commentAdapter;
     ImageView boardView_commentSendView;
     EditText boardView_commentText;
+    String userID = UserData.getInstance().getUserID();
+
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+    RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
     int favorite = 0, up = 0;
     int board_id;
@@ -101,6 +109,14 @@ public class BoardViewActivity extends AppCompatActivity {
         boardView_recyclerView.setLayoutManager(linearLayoutManager);
         boardView_recyclerView.setAdapter(commentAdapter);
 
+        commentAdapter.setOnRefreshChanged(new CommentAdapter.OnRefreshChanged() {
+            @Override
+            public void onRefreshChanged(boolean refresh) {
+                if(refresh) {
+                    commentRefresh();
+                }
+            }
+        });
         // 즐겨 찾기 클릭 리스너
         boardView_favoriteText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,13 +182,8 @@ public class BoardViewActivity extends AppCompatActivity {
     public void refresh() {
         HashMap<String,Object> data = new HashMap<>();
         data.put("id",board_id);
-        data.put("userID",SplashActivity.userData.getUserID());
+        data.put("userID",userID);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
         Call<RetrofitRepo> call = retrofitService.BoardViewRefresh(data);
         call.enqueue(new Callback<RetrofitRepo>() {
             @Override
@@ -230,15 +241,11 @@ public class BoardViewActivity extends AppCompatActivity {
             }
             HashMap<String, Object> data = new HashMap<>();
             data.put("board_id",board_id);
-            data.put("userID",SplashActivity.userData.getUserID());
+            data.put("userID",userID);
             data.put("comment",comment);
             data.put("anonymous",anonymous);
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+
             Call<RetrofitRepo> call = retrofitService.CommentInsert(data);
             call.enqueue(new Callback<RetrofitRepo>() {
                 @Override
@@ -267,12 +274,8 @@ public class BoardViewActivity extends AppCompatActivity {
 
         HashMap<String,Object> data = new HashMap<>();
         data.put("board_id",board_id);
+        data.put("userID",userID);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
         Call<RetrofitRepoList> call = retrofitService.CommentRefresh(data);
         call.enqueue(new Callback<RetrofitRepoList>() {
             @Override
@@ -281,7 +284,7 @@ public class BoardViewActivity extends AppCompatActivity {
 
                 for (int temp = 0; temp < arrayList.size(); temp++) {
                     RetrofitRepo repo = arrayList.get(temp);
-                    CommentData commentData = new CommentData(title,getIntent().getIntExtra("board_id",0),repo.getId(),repo.getUserID(),repo.getTime(),repo.getUp(),repo.getComment(),repo.isReply(),repo.isAnonymous(),repo.getAnony_count(),repo.isWriter());
+                    CommentData commentData = new CommentData(title,getIntent().getIntExtra("board_id",0),repo.getId(),repo.getUserID(),repo.getTime(),repo.getUp(),repo.getComment(),repo.isReply(),repo.isAnonymous(),repo.getAnony_count(),repo.isWriter(),repo.isCommentUp());
                     commentAdapter.addItem(commentData);
                 }
                 commentAdapter.notifyDataSetChanged();
@@ -297,15 +300,10 @@ public class BoardViewActivity extends AppCompatActivity {
     public void DetailInert(int code,int on) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("id",board_id);
-        data.put("userID",SplashActivity.userData.getUserID());
+        data.put("userID",userID);
         data.put("code",code);
         data.put("on",on);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
         Call<RetrofitRepo> call = retrofitService.BoardDetailInsert(data);
         call.enqueue(new Callback<RetrofitRepo>() {
             @Override

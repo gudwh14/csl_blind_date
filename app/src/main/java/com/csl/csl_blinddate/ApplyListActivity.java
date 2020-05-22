@@ -14,6 +14,7 @@ import com.csl.csl_blinddate.Adapter.ApplyListAdapter;
 import com.csl.csl_blinddate.Data.ApplyListData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.Data.RetrofitRepoList;
+import com.csl.csl_blinddate.Data.UserData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,7 +68,7 @@ public class ApplyListActivity extends AppCompatActivity {
         applyListAdapter.notifyDataSetChanged();
 
         HashMap<String, Object> data = new HashMap<>();
-        data.put("userID",SplashActivity.userData.getUserID());
+        data.put("userID", UserData.getInstance().getUserID());
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL)

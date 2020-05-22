@@ -53,6 +53,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         private Chip chatlist_memberChip;
         private TextView chatlist_nameText;
         private String title;
+        private String userID;
 
         ViewHolder(final View itemView) {
             super(itemView);
@@ -64,11 +65,20 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         }
 
         void onBind(ChatListData data) {
-            chatlist_schoolText.setText(data.getSchool());
-            chatlist_memberChip.setText(data.getMember() + " : " + data.getMember());
-            chatlist_nameText.setText(data.getName() + " 님");
-            title = data.getSchool() +" "+ data.getMember() +" : " + data.getMember() +" 미팅";
+            userID = data.getName();
             final int meeting_id = data.getList_id();
+
+            if(userID.trim().equals("")) {
+                chatlist_schoolText.setText("대화가 종료된 채팅방입니다");
+                chatlist_memberChip.setVisibility(View.INVISIBLE);
+                chatlist_nameText.setVisibility(View.INVISIBLE);
+            }
+            else {
+                chatlist_schoolText.setText(data.getSchool());
+                chatlist_memberChip.setText(data.getMember() + " : " + data.getMember());
+                chatlist_nameText.setText(userID + " 님");
+                title = data.getSchool() + " " + data.getMember() + " : " + data.getMember() + " 미팅";
+            }
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

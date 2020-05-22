@@ -1,11 +1,13 @@
 package com.csl.csl_blinddate;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +25,7 @@ import com.csl.csl_blinddate.Adapter.ChatAdapter;
 import com.csl.csl_blinddate.Data.ChatData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.Data.RetrofitRepoList;
+import com.csl.csl_blinddate.Data.UserData;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -42,8 +46,18 @@ public class ChatActivity extends AppCompatActivity {
     ImageView chat_sendButton;
     RecyclerView chatRecyclerView;
     ChatAdapter chatAdapter;
+    String userID = UserData.getInstance().getUserID();
+    int meeting_id;
+    LinearLayout chat_layout;
 
     private AtomicInteger verticalScrollOffset = new AtomicInteger(0);
+
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
+    RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +72,16 @@ public class ChatActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // view init
+        meeting_id = getIntent().getIntExtra("meeting_id",0);
         chat_msgText = findViewById(R.id.chat_msgText);
         chat_sendButton = findViewById(R.id.chat_sendButton);
         chatRecyclerView = findViewById(R.id.chatRecyclerView);
         chatAdapter = new ChatAdapter();
+        chat_layout = findViewById(R.id.chat_layout);
+
+        if(getIntent().getStringExtra("title") == null) {
+            chat_layout.setVisibility(View.INVISIBLE);
+        }
 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatActivity.this);
         chatRecyclerView.setLayoutManager(linearLayoutManager);
@@ -142,15 +162,9 @@ public class ChatActivity extends AppCompatActivity {
         else {
             HashMap<String,Object> data = new HashMap<>();
             data.put("MSG",MSG);
-            data.put("userID",SplashActivity.userData.getUserID());
-            data.put("id",getIntent().getIntExtra("meeting_id",0));
+            data.put("userID",userID);
+            data.put("id",meeting_id);
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            RetrofitService retrofitService = retrofit.create(RetrofitService.class);
             Call<RetrofitRepo> call = retrofitService.ChatInsert(data);
             call.enqueue(new Callback<RetrofitRepo>() {
                 @Override
@@ -179,14 +193,8 @@ public class ChatActivity extends AppCompatActivity {
         chatAdapter.notifyDataSetChanged();
 
         HashMap<String,Object> data = new HashMap<>();
-        data.put("id",getIntent().getIntExtra("meeting_id",0));
+        data.put("id",meeting_id);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
         Call<RetrofitRepoList> call = retrofitService.ChatRefresh(data);
         call.enqueue(new Callback<RetrofitRepoList>() {
             @Override
@@ -195,7 +203,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 for(int temp = 0; temp <arrayList.size(); temp ++) {
                     RetrofitRepo repo = arrayList.get(temp);
-                    ChatData chatData = new ChatData(repo.getUserID(),repo.getChatMSG(),repo.getTime(),repo.getUserID().equals(SplashActivity.userData.getUserID()));
+                    ChatData chatData = new ChatData(repo.getUserID(),repo.getChatMSG(),repo.getTime(),repo.getUserID().equals(userID));
                     chatAdapter.addItem(chatData);
                 }
                 chatAdapter.notifyDataSetChanged();
@@ -224,6 +232,36 @@ public class ChatActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.exit :
+                AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                builder.setMessage("채팅을 종료할까요?\n종료 후 채팅을 이어나갈수 없습니다")
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                HashMap<String, Object> data = new HashMap<>();
+                                data.put("id",meeting_id);
+                                data.put("userID",userID);
+
+                                Call<RetrofitRepo> call = retrofitService.ChatRemove(data);
+                                call.enqueue(new Callback<RetrofitRepo>() {
+                                    @Override
+                                    public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
+                                        RetrofitRepo repo = response.body();
+                                        if(repo.isSuccess()) {
+                                            finish();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<RetrofitRepo> call, Throwable t) {
+                                        t.printStackTrace();
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("취소",null)
+                        .create()
+                        .show();
+
                 break;
             case android.R.id.home :
                 finish();

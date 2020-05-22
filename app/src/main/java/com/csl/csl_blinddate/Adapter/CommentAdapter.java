@@ -3,7 +3,6 @@ package com.csl.csl_blinddate.Adapter;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +19,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import com.csl.csl_blinddate.BoardViewActivity;
 import com.csl.csl_blinddate.Data.CommentData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
+import com.csl.csl_blinddate.Data.UserData;
 import com.csl.csl_blinddate.R;
 import com.csl.csl_blinddate.RetrofitService;
 import com.csl.csl_blinddate.SplashActivity;
@@ -33,6 +32,19 @@ import java.util.HashMap;
 import static com.csl.csl_blinddate.RetrofitService.URL;
 
 public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    long timer = 0;
+
+    // 인터페이스 작성
+    public interface OnRefreshChanged {
+        public void onRefreshChanged(boolean refresh);
+    }
+
+    private OnRefreshChanged onRefreshChanged;
+
+    public void setOnRefreshChanged(OnRefreshChanged onRefreshChanged){
+        this.onRefreshChanged = onRefreshChanged;
+    }
+    //
     private ArrayList<CommentData> data = new ArrayList<>();
 
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -93,6 +105,13 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ImageView comment_replyImage;
         private Drawable drawable;
         boolean anonymous = false;
+        int up;
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
         ViewHolder(final View itemView) {
             super(itemView);
@@ -107,14 +126,25 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             drawable = itemView.getContext().getResources().getDrawable(R.drawable.heart_icon);
             drawable.setBounds(0,0,40,40);
 
+
         }
 
         void onBind(CommentData data) {
             final int comment_id = data.getComment_id();
             final int board_id = data.getBoard_id();
+            if(data.isCommentUp()) {
+                up = 1;
+                comment_upImage.setImageResource(R.drawable.heart_after_icon);
+            }
+            else {
+                up = 0;
+                comment_upImage.setImageResource(R.drawable.heart_icon);
+            }
+
             if(data.getBoard_title().equals("익명게시판")) {
                 anonymous = true;
             }
+
             String[] time = data.getTime().split(" ");
             if(data.isWriter()) {
                 comment_userText.setText("글쓴이");
@@ -157,15 +187,10 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                 HashMap<String, Object> data = new HashMap<>();
                                 data.put("board_id",board_id);
                                 data.put("comment_id",comment_id);
-                                data.put("userID", SplashActivity.userData.getUserID());
+                                data.put("userID", UserData.getInstance().getUserID());
                                 data.put("comment",comment);
                                 data.put("anonymous",anonymous);
 
-                                Retrofit retrofit = new Retrofit.Builder()
-                                        .baseUrl(URL)
-                                        .addConverterFactory(GsonConverterFactory.create())
-                                        .build();
-                                RetrofitService retrofitService = retrofit.create(RetrofitService.class);
                                 Call<RetrofitRepo> call = retrofitService.ReplyInsert(data);
                                 call.enqueue(new Callback<RetrofitRepo>() {
                                     @Override
@@ -173,6 +198,9 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                         RetrofitRepo repo = response.body();
                                         if(repo.isSuccess()) {
                                             alertDialog.dismiss();
+                                            if(onRefreshChanged != null) {
+                                                onRefreshChanged.onRefreshChanged(true);
+                                            }
                                         }
                                     }
 
@@ -188,6 +216,49 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     alertDialog.show();
                 }
             });
+
+            comment_upImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(System.currentTimeMillis()-timer>=1000) {
+                        HashMap<String, Object> data = new HashMap<>();
+                        data.put("id",comment_id);
+                        data.put("userID", UserData.getInstance().getUserID());
+                        data.put("code",3);
+                        data.put("on",up);
+
+                        Call<RetrofitRepo> call = retrofitService.BoardDetailInsert(data);
+                        call.enqueue(new Callback<RetrofitRepo>() {
+                            @Override
+                            public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
+                                RetrofitRepo repo = response.body();
+                                if(!repo.isSuccess()) {
+
+                                }
+                                else {
+                                    if(onRefreshChanged != null) {
+                                        onRefreshChanged.onRefreshChanged(true);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<RetrofitRepo> call, Throwable t) {
+                                t.printStackTrace();
+                            }
+                        });
+                        try {
+                            Thread.sleep(150) ;
+                        } catch (Exception e) {
+                            e.printStackTrace() ;
+                        }
+                        timer=System.currentTimeMillis();
+                    }
+                    else if(System.currentTimeMillis()-timer<1000) {
+                        Toast.makeText(view.getContext(), "잠시후 다시 시도해 주세요", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
     }
 
@@ -198,6 +269,14 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView reply_commentText;
         ImageView reply_upImage;
         private Drawable drawable;
+        int up;
+        int comment_id;
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
         my_ViewHolder(final View itemView) {
             super(itemView);
@@ -215,6 +294,16 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         void onBind(CommentData data) {
             String[] time = data.getTime().split(" ");
+            comment_id = data.getComment_id();
+            if(data.isCommentUp()) {
+                up = 1;
+                reply_upImage.setImageResource(R.drawable.heart_after_icon);
+            }
+            else {
+                up = 0;
+                reply_upImage.setImageResource(R.drawable.heart_icon);
+            }
+
             if(data.isWriter()) {
                 reply_userText.setText("글쓴이");
                 reply_userText.setTextColor(Color.parseColor("#FF486297"));
@@ -231,6 +320,51 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             reply_commentText.setText(data.getComment());
             reply_timeText.setText(time[1] + " " + time[2]);
+
+            reply_upImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(System.currentTimeMillis()-timer>=1000) {
+                        HashMap<String, Object> data = new HashMap<>();
+                        data.put("id",comment_id);
+                        data.put("userID",UserData.getInstance().getUserID());
+                        data.put("code",3);
+                        data.put("on",up);
+
+                        Call<RetrofitRepo> call = retrofitService.BoardDetailInsert(data);
+                        call.enqueue(new Callback<RetrofitRepo>() {
+                            @Override
+                            public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
+                                RetrofitRepo repo = response.body();
+                                if(!repo.isSuccess()) {
+
+                                }
+                                else {
+                                    if(onRefreshChanged != null) {
+                                        onRefreshChanged.onRefreshChanged(true);
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<RetrofitRepo> call, Throwable t) {
+                                t.printStackTrace();
+                            }
+                        });
+                        try {
+                            Thread.sleep(150) ;
+                        } catch (Exception e) {
+                            e.printStackTrace() ;
+                        }
+                        timer=System.currentTimeMillis();
+                    }
+                    else if(System.currentTimeMillis()-timer<1000) {
+                        Toast.makeText(view.getContext(), "잠시후 다시 시도해 주세요", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
     }
+
+
 }

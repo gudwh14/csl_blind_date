@@ -8,28 +8,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.csl.csl_blinddate.ChatActivity;
 import com.csl.csl_blinddate.Data.ListData;
 import com.csl.csl_blinddate.Data.UserData;
 import com.csl.csl_blinddate.ListInformActivity;
-import com.csl.csl_blinddate.ListTabFragment;
 import com.csl.csl_blinddate.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+public class HotMeetingAdapter extends RecyclerView.Adapter<HotMeetingAdapter.ViewHolder> {
     private ArrayList<ListData> data = new ArrayList<>();
 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // LayoutInflater를 이용하여 xml을 inflate 시킵니다.
         // return 인자는 ViewHolder 입니다.
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_view,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.hot_meeting_view,parent,false);
         return new ViewHolder(view);
     }
 
@@ -59,24 +60,24 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         private TextView ListCertify_Text;
         private TextView list_ageText;
         private Chip ListMember_Chip;
-        private ImageView ListGender_Image;
-        private MaterialButton ListOpen_Button;
         private Drawable drawable;
+        private LinearLayout linearLayout;
+
 
 
         private boolean open;
         private int id;
         private Context context;
-        private String userID,gender;
+        private String gender;
+        private String userID;
 
         ViewHolder(View itemView) {
             super(itemView);
-            list_ageText = itemView.findViewById(R.id.list_ageText);
-            ListSchool_Text = itemView.findViewById(R.id.ListSchool_Text);
-            ListCertify_Text = itemView.findViewById(R.id.ListCertify_Text);
-            ListMember_Chip = itemView.findViewById(R.id.ListMember_Chip);
-            ListGender_Image = itemView.findViewById(R.id.ListGender_Image);
-            ListOpen_Button = itemView.findViewById(R.id.ListOpen_Button);
+            list_ageText = itemView.findViewById(R.id.hotmeeting_ageText);
+            ListSchool_Text = itemView.findViewById(R.id.hotmeeting_schoolText);
+            ListCertify_Text = itemView.findViewById(R.id.hotmeeting_certifyText);
+            ListMember_Chip = itemView.findViewById(R.id.hotmeeting_memberChip);
+            linearLayout = itemView.findViewById(R.id.hotmeeting_layout);
 
         }
 
@@ -84,9 +85,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             ListSchool_Text.setText(data.getSchool());
             open = data.isOpen();
             id = data.getList_id();
-            userID = data.getUserID();
-            gender = data.getGender();
             context = itemView.getContext();
+            gender = data.getGender();
+            userID = data.getUserID();
 
 
             list_ageText.setText(data.getAge()+"살");
@@ -105,26 +106,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             ListMember_Chip.setText(data.getMember() + " : " + data.getMember());
 
             if(gender.equals("M")) {
-                ListGender_Image.setImageResource(R.drawable.boy_icon);
+                linearLayout.setBackgroundResource(R.drawable.m_hot_meeting_shape);
             }
             else {
-                ListGender_Image.setImageResource(R.drawable.girl_icon);
+                linearLayout.setBackgroundResource(R.drawable.hot_meeting_shape);
             }
 
-            if(!open) {
-                ListOpen_Button.setText("신청");
-                ListOpen_Button.setBackgroundTintList(itemView.getResources().getColorStateList(R.color.pink2));
-            }
-            else {
-                ListOpen_Button.setText("닫힘");
-                ListOpen_Button.setBackgroundTintList(itemView.getResources().getColorStateList(R.color.grey));
-            }
-
-            ListOpen_Button.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(!open) {
-                        if(gender.equals(UserData.getInstance().getGender()) && !(userID.equals(UserData.getInstance().getUserID()))) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION) {
+                        if(gender.equals(UserData.getInstance().getGender()) && !(userID.equals(UserData.getInstance().getUserID())) ) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(context);
                             builder.setMessage("같은 성별의 미팅은 신청할수없습니다")
                                     .setPositiveButton("확인",null)
@@ -137,16 +130,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                             context.startActivity(intent);
                         }
                     }
-                    else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle("안내")
-                                .setMessage("한발 늦었네요....\n이미 다른 분들이 신청한 미팅 입니다")
-                                .setPositiveButton("확인",null)
-                                .create()
-                                .show();
-                    }
                 }
             });
+
         }
     }
 }

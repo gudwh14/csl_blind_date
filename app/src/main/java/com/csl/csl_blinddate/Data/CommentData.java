@@ -12,8 +12,9 @@ public class CommentData {
     private boolean anonymous;
     private int anony_count;
     private boolean writer;
+    private boolean isCommentUp;
 
-    public CommentData(String board_title, int board_id, int comment_id, String userID, String time, int up, String comment, boolean reply,boolean anonymous,int anony_count,boolean writer) {
+    public CommentData(String board_title, int board_id, int comment_id, String userID, String time, int up, String comment, boolean reply,boolean anonymous,int anony_count,boolean writer, boolean isCommentUp) {
         this.board_title = board_title;
         this.board_id = board_id;
         this.comment_id = comment_id;
@@ -25,6 +26,7 @@ public class CommentData {
         this.anonymous = anonymous;
         this.anony_count = anony_count;
         this.writer = writer;
+        this.isCommentUp = isCommentUp;
     }
 
     public int getUp() {
@@ -69,5 +71,9 @@ public class CommentData {
 
     public boolean isWriter() {
         return writer;
+    }
+
+    public boolean isCommentUp() {
+        return isCommentUp;
     }
 }

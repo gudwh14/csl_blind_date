@@ -18,12 +18,15 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.csl.csl_blinddate.Adapter.HomeAdapter;
+import com.csl.csl_blinddate.Adapter.HotMeetingAdapter;
 import com.csl.csl_blinddate.Data.HomeData;
+import com.csl.csl_blinddate.Data.ListData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.Data.RetrofitRepoList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.csl.csl_blinddate.RetrofitService.URL;
 
@@ -33,10 +36,18 @@ import static com.csl.csl_blinddate.RetrofitService.URL;
  */
 public class MainBoardFragment extends Fragment {
     RecyclerView homeRecyclerView;
+    RecyclerView hotmeeting_recyclerVIew;
     HomeAdapter homeAdapter;
+    HotMeetingAdapter hotMeetingAdapter;
     String board_title_1 = "자유게시판";
     String board_title_2 = "OOTD";
     String board_title_3 = "익명게시판";
+
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+    RetrofitService retrofitService = retrofit.create(RetrofitService.class);
     public MainBoardFragment() {
         // Required empty public constructor
     }
@@ -48,14 +59,20 @@ public class MainBoardFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_board, container, false);
         homeRecyclerView = view.findViewById(R.id.homeRecyclerView);
+        hotmeeting_recyclerVIew = view.findViewById(R.id.hotmeeting_recyclerView);
+        hotMeetingAdapter = new HotMeetingAdapter();
         homeAdapter = new HomeAdapter();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
         homeRecyclerView.setLayoutManager(linearLayoutManager);
+        hotmeeting_recyclerVIew.setLayoutManager(linearLayoutManager2);
 
+        hotmeeting_recyclerVIew.setAdapter(hotMeetingAdapter);
         homeRecyclerView.setAdapter(homeAdapter);
 
         refresh();
+        hotMeetingRefresh();
 
         return view;
     }
@@ -69,11 +86,6 @@ public class MainBoardFragment extends Fragment {
         data.put("board_title_2",board_title_2);
         data.put("board_title_3",board_title_3);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
         Call<RetrofitRepoList> call = retrofitService.MainBoardRefresh(data);
         call.enqueue(new Callback<RetrofitRepoList>() {
             @Override
@@ -144,6 +156,32 @@ public class MainBoardFragment extends Fragment {
                 homeAdapter.addItem(homeData_3);
 
                 homeAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<RetrofitRepoList> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void hotMeetingRefresh() {
+        hotMeetingAdapter.clear();
+        hotMeetingAdapter.notifyDataSetChanged();
+
+        HashMap<String, Object> data = new HashMap<>();
+        Call<RetrofitRepoList> call = retrofitService.HotListRefresh(data);
+        call.enqueue(new Callback<RetrofitRepoList>() {
+            @Override
+            public void onResponse(Call<RetrofitRepoList> call, Response<RetrofitRepoList> response) {
+                ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
+                int size = arrayList.size();
+                for(int temp = 0 ; temp<size; temp++) {
+                    RetrofitRepo repo = arrayList.get(temp);
+                    ListData listData = new ListData(repo.getMeeting_id(),repo.getAge(),repo.getUserID(),repo.getSchool(),repo.isCertification(),repo.getMember(),repo.getGender(),repo.isNewbie(),repo.isStatus());
+                    hotMeetingAdapter.addItem(listData);
+                }
+                hotMeetingAdapter.notifyDataSetChanged();
             }
 
             @Override

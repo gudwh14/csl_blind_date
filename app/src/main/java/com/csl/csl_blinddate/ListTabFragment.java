@@ -14,6 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.csl.csl_blinddate.Adapter.ListAdapter;
@@ -24,7 +27,6 @@ import com.csl.csl_blinddate.Data.UserData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,7 +45,9 @@ public class ListTabFragment extends Fragment {
     ListAdapter listAdapter;
     Button listWriteButton;
     SwipeRefreshLayout listSwipeLayout;
-    public UserData userData;
+    CheckBox list_newbieCheckBox;
+    FrameLayout listTab_layout;
+    int newbie;
     public ListTabFragment() {
         // Required empty public constructor
     }
@@ -60,6 +64,7 @@ public class ListTabFragment extends Fragment {
 
 
         // RecyclerView, Adapter 초기화
+        listTab_layout = view.findViewById(R.id.listTab_layout);
         listRecyclerView = view.findViewById(R.id.ListRecyclerView);
         listSwipeLayout = view.findViewById(R.id.listSwipeLayout);
         listAdapter = new ListAdapter();
@@ -69,7 +74,11 @@ public class ListTabFragment extends Fragment {
 
         listRecyclerView.setAdapter(listAdapter);
 
+        list_newbieCheckBox = view.findViewById(R.id.list_newbieCheckBox);
 
+        if (UserData.getInstance().getAge() != 20) {
+            list_newbieCheckBox.setVisibility(View.INVISIBLE);
+        }
         // List Refresh
         refresh();
         listSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -96,6 +105,13 @@ public class ListTabFragment extends Fragment {
     public void refresh() {
         listAdapter.clear(); // adapter 초기화
         listAdapter.notifyDataSetChanged();
+
+        if(list_newbieCheckBox.isChecked()) {
+            newbie = 1;
+        }
+        else {
+            newbie = 0;
+        }
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -103,6 +119,7 @@ public class ListTabFragment extends Fragment {
 
         RetrofitService retrofitService = retrofit.create(RetrofitService.class);
         HashMap<String, Object> data = new HashMap<>();
+        data.put("newbie",newbie);
         Call<RetrofitRepoList> call = retrofitService.ListRefresh(data);
         call.enqueue(new Callback<RetrofitRepoList>() {
             @Override
@@ -112,7 +129,7 @@ public class ListTabFragment extends Fragment {
 
                 for (int temp = 0; temp < arrayList.size(); temp++) {
                     RetrofitRepo repo = arrayList.get(temp);
-                    ListData listData = new ListData(repo.getMeeting_id(),repo.getAge(),repo.getSchool(),repo.isCertification(),repo.getMember(),repo.getGender(),repo.isNewbie(),repo.isStatus());
+                    ListData listData = new ListData(repo.getMeeting_id(),repo.getAge(),repo.getUserID(),repo.getSchool(),repo.isCertification(),repo.getMember(),repo.getGender(),repo.isNewbie(),repo.isStatus());
                     listAdapter.addItem(listData);
                 }
                 listAdapter.notifyDataSetChanged();

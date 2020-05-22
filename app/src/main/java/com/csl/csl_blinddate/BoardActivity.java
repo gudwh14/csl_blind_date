@@ -16,6 +16,7 @@ import com.csl.csl_blinddate.Adapter.BoardAdapter;
 import com.csl.csl_blinddate.Data.BoardData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.Data.RetrofitRepoList;
+import com.csl.csl_blinddate.Data.UserData;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ public class BoardActivity extends AppCompatActivity {
         board_recyclerView.setLayoutManager(linearLayoutManager);
         board_recyclerView.setAdapter(boardAdapter);
 
-        if (title.equals("공지사항") && !(SplashActivity.userData.getUserID().equals("운영자"))) {
+        if (title.equals("공지사항") && !(UserData.getInstance().getUserID().equals("운영자"))) {
             Board_WriteButton.setVisibility(View.INVISIBLE);
         }
 

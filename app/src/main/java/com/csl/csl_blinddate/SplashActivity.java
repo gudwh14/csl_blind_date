@@ -37,8 +37,6 @@ import static com.csl.csl_blinddate.RetrofitService.URL;
 
 public class SplashActivity extends AppCompatActivity {
 
-    public static UserData userData;
-
     private ISessionCallback sessionCallback = new ISessionCallback() {
         @Override
         public void onSessionOpened() {
@@ -74,7 +72,10 @@ public class SplashActivity extends AppCompatActivity {
                                     Intent intent;
                                     if(repo.isSuccess()) {
                                         intent = new Intent(SplashActivity.this,MainActivity.class);
-                                        userData = new UserData(repo.getUserID(),repo.getAge(),repo.getGender()+"",repo.getSchool(),repo.getMail(),repo.isCertification());
+                                        UserData.getInstance().setUserID(repo.getUserID());
+                                        UserData.getInstance().setAge(repo.getAge());
+                                        UserData.getInstance().setSchool(repo.getSchool());
+                                        UserData.getInstance().setGender(repo.getGender());
                                         startActivity(intent);
                                         //finish();
 
