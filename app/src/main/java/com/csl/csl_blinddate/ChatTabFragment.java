@@ -84,8 +84,8 @@ public class ChatTabFragment extends Fragment {
             @Override
             public void onResponse(Call<RetrofitRepoList> call, Response<RetrofitRepoList> response) {
                 ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
-
-                for(int temp = 0; temp<arrayList.size(); temp++) {
+                int size = arrayList.size();
+                for(int temp = 0; temp<size; temp++) {
                     RetrofitRepo repo = arrayList.get(temp);
                     ChatListData chatListData = new ChatListData(repo.getMeeting_id(),repo.getSchool(),repo.getUserID(),repo.getMember());
                     chatListAdapter.addItem(chatListData);

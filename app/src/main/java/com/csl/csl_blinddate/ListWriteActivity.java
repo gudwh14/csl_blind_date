@@ -88,7 +88,8 @@ public class ListWriteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int temp = 0;
-                for (int i=0; i<trait.length; i++) {
+                int length = trait.length;
+                for (int i=0; i<length; i++) {
                     if(trait[i]==true) {
                         temp++;
                     }
@@ -180,7 +181,10 @@ public class ListWriteActivity extends AppCompatActivity {
         });
 
 
-        for ( chip_temp = 0; chip_temp<traitChipGroup_1.getChildCount(); chip_temp++) {
+        int count_1  = traitChipGroup_1.getChildCount();
+        int count_2 = traitChipGroup_2.getChildCount();
+
+        for ( chip_temp = 0; chip_temp<count_1; chip_temp++) {
             Chip chip = (Chip) traitChipGroup_1.getChildAt(chip_temp);
             chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -205,7 +209,7 @@ public class ListWriteActivity extends AppCompatActivity {
             });
         }
 
-        for ( chip_temp = 0; chip_temp<traitChipGroup_2.getChildCount(); chip_temp++) {
+        for ( chip_temp = 0; chip_temp<count_2; chip_temp++) {
             Chip chip = (Chip) traitChipGroup_2.getChildAt(chip_temp);
             chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

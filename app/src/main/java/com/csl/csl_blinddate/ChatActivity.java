@@ -200,8 +200,8 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RetrofitRepoList> call, Response<RetrofitRepoList> response) {
                 ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
-
-                for(int temp = 0; temp <arrayList.size(); temp ++) {
+                int size = arrayList.size();
+                for(int temp = 0; temp <size; temp ++) {
                     RetrofitRepo repo = arrayList.get(temp);
                     ChatData chatData = new ChatData(repo.getUserID(),repo.getChatMSG(),repo.getTime(),repo.getUserID().equals(userID));
                     chatAdapter.addItem(chatData);

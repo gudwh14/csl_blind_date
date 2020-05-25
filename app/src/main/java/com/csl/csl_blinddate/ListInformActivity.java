@@ -187,8 +187,8 @@ public class ListInformActivity extends AppCompatActivity {
                             }
                         }
                     }
-
-                    for(int temp = 0; temp < arrayList.size(); temp++) {
+                    int size = arrayList.size();
+                    for(int temp = 0; temp < size; temp++) {
                         if(inform_trait_1.getText().toString().equals("Item")) {
                             inform_trait_1.setText(arrayList.get(temp));
                             inform_trait_1.setVisibility(View.VISIBLE);

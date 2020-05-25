@@ -126,8 +126,8 @@ public class ListTabFragment extends Fragment {
             public void onResponse(Call<RetrofitRepoList> call, Response<RetrofitRepoList> response) {
                 RetrofitRepoList repoList = (RetrofitRepoList)response.body();
                 ArrayList<RetrofitRepo> arrayList = repoList.getRepoArrayList();
-
-                for (int temp = 0; temp < arrayList.size(); temp++) {
+                int size = arrayList.size();
+                for (int temp = 0; temp < size; temp++) {
                     RetrofitRepo repo = arrayList.get(temp);
                     ListData listData = new ListData(repo.getMeeting_id(),repo.getAge(),repo.getUserID(),repo.getSchool(),repo.isCertification(),repo.getMember(),repo.getGender(),repo.isNewbie(),repo.isStatus());
                     listAdapter.addItem(listData);

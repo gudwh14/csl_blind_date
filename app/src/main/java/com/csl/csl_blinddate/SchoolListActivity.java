@@ -103,7 +103,8 @@ public class SchoolListActivity extends AppCompatActivity {
             arrayAdapter.addAll(list);
         }
         else {
-            for(int i = 0; i < list.size(); i++) {
+            int size = list.size();
+            for(int i = 0; i < size; i++) {
                 if(list.get(i).toLowerCase().contains(charText)) {
                     arrayAdapter.add(list.get(i));
                 }

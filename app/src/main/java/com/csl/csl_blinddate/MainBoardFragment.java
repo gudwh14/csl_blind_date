@@ -95,7 +95,8 @@ public class MainBoardFragment extends Fragment {
                 HomeData homeData_2 = new HomeData(board_title_2);
                 HomeData homeData_3 = new HomeData(board_title_3);
                 int board1=0 ,board2 = 0,board3 = 0;
-                for(int temp = 0; temp < arrayList.size(); temp++) {
+                int size = arrayList.size();
+                for(int temp = 0; temp < size; temp++) {
                     RetrofitRepo repo = arrayList.get(temp);
                     String title = repo.getTitle();
 

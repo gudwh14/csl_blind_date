@@ -87,7 +87,8 @@ public class ApplyedListActivity extends AppCompatActivity {
                     applyRecyclerView.setVisibility(View.VISIBLE);
                 }
 
-                for (int temp = 0 ; temp < arrayList.size(); temp ++) {
+                int size = arrayList.size();
+                for (int temp = 0 ; temp < size; temp ++) {
                     RetrofitRepo repo = arrayList.get(temp);
                     ApplyData applyData = new ApplyData(repo.getApply_id(),repo.getAge(),repo.getSchool(),repo.isCertification(),repo.getComment());
                     applyAdapter.addItem(applyData);

@@ -89,7 +89,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
 
             if(title.equals("OOTD")) {
-                imageView.setImageResource(R.drawable.photo_icon);
+                imageView.setImageResource(R.drawable.clothes_icon);
             }
             homeTitleText.setText(" "+ data.getHomeTitle().toString());
 

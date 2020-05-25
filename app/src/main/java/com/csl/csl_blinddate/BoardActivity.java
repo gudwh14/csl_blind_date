@@ -129,7 +129,8 @@ public class BoardActivity extends AppCompatActivity {
             public void onResponse(Call<RetrofitRepoList> call, Response<RetrofitRepoList> response) {
                 ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
 
-                for(int temp = 0; temp<arrayList.size(); temp++) {
+                int size = arrayList.size();
+                for(int temp = 0; temp<size; temp++) {
                     RetrofitRepo repo = arrayList.get(temp);
                     BoardData boardData = new BoardData(repo.getBoard_id(),title,repo.getUserID(),repo.getTitle(),repo.getTime(),repo.getUp(),repo.getComments());
                     boardAdapter.addItem(boardData);

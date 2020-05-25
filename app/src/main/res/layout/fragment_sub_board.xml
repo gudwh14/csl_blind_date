@@ -10,9 +10,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:orientation="vertical"
-        android:background="@drawable/view_background_shape"
+        android:background="@drawable/grey_background_shape"
         android:layout_margin="10dp"
         android:padding="10dp">
 
@@ -35,16 +35,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="4"
                 android:gravity="center_vertical"
-                android:text=" 자유게시판"
+                android:text="자유게시판"
+                android:layout_marginStart="15dp"
                 android:textColor="#000000"
                 android:background="?attr/selectableItemBackground"/>
 
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#696969"/>
 
 
         <LinearLayout
@@ -66,15 +62,13 @@
                 android:layout_height="match_parent"
                 android:layout_weight="4"
                 android:gravity="center_vertical"
-                android:text=" 미팅TIP게시판"
+                android:text="미팅TIP게시판"
+                android:layout_marginStart="15dp"
                 android:textColor="#000000"
                 android:background="?attr/selectableItemBackground"/>
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#696969"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -93,15 +87,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="4"
                 android:gravity="center_vertical"
-                android:text=" 미팅 새내기게시판"
+                android:text="익명게시판"
+                android:layout_marginStart="15dp"
                 android:textColor="#000000"
                 android:background="?attr/selectableItemBackground"/>
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#696969"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,7 +104,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
-                android:src="@drawable/post_icon" />
+                android:src="@drawable/clothes_icon" />
 
             <TextView
                 android:id="@+id/sub_boardText_4"
@@ -121,15 +112,13 @@
                 android:layout_height="match_parent"
                 android:layout_weight="4"
                 android:gravity="center_vertical"
-                android:text=" 새내기게시판"
+                android:layout_marginStart="15dp"
+                android:text="OOTD"
                 android:textColor="#000000"
                 android:background="?attr/selectableItemBackground"/>
 
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#696969"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -141,7 +130,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
-                android:src="@drawable/post_icon" />
+                android:src="@drawable/photo_icon" />
 
             <TextView
                 android:id="@+id/sub_boardText_5"
@@ -149,7 +138,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="4"
                 android:gravity="center_vertical"
-                android:text=" 익명게시판"
+                android:layout_marginStart="15dp"
+                android:text="포토게시판"
                 android:textColor="#000000"
                 android:background="?attr/selectableItemBackground"/>
 
@@ -164,6 +154,27 @@
         android:orientation="vertical"
         android:background="@drawable/view_background_shape"
         android:layout_margin="10dp"
-        android:padding="10dp">
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:id="@+id/textView30"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="설마... 미팅이 처음이세요?" />
+
+        <TextView
+            android:id="@+id/subboard_guideText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:text="미팅 길잡이"
+            android:fontFamily="@font/jalnan"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground"/>
     </LinearLayout>
 </LinearLayout>

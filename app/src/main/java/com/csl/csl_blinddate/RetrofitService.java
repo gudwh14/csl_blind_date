@@ -18,7 +18,7 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface RetrofitService {
-    String URL = "http://112.186.52.39/blinddate/";
+    String URL = "http://112.168.40.123/blinddate/";
 
 
     @GET("index.php")

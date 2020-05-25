@@ -1,5 +1,7 @@
 package com.csl.csl_blinddate;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -20,6 +22,7 @@ public class SubBoardFragment extends Fragment {
     TextView sub_boardText_3;
     TextView sub_boardText_4;
     TextView sub_boardText_5;
+    TextView subBoard_guideText;
 
     public SubBoardFragment() {
         // Required empty public constructor
@@ -36,11 +39,13 @@ public class SubBoardFragment extends Fragment {
         sub_boardText_3 = view.findViewById(R.id.sub_boardText_3);
         sub_boardText_4 = view.findViewById(R.id.sub_boardText_4);
         sub_boardText_5 = view.findViewById(R.id.sub_boardText_5);
+        subBoard_guideText = view.findViewById(R.id.subboard_guideText);
 
+        final Context context = getContext();
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(),BoardActivity.class);
+                Intent intent = new Intent(context,BoardActivity.class);
                 switch (view.getId()) {
                     case R.id.sub_boardText_1 :
                         intent.putExtra("title",sub_boardText_1.getText().toString().trim());
@@ -70,6 +75,18 @@ public class SubBoardFragment extends Fragment {
         sub_boardText_3.setOnClickListener(onClickListener);
         sub_boardText_4.setOnClickListener(onClickListener);
         sub_boardText_5.setOnClickListener(onClickListener);
+        //
+
+        subBoard_guideText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("준비 중입니다")
+                        .setPositiveButton("확인",null)
+                        .create()
+                        .show();
+            }
+        });
 
 
         return view;
