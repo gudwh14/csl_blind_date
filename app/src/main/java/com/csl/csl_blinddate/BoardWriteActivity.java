@@ -8,8 +8,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -51,6 +53,7 @@ public class BoardWriteActivity extends AppCompatActivity {
     String board_title;
 
     Uri selectedImageUri;
+    String image_path = "";
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(URL)
@@ -100,6 +103,9 @@ public class BoardWriteActivity extends AppCompatActivity {
                     Toast.makeText(BoardWriteActivity.this,"본문을 입력해 주세요",Toast.LENGTH_SHORT).show();
                 }
                 else { // input 통신
+                    imageSend();
+
+
                     HashMap<String, Object> data = new HashMap<>();
                     data.put("userID",UserData.getInstance().getUserID());
                     data.put("board_title",board_title);
@@ -144,21 +150,55 @@ public class BoardWriteActivity extends AppCompatActivity {
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
             selectedImageUri = data.getData();
-            Log.i("Uri",selectedImageUri+"");
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = managedQuery(selectedImageUri, projection, null, null, null);
+            if(cursor != null) {
+                startManagingCursor(cursor);
+                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                cursor.moveToFirst();
+                image_path = cursor.getString(columnIndex);
+                cursor.close();
+            }
+
+
+            Log.i("Uri",image_path);
             upload_imageView.setImageURI(selectedImageUri);
 
         }
     }
 
     public void imageSend() {
-        File file = new File()
-        SharedPreferences pref = getSharedPreferences("pref", Activity.MODE_PRIVATE);
-        String idx =pref.getString("idx","");
-        RequestBody id = new MultipartBody.Builder()
-                .addFormDataPart("idx",idx)
-                .build();
-        /*MultipartBody.Part = MultipartBody.Part.createFormData("upload_file",selectedImageUri, RequestBody.create(MediaType.parse("image/*")));
+        String filename = image_path.substring(image_path.lastIndexOf("/")+1);
+        File file = new File(image_path);
+        final File to = new File(file.getAbsolutePath() + System.currentTimeMillis());
+        file.renameTo(to);
+        to.delete();
 
-        Call<RetrofitRepo> call = retrofitService.uploadFile()*/
+       /* SharedPreferences pref = getSharedPreferences("pref", Activity.MODE_PRIVATE);
+        final String idx = pref.getString("idx","");*/
+
+        Log.i("file",filename);
+        //RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),idx);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("upload_file",filename, RequestBody.create(MediaType.parse("image/*"),file));
+
+
+        Call<RetrofitRepo> call = retrofitService.uploadFile(body);
+        call.enqueue(new Callback<RetrofitRepo>() {
+            @Override
+            public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
+                RetrofitRepo repo = response.body();
+                if(repo.isSuccess()) {
+                    Toast.makeText(getApplicationContext(),"이미지 업로드성공",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"이미지 업로드 실패 ",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RetrofitRepo> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }
