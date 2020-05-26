@@ -17,8 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.csl.csl_blinddate.Adapter.BoardAdapter;
 import com.csl.csl_blinddate.Adapter.HomeAdapter;
 import com.csl.csl_blinddate.Adapter.HotMeetingAdapter;
+import com.csl.csl_blinddate.Data.BoardData;
 import com.csl.csl_blinddate.Data.HomeData;
 import com.csl.csl_blinddate.Data.ListData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
@@ -37,8 +39,10 @@ import static com.csl.csl_blinddate.RetrofitService.URL;
 public class MainBoardFragment extends Fragment {
     RecyclerView homeRecyclerView;
     RecyclerView hotmeeting_recyclerVIew;
+    RecyclerView hotboard_recyclerView;
     HomeAdapter homeAdapter;
     HotMeetingAdapter hotMeetingAdapter;
+    BoardAdapter boardAdapter;
     String board_title_1 = "자유게시판";
     String board_title_2 = "OOTD";
     String board_title_3 = "익명게시판";
@@ -60,19 +64,25 @@ public class MainBoardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_board, container, false);
         homeRecyclerView = view.findViewById(R.id.homeRecyclerView);
         hotmeeting_recyclerVIew = view.findViewById(R.id.hotmeeting_recyclerView);
+        hotboard_recyclerView = view.findViewById(R.id.hotboard_recyclerView);
         hotMeetingAdapter = new HotMeetingAdapter();
         homeAdapter = new HomeAdapter();
+        boardAdapter = new BoardAdapter();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext());
         homeRecyclerView.setLayoutManager(linearLayoutManager);
         hotmeeting_recyclerVIew.setLayoutManager(linearLayoutManager2);
+        hotboard_recyclerView.setLayoutManager(linearLayoutManager3);
 
         hotmeeting_recyclerVIew.setAdapter(hotMeetingAdapter);
         homeRecyclerView.setAdapter(homeAdapter);
+        hotboard_recyclerView.setAdapter(boardAdapter);
 
         refresh();
         hotMeetingRefresh();
+        hotBoardRefresh();
 
         return view;
     }
@@ -190,6 +200,39 @@ public class MainBoardFragment extends Fragment {
                 t.printStackTrace();
             }
         });
+    }
 
+    public void hotBoardRefresh() {
+        boardAdapter.clear();
+        boardAdapter.notifyDataSetChanged();
+
+        HashMap<String,Object> data = new HashMap<>();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+        Call<RetrofitRepoList> call = retrofitService.HotBoardRefresh(data);
+        call.enqueue(new Callback<RetrofitRepoList>() {
+            @Override
+            public void onResponse(Call<RetrofitRepoList> call, Response<RetrofitRepoList> response) {
+                ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
+
+                int size = arrayList.size();
+                for(int temp = 0; temp<size; temp++) {
+                    RetrofitRepo repo = arrayList.get(temp);
+                    BoardData boardData = new BoardData(repo.getBoard_id(),repo.getBoard_title(),repo.getUserID(),repo.getTitle(),repo.getTime(),repo.getUp(),repo.getComments());
+                    boardAdapter.addItem(boardData);
+                }
+                boardAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<RetrofitRepoList> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }

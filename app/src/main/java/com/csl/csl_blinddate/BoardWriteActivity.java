@@ -3,22 +3,34 @@ package com.csl.csl_blinddate;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.Data.UserData;
 import com.google.android.material.button.MaterialButton;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashMap;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,11 +40,24 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.csl.csl_blinddate.RetrofitService.URL;
 
 public class BoardWriteActivity extends AppCompatActivity {
+    private final int GET_GALLERY_IMAGE = 200;
+
     ImageButton boardWrite_CloseButton;
     MaterialButton boardWrite_writeButton;
     EditText boardWrite_titleText;
     EditText boardWrite_mainText;
+    ImageView photo_upload;
+    ImageView upload_imageView;
     String board_title;
+
+    Uri selectedImageUri;
+
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
+    RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +69,9 @@ public class BoardWriteActivity extends AppCompatActivity {
         boardWrite_writeButton = findViewById(R.id.boardWrite_writeButton);
         boardWrite_titleText = findViewById(R.id.boardWrite_titleText);
         boardWrite_mainText = findViewById(R.id.boardWrite_mainText);
+        photo_upload = findViewById(R.id.photo_upload);
+        upload_imageView = findViewById(R.id.upload_imageView);
+
         boolean anonymous = false;
         board_title = getIntent().getStringExtra("title");
 
@@ -78,12 +106,6 @@ public class BoardWriteActivity extends AppCompatActivity {
                     data.put("title",title);
                     data.put("mainText",mainText);
 
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl(URL)
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .build();
-
-                    RetrofitService retrofitService = retrofit.create(RetrofitService.class);
                     Call<RetrofitRepo> call = retrofitService.BoardWrite(data);
                     call.enqueue(new Callback<RetrofitRepo>() {
                         @Override
@@ -105,5 +127,38 @@ public class BoardWriteActivity extends AppCompatActivity {
                 }
             }
         });
+
+        photo_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent,GET_GALLERY_IMAGE);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            selectedImageUri = data.getData();
+            Log.i("Uri",selectedImageUri+"");
+            upload_imageView.setImageURI(selectedImageUri);
+
+        }
+    }
+
+    public void imageSend() {
+        File file = new File()
+        SharedPreferences pref = getSharedPreferences("pref", Activity.MODE_PRIVATE);
+        String idx =pref.getString("idx","");
+        RequestBody id = new MultipartBody.Builder()
+                .addFormDataPart("idx",idx)
+                .build();
+        /*MultipartBody.Part = MultipartBody.Part.createFormData("upload_file",selectedImageUri, RequestBody.create(MediaType.parse("image/*")));
+
+        Call<RetrofitRepo> call = retrofitService.uploadFile()*/
     }
 }
