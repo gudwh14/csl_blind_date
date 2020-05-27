@@ -165,24 +165,21 @@ public class BoardWriteActivity extends AppCompatActivity {
             upload_imageView.setImageURI(selectedImageUri);
 
         }
+        
     }
 
     public void imageSend() {
-        String filename = image_path.substring(image_path.lastIndexOf("/")+1);
-        File file = new File(image_path);
+        final String filename = image_path.substring(image_path.lastIndexOf("/")+1);
+        final File file = new File(image_path);
         final File to = new File(file.getAbsolutePath() + System.currentTimeMillis());
         file.renameTo(to);
         to.delete();
 
-       /* SharedPreferences pref = getSharedPreferences("pref", Activity.MODE_PRIVATE);
-        final String idx = pref.getString("idx","");*/
-
-        Log.i("file",filename);
-        //RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),idx);
         MultipartBody.Part body = MultipartBody.Part.createFormData("upload_file",filename, RequestBody.create(MediaType.parse("image/*"),file));
+        RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
 
 
-        Call<RetrofitRepo> call = retrofitService.uploadFile(body);
+        Call<RetrofitRepo> call = retrofitService.uploadFile(body,description);
         call.enqueue(new Callback<RetrofitRepo>() {
             @Override
             public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {

@@ -187,5 +187,6 @@ public interface RetrofitService {
 
     @Multipart
     @POST("ImageUpload.php")
-    Call<RetrofitRepo> uploadFile(@Part MultipartBody.Part file);
+    Call<RetrofitRepo> uploadFile(@Part MultipartBody.Part file
+    , @Part("name") RequestBody requestBody);
 }
