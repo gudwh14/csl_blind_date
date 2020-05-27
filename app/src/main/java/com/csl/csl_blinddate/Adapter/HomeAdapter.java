@@ -91,7 +91,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             if(title.equals("OOTD")) {
                 imageView.setImageResource(R.drawable.clothes_icon);
             }
-            homeTitleText.setText(" "+ data.getHomeTitle().toString());
+            homeTitleText.setText(" "+ data.getHomeTitle());
 
             homeTitleLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -137,14 +137,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 homePostText_2.setText("등록된 글이 없습니다");
             }
             else {
-                homePostText_2.setText(homePost_1);
+                homePostText_2.setText(homePost_2);
             }
             homePostText_2.setOnClickListener(clickListener);
             if(homePost_3.equals("")) {
                 homePostText_3.setText("등록된 글이 없습니다");
             }
             else {
-                homePostText_3.setText(homePost_1);
+                homePostText_3.setText(homePost_3);
             }
             homePostText_3.setOnClickListener(clickListener);
         }

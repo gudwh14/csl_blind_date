@@ -11,11 +11,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.csl.csl_blinddate.Adapter.BoardAdapter;
 import com.csl.csl_blinddate.Adapter.HomeAdapter;
@@ -28,7 +27,6 @@ import com.csl.csl_blinddate.Data.RetrofitRepoList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import static com.csl.csl_blinddate.RetrofitService.URL;
 
