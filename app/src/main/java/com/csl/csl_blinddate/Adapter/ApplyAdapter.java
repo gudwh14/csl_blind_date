@@ -14,12 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.csl.csl_blinddate.Data.ApplyData;
-import com.csl.csl_blinddate.Data.ChatData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.Data.UserData;
 import com.csl.csl_blinddate.R;
 import com.csl.csl_blinddate.RetrofitService;
-import com.csl.csl_blinddate.SplashActivity;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +32,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.csl.csl_blinddate.RetrofitService.URL;
 
 public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> {
+    public interface OnRefreshChanged {
+        public void onRefreshChanged(boolean refresh);
+    }
+
+    private OnRefreshChanged onRefreshChanged;
+
+    public void setOnRefreshChanged(OnRefreshChanged onRefreshChanged){
+        this.onRefreshChanged = onRefreshChanged;
+    }
+
     private ArrayList<ApplyData> data = new ArrayList<>();
 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -145,6 +154,9 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
                         }
                         else {
                             Toast.makeText(itemView.getContext(),"거절 하였습니다",Toast.LENGTH_SHORT).show();
+                        }
+                        if(onRefreshChanged != null) {
+                            onRefreshChanged.onRefreshChanged(true);
                         }
                     }
                     else {

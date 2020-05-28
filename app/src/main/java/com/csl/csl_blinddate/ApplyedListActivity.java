@@ -62,6 +62,15 @@ public class ApplyedListActivity extends AppCompatActivity {
 
         refresh();
 
+        applyAdapter.setOnRefreshChanged(new ApplyAdapter.OnRefreshChanged() {
+            @Override
+            public void onRefreshChanged(boolean refresh) {
+                if(refresh) {
+                    refresh();
+                }
+            }
+        });
+
     }
 
     public void refresh() {

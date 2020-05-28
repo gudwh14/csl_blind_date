@@ -226,6 +226,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         data.put("userID", UserData.getInstance().getUserID());
                         data.put("code",3);
                         data.put("on",up);
+                        data.put("reason","");
 
                         Call<RetrofitRepo> call = retrofitService.BoardDetailInsert(data);
                         call.enqueue(new Callback<RetrofitRepo>() {
@@ -330,6 +331,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         data.put("userID",UserData.getInstance().getUserID());
                         data.put("code",3);
                         data.put("on",up);
+                        data.put("reason","");
 
                         Call<RetrofitRepo> call = retrofitService.BoardDetailInsert(data);
                         call.enqueue(new Callback<RetrofitRepo>() {

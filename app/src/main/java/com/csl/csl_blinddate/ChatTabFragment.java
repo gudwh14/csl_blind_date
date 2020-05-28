@@ -63,8 +63,6 @@ public class ChatTabFragment extends Fragment {
         chatListAdapter = new ChatListAdapter();
         chatlistRecyclerView.setAdapter(chatListAdapter);
 
-        // refresh
-        refresh();
 
         return view;
     }
@@ -101,5 +99,12 @@ public class ChatTabFragment extends Fragment {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        // refresh
+        refresh();
+        super.onStart();
     }
 }

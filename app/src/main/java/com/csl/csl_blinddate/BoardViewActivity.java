@@ -15,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -425,4 +426,5 @@ public class BoardViewActivity extends AppCompatActivity {
         System.gc();
         super.onDestroy();
     }
+
 }

@@ -82,9 +82,6 @@ public class MainBoardFragment extends Fragment {
         homeRecyclerView.setAdapter(homeAdapter);
         hotboard_recyclerView.setAdapter(boardAdapter);
 
-        refresh();
-        hotMeetingRefresh();
-        hotBoardRefresh();
 
         return view;
     }
@@ -236,5 +233,13 @@ public class MainBoardFragment extends Fragment {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        refresh();
+        hotMeetingRefresh();
+        hotBoardRefresh();
+        super.onStart();
     }
 }

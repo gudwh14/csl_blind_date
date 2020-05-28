@@ -83,7 +83,6 @@ public class ListTabFragment extends Fragment {
             list_newbieCheckBox.setVisibility(View.INVISIBLE);
         }
         // List Refresh
-        refresh();
         listSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -147,4 +146,9 @@ public class ListTabFragment extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        refresh();
+        super.onStart();
+    }
 }

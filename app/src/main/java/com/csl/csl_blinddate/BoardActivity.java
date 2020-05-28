@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -79,7 +80,7 @@ public class BoardActivity extends AppCompatActivity {
         });
 
         //
-        refresh();
+
 
     }
 
@@ -108,7 +109,7 @@ public class BoardActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_WRITE) {
             if (resultCode == RESULT_OK) {
-                refresh();
+                //refresh();
             }
         }
     }
@@ -146,5 +147,12 @@ public class BoardActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        Log.i("log","Board Resume");
+        refresh();
+        super.onResume();
     }
 }
