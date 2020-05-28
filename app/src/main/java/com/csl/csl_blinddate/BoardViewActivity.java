@@ -15,6 +15,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.csl.csl_blinddate.Adapter.BoardAdapter;
 import com.csl.csl_blinddate.Adapter.CommentAdapter;
 import com.csl.csl_blinddate.Data.CommentData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
@@ -54,6 +57,7 @@ public class BoardViewActivity extends AppCompatActivity {
     ImageView uploaded_imageView;
     EditText boardView_commentText;
     String userID = UserData.getInstance().getUserID();
+    String board_userID;
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(URL)
@@ -133,7 +137,7 @@ public class BoardViewActivity extends AppCompatActivity {
                             .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    DetailInert(1,favorite);
+                                    DetailInert(1,favorite,"");
                                     refresh();
                                 }
                             })
@@ -147,7 +151,7 @@ public class BoardViewActivity extends AppCompatActivity {
                             .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    DetailInert(1,favorite);
+                                    DetailInert(1,favorite,"");
                                     refresh();
                                 }
                             })
@@ -164,7 +168,7 @@ public class BoardViewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(System.currentTimeMillis()-time>=1000){
                     time=System.currentTimeMillis();
-                    DetailInert(2,up);
+                    DetailInert(2,up,"");
                     refresh();
                 }else if(System.currentTimeMillis()-time<1000){
                     Toast.makeText(getApplicationContext(),"잠시후 다시 시도해 주세요", Toast.LENGTH_SHORT).show();
@@ -200,6 +204,7 @@ public class BoardViewActivity extends AppCompatActivity {
                     boardView_userText.setText("익명");
                 }
                 else {
+                    board_userID = repo.getUserID();
                     boardView_userText.setText(repo.getUserID() + " 님");
                 }
 
@@ -312,12 +317,13 @@ public class BoardViewActivity extends AppCompatActivity {
         });
     }
 
-    public void DetailInert(int code,int on) {
+    public void DetailInert(final int code,int on,String reason) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("id",board_id);
         data.put("userID",userID);
         data.put("code",code);
         data.put("on",on);
+        data.put("reason",reason);
 
         Call<RetrofitRepo> call = retrofitService.BoardDetailInsert(data);
         call.enqueue(new Callback<RetrofitRepo>() {
@@ -325,7 +331,9 @@ public class BoardViewActivity extends AppCompatActivity {
             public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
                 RetrofitRepo repo = response.body();
                 if(!repo.isSuccess()) {
-
+                    if(code == 4) {
+                        Toast.makeText(BoardViewActivity.this,"이미 신고한 게시글입니다",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -341,11 +349,72 @@ public class BoardViewActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.board_toolbar_menu, menu);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home :
                 finish();
+                break;
+            case R.id.board_remove :
+                if(userID.equals(board_userID)) {
+                    DetailInert(5, 0, "");
+                    finish();
+                }
+                else {
+                    Toast.makeText(BoardViewActivity.this,"글 작성자가 아닙니다",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.board_report :
+                LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
+                View layout = layoutInflater.inflate(R.layout.report,null);
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(BoardViewActivity.this);
+                builder.setView(layout);
+
+                final TextView report_1 = layout.findViewById(R.id.report_1);
+                final TextView report_2 = layout.findViewById(R.id.report_2);
+                final TextView report_3 = layout.findViewById(R.id.report_3);
+                final TextView report_4 = layout.findViewById(R.id.report_4);
+
+                final AlertDialog alertDialog = builder.create();
+
+                View.OnClickListener onClickListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String reason = "";
+                        switch (view.getId()) {
+                            case R.id.report_1 :
+                                reason = report_1.getText().toString();
+                                break;
+                            case R.id.report_2 :
+                                reason = report_2.getText().toString();
+                                break;
+                            case R.id.report_3 :
+                                reason = report_3.getText().toString();
+                                break;
+                            case R.id.report_4 :
+                                reason = report_4.getText().toString();
+                                break;
+                        }
+                        DetailInert(4,0,reason);
+                        alertDialog.dismiss();
+                    }
+                };
+
+                report_1.setOnClickListener(onClickListener);
+                report_2.setOnClickListener(onClickListener);
+                report_3.setOnClickListener(onClickListener);
+                report_4.setOnClickListener(onClickListener);
+
+                alertDialog.show();
+
                 break;
         }
         return super.onOptionsItemSelected(item);
