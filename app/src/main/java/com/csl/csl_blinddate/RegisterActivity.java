@@ -36,6 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
     Register3_Fragment register3_fragment;
     Register4_Fragment register4_fragment;
 
+
+
     MaterialButton register_okButton;
     int fragment,age;
     String gender,school,mail,userID;

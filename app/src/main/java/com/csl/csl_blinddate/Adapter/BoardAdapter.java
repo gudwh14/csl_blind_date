@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +77,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         TextView board_titleText;
         TextView board_upText;
         TextView board_commentsText;
+        ImageView board_imageView;
         Context context;
 
         private Drawable up_drawable;
@@ -91,6 +93,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             board_titleText = itemView.findViewById(R.id.board_titleText);
             board_upText = itemView.findViewById(R.id.board_upText);
             board_commentsText = itemView.findViewById(R.id.board_commentsText);
+            board_imageView = itemView.findViewById(R.id.board_imageView);
 
             up_drawable = context.getResources().getDrawable(R.drawable.heart_icon);
             comments_drawable = context.getResources().getDrawable(R.drawable.comments_icon);
@@ -119,6 +122,13 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             }
             else {
                 board_userText.setText(data.getUserID());
+            }
+
+            if(!(data.getImage_path().equals(""))) {
+                board_imageView.setVisibility(View.VISIBLE);
+            }
+            else {
+                board_imageView.setVisibility(View.INVISIBLE);
             }
 
             board_titleText.setText(data.getTitle());

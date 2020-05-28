@@ -6,10 +6,11 @@ public class BoardData {
     private String userID;
     private String title;
     private String time;
+    private String image_path;
     private int up;
     private int comments;
 
-    public BoardData(int board_id,String board_title,String userID,String title,String time,int up,int comments) {
+    public BoardData(int board_id,String board_title,String userID,String title,String time,int up, int comments, String image_path) {
         this.board_id = board_id;
         this.board_title = board_title;
         this.userID = userID;
@@ -17,6 +18,7 @@ public class BoardData {
         this.time = time;
         this.up = up;
         this.comments = comments;
+        this.image_path = image_path;
     }
 
     public String getTime() {
@@ -45,5 +47,9 @@ public class BoardData {
 
     public String getBoard_title() {
         return board_title;
+    }
+
+    public String getImage_path() {
+        return image_path;
     }
 }

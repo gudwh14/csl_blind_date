@@ -25,10 +25,6 @@ public class RetrofitRepo {
     private String mail;
     @SerializedName("certification")
     private boolean certification;
-    @SerializedName("isWrite")
-    private boolean isWrite;
-    @SerializedName("isMatch")
-    private boolean isMatch;
     @SerializedName("status")
     private boolean status;
     @SerializedName("apply_status")
@@ -75,6 +71,8 @@ public class RetrofitRepo {
     private boolean writer;
     @SerializedName("isCommentUp")
     private boolean isCommentUp;
+    @SerializedName("image_path")
+    private String image_path;
 
     public boolean isSuccess() {
         return success;
@@ -106,14 +104,6 @@ public class RetrofitRepo {
 
     public boolean isCertification() {
         return certification;
-    }
-
-    public boolean isMatch() {
-        return isMatch;
-    }
-
-    public boolean isWrite() {
-        return isWrite;
     }
 
     public int getMember() {
@@ -218,5 +208,9 @@ public class RetrofitRepo {
 
     public boolean isCommentUp() {
         return isCommentUp;
+    }
+
+    public String getImage_path() {
+        return image_path;
     }
 }

@@ -54,6 +54,7 @@ public class BoardWriteActivity extends AppCompatActivity {
 
     Uri selectedImageUri;
     String image_path = "";
+    String filename = "";
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(URL)
@@ -111,6 +112,7 @@ public class BoardWriteActivity extends AppCompatActivity {
                     data.put("board_title",board_title);
                     data.put("title",title);
                     data.put("mainText",mainText);
+                    data.put("image_path",filename);
 
                     Call<RetrofitRepo> call = retrofitService.BoardWrite(data);
                     call.enqueue(new Callback<RetrofitRepo>() {
@@ -169,7 +171,7 @@ public class BoardWriteActivity extends AppCompatActivity {
     }
 
     public void imageSend() {
-        final String filename = image_path.substring(image_path.lastIndexOf("/")+1);
+        filename = image_path.substring(image_path.lastIndexOf("/")+1);
         final File file = new File(image_path);
         final File to = new File(file.getAbsolutePath() + System.currentTimeMillis());
         file.renameTo(to);

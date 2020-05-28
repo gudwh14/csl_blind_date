@@ -30,6 +30,9 @@ public class CommonBoardActivity extends AppCompatActivity {
     RecyclerView common_recyclerView;
     BoardAdapter boardAdapter;
 
+    RetrofitRepo repo;
+    BoardData boardData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,8 +85,8 @@ public class CommonBoardActivity extends AppCompatActivity {
                 ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
                 int size = arrayList.size();
                 for(int temp = 0; temp<size; temp++) {
-                    RetrofitRepo repo = arrayList.get(temp);
-                    BoardData boardData = new BoardData(repo.getBoard_id(),repo.getBoard_title(),repo.getUserID(),repo.getTitle(),repo.getTime(),repo.getUp(),repo.getComments());
+                    repo = arrayList.get(temp);
+                    boardData = new BoardData(repo.getBoard_id(),repo.getBoard_title(),repo.getUserID(),repo.getTitle(),repo.getTime(),repo.getUp(),repo.getComments(),repo.getImage_path());
                     boardAdapter.addItem(boardData);
                 }
                 boardAdapter.notifyDataSetChanged();

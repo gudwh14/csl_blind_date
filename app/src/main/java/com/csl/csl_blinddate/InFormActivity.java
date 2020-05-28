@@ -85,4 +85,10 @@ public class InFormActivity extends AppCompatActivity {
         inform_appText.setOnClickListener(onClickListener);
 
     }
+
+    @Override
+    protected void onDestroy() {
+        System.gc();
+        super.onDestroy();
+    }
 }

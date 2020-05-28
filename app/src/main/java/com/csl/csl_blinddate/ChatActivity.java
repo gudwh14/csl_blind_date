@@ -12,13 +12,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.csl.csl_blinddate.Adapter.ChatAdapter;
@@ -26,7 +23,6 @@ import com.csl.csl_blinddate.Data.ChatData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.Data.RetrofitRepoList;
 import com.csl.csl_blinddate.Data.UserData;
-import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +45,9 @@ public class ChatActivity extends AppCompatActivity {
     String userID = UserData.getInstance().getUserID();
     int meeting_id;
     LinearLayout chat_layout;
+
+    RetrofitRepo repo;
+    ChatData chatData;
 
     private AtomicInteger verticalScrollOffset = new AtomicInteger(0);
 
@@ -202,8 +201,8 @@ public class ChatActivity extends AppCompatActivity {
                 ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
                 int size = arrayList.size();
                 for(int temp = 0; temp <size; temp ++) {
-                    RetrofitRepo repo = arrayList.get(temp);
-                    ChatData chatData = new ChatData(repo.getUserID(),repo.getChatMSG(),repo.getTime(),repo.getUserID().equals(userID));
+                    repo = arrayList.get(temp);
+                    chatData = new ChatData(repo.getUserID(),repo.getChatMSG(),repo.getTime(),repo.getUserID().equals(userID));
                     chatAdapter.addItem(chatData);
                 }
                 chatAdapter.notifyDataSetChanged();

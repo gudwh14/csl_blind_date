@@ -47,6 +47,9 @@ public class ListTabFragment extends Fragment {
     SwipeRefreshLayout listSwipeLayout;
     CheckBox list_newbieCheckBox;
     FrameLayout listTab_layout;
+
+    RetrofitRepo repo;
+    ListData listData;
     int newbie;
     public ListTabFragment() {
         // Required empty public constructor
@@ -128,8 +131,8 @@ public class ListTabFragment extends Fragment {
                 ArrayList<RetrofitRepo> arrayList = repoList.getRepoArrayList();
                 int size = arrayList.size();
                 for (int temp = 0; temp < size; temp++) {
-                    RetrofitRepo repo = arrayList.get(temp);
-                    ListData listData = new ListData(repo.getMeeting_id(),repo.getAge(),repo.getUserID(),repo.getSchool(),repo.isCertification(),repo.getMember(),repo.getGender(),repo.isNewbie(),repo.isStatus());
+                    repo = arrayList.get(temp);
+                    listData = new ListData(repo.getMeeting_id(),repo.getAge(),repo.getUserID(),repo.getSchool(),repo.isCertification(),repo.getMember(),repo.getGender(),repo.isNewbie(),repo.isStatus());
                     listAdapter.addItem(listData);
                 }
                 listAdapter.notifyDataSetChanged();

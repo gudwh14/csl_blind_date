@@ -45,6 +45,10 @@ public class MainBoardFragment extends Fragment {
     String board_title_2 = "OOTD";
     String board_title_3 = "익명게시판";
 
+    RetrofitRepo repo = null;
+    ListData listData = null;
+    BoardData boardData = null;
+
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -105,7 +109,7 @@ public class MainBoardFragment extends Fragment {
                 int board1=0 ,board2 = 0,board3 = 0;
                 int size = arrayList.size();
                 for(int temp = 0; temp < size; temp++) {
-                    RetrofitRepo repo = arrayList.get(temp);
+                    repo = arrayList.get(temp);
                     String title = repo.getTitle();
 
                     if(repo.getBoard_title().equals(board_title_1)) {
@@ -186,8 +190,8 @@ public class MainBoardFragment extends Fragment {
                 ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
                 int size = arrayList.size();
                 for(int temp = 0 ; temp<size; temp++) {
-                    RetrofitRepo repo = arrayList.get(temp);
-                    ListData listData = new ListData(repo.getMeeting_id(),repo.getAge(),repo.getUserID(),repo.getSchool(),repo.isCertification(),repo.getMember(),repo.getGender(),repo.isNewbie(),repo.isStatus());
+                    repo = arrayList.get(temp);
+                    listData = new ListData(repo.getMeeting_id(),repo.getAge(),repo.getUserID(),repo.getSchool(),repo.isCertification(),repo.getMember(),repo.getGender(),repo.isNewbie(),repo.isStatus());
                     hotMeetingAdapter.addItem(listData);
                 }
                 hotMeetingAdapter.notifyDataSetChanged();
@@ -220,8 +224,8 @@ public class MainBoardFragment extends Fragment {
 
                 int size = arrayList.size();
                 for(int temp = 0; temp<size; temp++) {
-                    RetrofitRepo repo = arrayList.get(temp);
-                    BoardData boardData = new BoardData(repo.getBoard_id(),repo.getBoard_title(),repo.getUserID(),repo.getTitle(),repo.getTime(),repo.getUp(),repo.getComments());
+                    repo = arrayList.get(temp);
+                    boardData = new BoardData(repo.getBoard_id(),repo.getBoard_title(),repo.getUserID(),repo.getTitle(),repo.getTime(),repo.getUp(),repo.getComments(),repo.getImage_path());
                     boardAdapter.addItem(boardData);
                 }
                 boardAdapter.notifyDataSetChanged();

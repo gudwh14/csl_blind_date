@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.csl.csl_blinddate.Adapter.CommentAdapter;
 import com.csl.csl_blinddate.Data.CommentData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
@@ -50,6 +51,7 @@ public class BoardViewActivity extends AppCompatActivity {
     RecyclerView boardView_recyclerView;
     CommentAdapter commentAdapter;
     ImageView boardView_commentSendView;
+    ImageView uploaded_imageView;
     EditText boardView_commentText;
     String userID = UserData.getInstance().getUserID();
 
@@ -62,6 +64,9 @@ public class BoardViewActivity extends AppCompatActivity {
     int favorite = 0, up = 0;
     int board_id;
     String title;
+
+    RetrofitRepo repo;
+    CommentData commentData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +100,7 @@ public class BoardViewActivity extends AppCompatActivity {
         boardView_favorite_countText = findViewById(R.id.boardView_favorite_countText);
         boardView_commentSendView = findViewById(R.id.boardView_commentSendView);
         boardView_commentText = findViewById(R.id.boardView_commentText);
+        uploaded_imageView =findViewById(R.id.uploaded_imageView);
 
 
         boardView_upText.setCompoundDrawables(up_drawable,null,null,null);
@@ -188,7 +194,7 @@ public class BoardViewActivity extends AppCompatActivity {
         call.enqueue(new Callback<RetrofitRepo>() {
             @Override
             public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
-                RetrofitRepo repo = response.body();
+                repo = response.body();
                 boardView_titleText.setText(repo.getTitle());
                 if((getIntent().getStringExtra("title")).equals("익명게시판")) {
                     boardView_userText.setText("익명");
@@ -220,6 +226,15 @@ public class BoardViewActivity extends AppCompatActivity {
                 boardView_favorite_countText.setText(" "+repo.getFavorite());
                 String[] time = repo.getTime().split(" ");
                 boardView_timeText.setText(time[1]+" "+time[2]);
+
+                String image_path = repo.getImage_path();
+                if( !(image_path.equals("")) ) {
+                    Glide.with(BoardViewActivity.this).load(URL+"photos/"+image_path).into(uploaded_imageView);
+                    uploaded_imageView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    uploaded_imageView.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -251,7 +266,7 @@ public class BoardViewActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
                     boardView_commentText.setText("");
-                    RetrofitRepo repo = response.body();
+                    repo = response.body();
                     if(!(repo.isSuccess())) {
                         Toast.makeText(getApplicationContext(),"인터넷 연결을 확인해 주세요",Toast.LENGTH_SHORT).show();
                     }
@@ -283,8 +298,8 @@ public class BoardViewActivity extends AppCompatActivity {
                 ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
                 int size = arrayList.size();
                 for (int temp = 0; temp < size; temp++) {
-                    RetrofitRepo repo = arrayList.get(temp);
-                    CommentData commentData = new CommentData(title,getIntent().getIntExtra("board_id",0),repo.getId(),repo.getUserID(),repo.getTime(),repo.getUp(),repo.getComment(),repo.isReply(),repo.isAnonymous(),repo.getAnony_count(),repo.isWriter(),repo.isCommentUp());
+                    repo = arrayList.get(temp);
+                    commentData = new CommentData(title,getIntent().getIntExtra("board_id",0),repo.getId(),repo.getUserID(),repo.getTime(),repo.getUp(),repo.getComment(),repo.isReply(),repo.isAnonymous(),repo.getAnony_count(),repo.isWriter(),repo.isCommentUp());
                     commentAdapter.addItem(commentData);
                 }
                 commentAdapter.notifyDataSetChanged();
@@ -334,5 +349,11 @@ public class BoardViewActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        System.gc();
+        super.onDestroy();
     }
 }

@@ -36,6 +36,9 @@ import static com.csl.csl_blinddate.RetrofitService.URL;
 public class ChatTabFragment extends Fragment {
     RecyclerView chatlistRecyclerView;
     ChatListAdapter chatListAdapter;
+    ChatListData chatListData;
+
+    RetrofitRepo repo;
 
     public ChatTabFragment() {
         // Required empty public constructor
@@ -86,8 +89,8 @@ public class ChatTabFragment extends Fragment {
                 ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
                 int size = arrayList.size();
                 for(int temp = 0; temp<size; temp++) {
-                    RetrofitRepo repo = arrayList.get(temp);
-                    ChatListData chatListData = new ChatListData(repo.getMeeting_id(),repo.getSchool(),repo.getUserID(),repo.getMember());
+                    repo = arrayList.get(temp);
+                    chatListData = new ChatListData(repo.getMeeting_id(),repo.getSchool(),repo.getUserID(),repo.getMember());
                     chatListAdapter.addItem(chatListData);
                 }
                 chatListAdapter.notifyDataSetChanged();

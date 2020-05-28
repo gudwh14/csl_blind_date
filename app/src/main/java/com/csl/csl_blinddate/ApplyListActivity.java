@@ -33,6 +33,9 @@ public class ApplyListActivity extends AppCompatActivity {
     ApplyListAdapter applyListAdapter;
     TextView applyList_isEmptyText;
 
+    RetrofitRepo repo;
+    ApplyListData applyListData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,8 +91,8 @@ public class ApplyListActivity extends AppCompatActivity {
                     applyList_RecyclerView.setVisibility(View.VISIBLE);
                 }
                 for(int temp =0; temp<size; temp++) {
-                    RetrofitRepo repo = arrayList.get(temp);
-                    ApplyListData applyListData = new ApplyListData(repo.getSchool(),repo.getMember(),repo.getDate(),repo.getApply_status());
+                    repo = arrayList.get(temp);
+                    applyListData = new ApplyListData(repo.getSchool(),repo.getMember(),repo.getDate(),repo.getApply_status());
                     applyListAdapter.addItem(applyListData);
                 }
                 applyListAdapter.notifyDataSetChanged();

@@ -38,6 +38,9 @@ public class BoardActivity extends AppCompatActivity {
     private int REQUEST_WRITE = 1;
     String title;
 
+    RetrofitRepo repo;
+    BoardData boardData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,8 +134,8 @@ public class BoardActivity extends AppCompatActivity {
 
                 int size = arrayList.size();
                 for(int temp = 0; temp<size; temp++) {
-                    RetrofitRepo repo = arrayList.get(temp);
-                    BoardData boardData = new BoardData(repo.getBoard_id(),title,repo.getUserID(),repo.getTitle(),repo.getTime(),repo.getUp(),repo.getComments());
+                    repo = arrayList.get(temp);
+                    boardData = new BoardData(repo.getBoard_id(),title,repo.getUserID(),repo.getTitle(),repo.getTime(),repo.getUp(),repo.getComments(),repo.getImage_path());
                     boardAdapter.addItem(boardData);
                 }
                 boardAdapter.notifyDataSetChanged();
