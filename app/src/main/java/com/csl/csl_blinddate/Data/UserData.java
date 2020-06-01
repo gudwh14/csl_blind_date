@@ -12,6 +12,7 @@ public class UserData {
     private String school;
     private String mail;
     private boolean certification;
+    private String token;
 
     private UserData() {
     }
@@ -70,5 +71,13 @@ public class UserData {
 
     public void setUserID(String userID) {
         this.userID = userID;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
     }
 }
