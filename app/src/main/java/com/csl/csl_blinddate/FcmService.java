@@ -21,7 +21,7 @@ public class FcmService extends FirebaseMessagingService {
     @Override
     public void onNewToken(String s) {
         super.onNewToken(s);
-        UserData.getInstance().setToken(s);
+        UserData.getInstance().setToken(s); // 첫 토큰 생성시 인스턴스 에 토큰값 넣어주기
         Log.d("Fcm_token",s);
     }
 

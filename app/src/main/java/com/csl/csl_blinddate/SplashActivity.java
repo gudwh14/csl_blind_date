@@ -4,18 +4,22 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 
 import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.Data.UserData;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.LoginButton;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeV2ResponseCallback;
 import com.kakao.usermgmt.callback.UnLinkResponseCallback;
@@ -36,6 +40,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.csl.csl_blinddate.RetrofitService.URL;
 
 public class SplashActivity extends AppCompatActivity {
+    LoginButton kakaoLoginButton;
+
+    SharedPreferences pref;
+    boolean auto_login;
+    String kakaoID;
 
     private ISessionCallback sessionCallback = new ISessionCallback() {
         @Override
@@ -57,42 +66,9 @@ public class SplashActivity extends AppCompatActivity {
                         public void onSuccess(MeV2Response result) {
                             Log.i("KAKAO_API", "사용자 아이디: " + result.getId());
                             // 서버 통신
-                            final String kakaoID = result.getId()+"";
-                            Retrofit retrofit = new Retrofit.Builder()
-                                    .baseUrl(URL)
-                                    .addConverterFactory(GsonConverterFactory.create())
-                                    .build();
+                            kakaoID = result.getId()+"";
+                            login();
 
-                            RetrofitService retrofitService = retrofit.create(RetrofitService.class);
-                            Call<RetrofitRepo> call = retrofitService.checkUser(result.getId()+"");
-                            call.enqueue(new Callback<RetrofitRepo>() {
-                                @Override
-                                public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
-                                    RetrofitRepo repo = response.body();
-                                    Intent intent;
-                                    if(repo.isSuccess()) {
-                                        intent = new Intent(SplashActivity.this,MainActivity.class);
-                                        UserData.getInstance().setUserID(repo.getUserID());
-                                        UserData.getInstance().setAge(repo.getAge());
-                                        UserData.getInstance().setSchool(repo.getSchool());
-                                        UserData.getInstance().setGender(repo.getGender());
-                                        startActivity(intent);
-                                        //finish();
-
-                                    }
-                                    else {
-                                        intent = new Intent(SplashActivity.this,RegisterActivity.class);
-                                        intent.putExtra("kakaoID",kakaoID);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<RetrofitRepo> call, Throwable t) {
-
-                                }
-                            });
                             /* 연결해제
                             UserManagement.getInstance()
                                     .requestUnlink(new UnLinkResponseCallback() {
@@ -165,8 +141,19 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-        getAppKeyHash();
+        pref = getSharedPreferences("auto_login",MODE_PRIVATE);
+        auto_login = pref.getBoolean("auto_login",false);
+        kakaoID = pref.getString("kakaoID","");
+        // View 초기화
+        kakaoLoginButton = findViewById(R.id.KakaoLoginButton);
+        if(auto_login == false) {
+            kakaoLoginButton.setVisibility(View.VISIBLE);
+        }
+        else {
+            kakaoLoginButton.setVisibility(View.INVISIBLE);
+            login();
+        }
+        //getAppKeyHash(); 해쉬키 구하기
 
         Session.getCurrentSession().addCallback(sessionCallback);
 
@@ -207,4 +194,43 @@ public class SplashActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    public void login() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+        Call<RetrofitRepo> call = retrofitService.checkUser(kakaoID);
+        call.enqueue(new Callback<RetrofitRepo>() {
+            @Override
+            public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
+                RetrofitRepo repo = response.body();
+                Intent intent;
+                if(repo.isSuccess()) {
+                    intent = new Intent(SplashActivity.this,MainActivity.class);
+                    UserData.getInstance().setUserID(repo.getUserID());
+                    UserData.getInstance().setAge(repo.getAge());
+                    UserData.getInstance().setSchool(repo.getSchool());
+                    UserData.getInstance().setGender(repo.getGender());
+                    startActivity(intent);
+                    //finish();
+
+                }
+                else {
+                    intent = new Intent(SplashActivity.this,RegisterActivity.class);
+                    intent.putExtra("kakaoID",kakaoID);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RetrofitRepo> call, Throwable t) {
+
+            }
+        });
+    }
+
 }

@@ -3,6 +3,7 @@ package com.csl.csl_blinddate;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,18 +37,21 @@ public class RegisterActivity extends AppCompatActivity {
     Register3_Fragment register3_fragment;
     Register4_Fragment register4_fragment;
 
-
-
     MaterialButton register_okButton;
     int fragment,age;
     String gender,school,mail,userID;
     boolean certification;
 
+    SharedPreferences pref;// 자동로그인 Preference 생성
+    SharedPreferences.Editor editor;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        pref = getSharedPreferences("auto_login",MODE_PRIVATE); // 자동로그인 Preference 생성
+        editor = pref.edit();
 
         // Fragment 초기화
         register1_fragment = new Register1_Fragment();
@@ -129,11 +133,16 @@ public class RegisterActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
                                     RetrofitRepo repo = response.body();
-                                    if (repo.isSuccess()) {
+                                    if (repo.isSuccess()) { // 회원가입 성공시
+                                        // Preference 데이터 저장
+                                        editor.putBoolean("auto_login",true);
+                                        editor.putString("kakaoID",getIntent().getStringExtra("kakaoID"));
+                                        editor.commit();
+                                        // 앱 시작화면으로 이동
                                         Intent intent = new Intent(RegisterActivity.this, SplashActivity.class);
                                         startActivity(intent);
                                         finish();
-                                    } else {
+                                    } else { // 회원가입 실패( Primary key 중복)
                                         Toast.makeText(RegisterActivity.this, "닉네임 중복입니다, 다른 닉네임을 입력해주세요.", Toast.LENGTH_LONG).show();
                                     }
                                 }
@@ -156,5 +165,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        // 뒤로가기 막기
     }
 }
