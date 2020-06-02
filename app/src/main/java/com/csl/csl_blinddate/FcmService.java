@@ -47,7 +47,7 @@ public class FcmService extends FirebaseMessagingService {
             intent = new Intent(this,ChatTabFragment.class);
         }
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, (int)System.currentTimeMillis()/1000, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
@@ -78,7 +78,7 @@ public class FcmService extends FirebaseMessagingService {
             NotificationManager notificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-            notificationManager.notify(9999, notificationBuilder.build());
+            notificationManager.notify((int)System.currentTimeMillis()/1000, notificationBuilder.build());
 
         } else {
             NotificationCompat.Builder notificationBuilder =
@@ -93,7 +93,7 @@ public class FcmService extends FirebaseMessagingService {
             NotificationManager notificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-            notificationManager.notify(9999, notificationBuilder.build());
+            notificationManager.notify((int)System.currentTimeMillis()/1000, notificationBuilder.build());
 
         }
     }

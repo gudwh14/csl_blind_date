@@ -94,9 +94,11 @@ public class ApplyedListActivity extends AppCompatActivity {
 
                 if(arrayList.isEmpty()) {
                     applyedList_isEmptyText.setVisibility(View.VISIBLE);
+                    applyRecyclerView.setVisibility(View.INVISIBLE);
                 }
                 else {
                     applyRecyclerView.setVisibility(View.VISIBLE);
+                    applyedList_isEmptyText.setVisibility(View.INVISIBLE);
                 }
 
                 int size = arrayList.size();
