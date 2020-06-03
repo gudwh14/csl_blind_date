@@ -120,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
                             data.put("mail", mail);
                             data.put("gender", gender);
                             data.put("certification", certification);
-                            data.put("token",UserData.getInstance().getToken());
+                            data.put("token",pref.getString("token",""));
 
                             Retrofit retrofit = new Retrofit.Builder()
                                     .baseUrl(URL)

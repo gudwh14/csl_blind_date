@@ -7,13 +7,13 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import com.csl.csl_blinddate.Data.UserData;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -21,7 +21,11 @@ public class FcmService extends FirebaseMessagingService {
     @Override
     public void onNewToken(String s) {
         super.onNewToken(s);
-        UserData.getInstance().setToken(s); // 첫 토큰 생성시 인스턴스 에 토큰값 넣어주기
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("auto_login",MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("token",s);
+        editor.commit();// 첫 토큰 생성시 인스턴스 에 토큰값 넣어주기
         Log.d("Fcm_token",s);
     }
 

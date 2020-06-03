@@ -3,16 +3,24 @@ package com.csl.csl_blinddate;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.Preference;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.Data.UserData;
@@ -30,6 +38,7 @@ import com.kakao.util.exception.KakaoException;
 
 
 import java.security.MessageDigest;
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,8 +52,11 @@ public class SplashActivity extends AppCompatActivity {
     LoginButton kakaoLoginButton;
 
     SharedPreferences pref;
+    SharedPreferences.Editor editor;
     boolean auto_login;
     String kakaoID;
+
+    FcmService fcmService;
 
     private ISessionCallback sessionCallback = new ISessionCallback() {
         @Override
@@ -67,7 +79,21 @@ public class SplashActivity extends AppCompatActivity {
                             Log.i("KAKAO_API", "사용자 아이디: " + result.getId());
                             // 서버 통신
                             kakaoID = result.getId()+"";
-                            login();
+                            if(pref.getString("token","").equals("")) {
+                                ProgressBar progressBar = new ProgressBar(SplashActivity.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
+                                builder.setView(progressBar);
+
+                                final AlertDialog alertDialog = builder.create();
+                                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                alertDialog.show();
+
+                                Toast.makeText(SplashActivity.this,"잠시후 다시 시도해 주세요",Toast.LENGTH_SHORT).show();
+                                alertDialog.dismiss();
+                            }
+                            else {
+                                login();
+                            }
 
                             /* 연결해제
                             UserManagement.getInstance()
@@ -89,7 +115,6 @@ public class SplashActivity extends AppCompatActivity {
                                     });
 
                              */
-                            finish();
                             /*
                             UserAccount kakaoAccount = result.getKakaoAccount();
                             if (kakaoAccount != null) {
@@ -141,13 +166,29 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        // preferences
+        fcmService = new FcmService();
         pref = getSharedPreferences("auto_login",MODE_PRIVATE);
+        editor = pref.edit();
         auto_login = pref.getBoolean("auto_login",false);
         kakaoID = pref.getString("kakaoID","");
         // View 초기화
         kakaoLoginButton = findViewById(R.id.KakaoLoginButton);
+
         if(auto_login == false) {
-            kakaoLoginButton.setVisibility(View.VISIBLE);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            kakaoLoginButton.setVisibility(View.VISIBLE);
+                        }
+                    },1000);
+                }
+            });
         }
         else {
             kakaoLoginButton.setVisibility(View.INVISIBLE);
@@ -201,8 +242,12 @@ public class SplashActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("kakaoID",kakaoID);
+        data.put("auto_login",auto_login);
+        data.put("token",pref.getString("token",""));
         RetrofitService retrofitService = retrofit.create(RetrofitService.class);
-        Call<RetrofitRepo> call = retrofitService.checkUser(kakaoID);
+        Call<RetrofitRepo> call = retrofitService.checkUser(data);
         call.enqueue(new Callback<RetrofitRepo>() {
             @Override
             public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
@@ -210,12 +255,15 @@ public class SplashActivity extends AppCompatActivity {
                 Intent intent;
                 if(repo.isSuccess()) {
                     intent = new Intent(SplashActivity.this,MainActivity.class);
+                    editor.putBoolean("auto_login",true);
+                    editor.putString("kakaoID",kakaoID);
+                    editor.commit();
                     UserData.getInstance().setUserID(repo.getUserID());
                     UserData.getInstance().setAge(repo.getAge());
                     UserData.getInstance().setSchool(repo.getSchool());
                     UserData.getInstance().setGender(repo.getGender());
                     startActivity(intent);
-                    //finish();
+                    finish();
 
                 }
                 else {
@@ -228,7 +276,7 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RetrofitRepo> call, Throwable t) {
-
+                t.printStackTrace();
             }
         });
     }

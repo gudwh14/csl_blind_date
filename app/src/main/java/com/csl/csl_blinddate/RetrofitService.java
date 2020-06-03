@@ -38,7 +38,7 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST("checkUser.php")
     Call<RetrofitRepo> checkUser(
-            @Field("kakaoID") String kakaoID
+            @FieldMap HashMap<String, Object> param
     );
 
     @FormUrlEncoded

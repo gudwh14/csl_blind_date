@@ -1,6 +1,7 @@
 package com.csl.csl_blinddate;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,11 +21,19 @@ import android.widget.Toast;
 
 import com.csl.csl_blinddate.Adapter.ChatAdapter;
 import com.csl.csl_blinddate.Data.ChatData;
+import com.csl.csl_blinddate.Data.ChatVo;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.Data.RetrofitRepoList;
 import com.csl.csl_blinddate.Data.UserData;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -51,12 +60,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private AtomicInteger verticalScrollOffset = new AtomicInteger(0);
 
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-
-    RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("chat_log");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +155,33 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
+
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void send() {
@@ -159,30 +191,10 @@ public class ChatActivity extends AppCompatActivity {
             chat_msgText.setText("");
         }
         else {
-            HashMap<String,Object> data = new HashMap<>();
-            data.put("MSG",MSG);
-            data.put("userID",userID);
-            data.put("id",meeting_id);
-
-            Call<RetrofitRepo> call = retrofitService.ChatInsert(data);
-            call.enqueue(new Callback<RetrofitRepo>() {
-                @Override
-                public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
-                    chat_msgText.setText("");
-                    RetrofitRepo repo = response.body();
-                    if(!repo.isSuccess()) {
-                        Toast.makeText(ChatActivity.this,"통신 오류",Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        refresh();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<RetrofitRepo> call, Throwable t) {
-                    t.printStackTrace();
-                }
-            });
+            Date today = new Date();
+            SimpleDateFormat timeNow = new SimpleDateFormat("a K:mm");
+            myRef.push().setValue(new ChatVo(meeting_id,userID,MSG, timeNow.format(today)));
+            chat_msgText.setText("");
         }
 
     }
@@ -190,33 +202,6 @@ public class ChatActivity extends AppCompatActivity {
     public void refresh() {
         chatAdapter.clear();
         chatAdapter.notifyDataSetChanged();
-
-        HashMap<String,Object> data = new HashMap<>();
-        data.put("id",meeting_id);
-
-        Call<RetrofitRepoList> call = retrofitService.ChatRefresh(data);
-        call.enqueue(new Callback<RetrofitRepoList>() {
-            @Override
-            public void onResponse(Call<RetrofitRepoList> call, Response<RetrofitRepoList> response) {
-                ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
-                int size = arrayList.size();
-                for(int temp = 0; temp <size; temp ++) {
-                    repo = arrayList.get(temp);
-                    chatData = new ChatData(repo.getUserID(),repo.getChatMSG(),repo.getTime(),repo.getUserID().equals(userID));
-                    chatAdapter.addItem(chatData);
-                }
-                chatAdapter.notifyDataSetChanged();
-                chatRecyclerView.scrollToPosition(chatAdapter.getItemCount()-1);
-            }
-
-            @Override
-            public void onFailure(Call<RetrofitRepoList> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-
-
-
     }
 
 
@@ -239,7 +224,11 @@ public class ChatActivity extends AppCompatActivity {
                                 HashMap<String, Object> data = new HashMap<>();
                                 data.put("id",meeting_id);
                                 data.put("userID",userID);
-
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(URL)
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                RetrofitService retrofitService = retrofit.create(RetrofitService.class);
                                 Call<RetrofitRepo> call = retrofitService.ChatRemove(data);
                                 call.enqueue(new Callback<RetrofitRepo>() {
                                     @Override
