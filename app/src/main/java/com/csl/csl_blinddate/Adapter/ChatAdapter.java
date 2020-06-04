@@ -3,19 +3,20 @@ package com.csl.csl_blinddate.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.csl.csl_blinddate.Data.ChatData;
+import com.csl.csl_blinddate.Data.ChatVo;
+import com.csl.csl_blinddate.Data.UserData;
 import com.csl.csl_blinddate.R;
 
 import java.util.ArrayList;
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<ChatData> data = new ArrayList<>();
+    private ArrayList<ChatVo> data = new ArrayList<>();
+    private String userID = UserData.getInstance().getUserID();
 
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // LayoutInflater를 이용하여 xml을 inflate 시킵니다.
@@ -49,7 +50,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if(data.get(position).isMyText()) {
+        if(data.get(position).getUserID().equals(userID)) {
             return 1;
         }
         else {
@@ -57,7 +58,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public void addItem(ChatData data2) {
+    public void addItem(ChatVo data2) {
         // 외부에서 item을 추가시킬 함수입니다.
         data.add(data2);
     }
@@ -81,16 +82,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         }
 
-        void onBind(ChatData data) {
+        void onBind(ChatVo data) {
             userID.setText(data.getUserID());
-            String[] time =  data.getTime().split(" ");
-            if(time[0].equals("am")) {
-                time[0] = "오전 ";
-            }
-            else {
-                time[0] = "오후 ";
-            }
-            chat_timeText.setText(time[0]+time[1]);
+            chat_timeText.setText(data.getTime());
             chatMsg.setText(data.getChatMsg());
         }
     }
@@ -108,15 +102,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         }
 
-        void onBind(ChatData data) {
-            String[] time =  data.getTime().split(" ");
-            if(time[0].equals("am")) {
-                time[0] = "오전 ";
-            }
-            else {
-                time[0] = "오후 ";
-            }
-            chat_timeText.setText(time[0]+time[1]);
+        void onBind(ChatVo data) {
+            chat_timeText.setText(data.getTime());
             chatMsg.setText(data.getChatMsg());
         }
     }

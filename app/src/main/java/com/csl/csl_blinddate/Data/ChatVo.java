@@ -6,6 +6,8 @@ public class ChatVo {
     private String chatMsg;
     private String time;
 
+    public ChatVo(){}
+
     public ChatVo(int meeting_id,String userID, String chatMsg, String time){
         this.meeting_id = meeting_id;
         this.userID = userID;

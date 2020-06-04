@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.csl.csl_blinddate.Adapter.ChatAdapter;
-import com.csl.csl_blinddate.Data.ChatData;
 import com.csl.csl_blinddate.Data.ChatVo;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
-import com.csl.csl_blinddate.Data.RetrofitRepoList;
 import com.csl.csl_blinddate.Data.UserData;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +31,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -55,13 +53,11 @@ public class ChatActivity extends AppCompatActivity {
     int meeting_id;
     LinearLayout chat_layout;
 
-    RetrofitRepo repo;
-    ChatData chatData;
 
     private AtomicInteger verticalScrollOffset = new AtomicInteger(0);
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("chat_log");
+    DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +73,7 @@ public class ChatActivity extends AppCompatActivity {
 
         // view init
         meeting_id = getIntent().getIntExtra("meeting_id",0);
+        myRef = database.getReference("chat_log").child(meeting_id+"");
         chat_msgText = findViewById(R.id.chat_msgText);
         chat_sendButton = findViewById(R.id.chat_sendButton);
         chatRecyclerView = findViewById(R.id.chatRecyclerView);
@@ -159,7 +156,13 @@ public class ChatActivity extends AppCompatActivity {
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                String key = dataSnapshot.getKey();
+                String value = dataSnapshot.getValue().toString();
+                Log.d("chatlist","key :" +key + "value : " + value);
+                ChatVo chatVo = dataSnapshot.getValue(ChatVo.class);
+                chatAdapter.addItem(chatVo);
+                chatAdapter.notifyDataSetChanged();
+                chatRecyclerView.scrollToPosition(chatAdapter.getItemCount()-1);
             }
 
             @Override
