@@ -28,7 +28,8 @@ public class Register3_Fragment extends Fragment {
     TextView register_certificationText;
 
     MaterialButton register_schoolButton;
-    private int REQUEST_TEST = 1;
+    private int REQUEST_SCHOOL = 1;
+    private int REQUEST_MAIL = 2;
 
     public Register3_Fragment() {
         // Required empty public constructor
@@ -52,7 +53,17 @@ public class Register3_Fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), SchoolListActivity.class);
-                startActivityForResult(intent,REQUEST_TEST);
+                startActivityForResult(intent,REQUEST_SCHOOL);
+            }
+        });
+
+        register_certifyText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), MailCertifyActivity.class);
+                intent.putExtra("school",school);
+                intent.putExtra("mail",mail);
+                startActivityForResult(intent,REQUEST_MAIL);
             }
         });
 
@@ -62,12 +73,18 @@ public class Register3_Fragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_TEST) {
+        if(requestCode == REQUEST_SCHOOL) {
             if(resultCode == RESULT_OK) {
                 school = data.getStringExtra("school");
+                mail = data.getStringExtra("mail");
                 register_schoolText.setText(school);
                 register_certificationText.setVisibility(View.VISIBLE);
                 register_certifyText.setVisibility(View.VISIBLE);
+            }
+        }
+        else if(requestCode == REQUEST_MAIL) {
+            if(resultCode == RESULT_OK) {
+
             }
         }
     }

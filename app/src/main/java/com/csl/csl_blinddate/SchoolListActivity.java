@@ -1,11 +1,14 @@
 package com.csl.csl_blinddate;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,9 +17,13 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.csl.csl_blinddate.Adapter.SchoolAdapter;
+import com.csl.csl_blinddate.Data.SchoolData;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import jxl.Sheet;
@@ -25,9 +32,10 @@ import jxl.read.biff.BiffException;
 
 public class SchoolListActivity extends AppCompatActivity {
     EditText school_editText;
-    ListView school_listView;
-    ArrayAdapter<String> arrayAdapter;
-    List<String> list;
+    RecyclerView school_listView;
+
+    SchoolAdapter schoolAdapter;
+    List<SchoolData> list;
     public String school;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +46,14 @@ public class SchoolListActivity extends AppCompatActivity {
         school = "";
         school_editText = findViewById(R.id.school_editText);
         school_listView = findViewById(R.id.school_listView);
-        arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
-        list = new ArrayList<String>();
+
+
+        // 리사이클러뷰 바인딩, 초기화
+        schoolAdapter = new SchoolAdapter();
+        list = new ArrayList<SchoolData>();
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SchoolListActivity.this);
+        school_listView.setLayoutManager(linearLayoutManager);
 
         Excel();
 
@@ -61,16 +75,6 @@ public class SchoolListActivity extends AppCompatActivity {
             }
         });
 
-        school_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                school = arrayAdapter.getItem(i);
-                Intent intent = new Intent();
-                intent.putExtra("school",school);
-                setResult(RESULT_OK,intent);
-                finish();
-            }
-        });
     }
 
     public void Excel() {
@@ -83,34 +87,36 @@ public class SchoolListActivity extends AppCompatActivity {
             int MaxColumn = 1, RowStart = 0, RowEnd = sheet.getColumn(MaxColumn - 1).length -1, ColumnStart = 0, ColumnEnd = sheet.getRow(2).length - 1;
             for(int row = RowStart;row <= RowEnd;row++) {
                 String excelload = sheet.getCell(ColumnStart, row).getContents();
-                arrayAdapter.add(excelload);
-                list.add(excelload);
+                String mail = sheet.getCell(1, row).getContents();
+                SchoolData schoolData = new SchoolData(excelload,mail);
+                schoolAdapter.addItem(schoolData);
+                list.add(schoolData);
             }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (BiffException e) {
             e.printStackTrace();
         } finally {
-            school_listView.setAdapter(arrayAdapter);
+            school_listView.setAdapter(schoolAdapter);
             workbook.close();
         }
     }
 
     public void search(String charText) {
-        arrayAdapter.clear();
+        schoolAdapter.clear();
 
         if(charText.length() == 0 ) {
-            arrayAdapter.addAll(list);
+            schoolAdapter.addAll(list);
         }
         else {
             int size = list.size();
             for(int i = 0; i < size; i++) {
-                if(list.get(i).toLowerCase().contains(charText)) {
-                    arrayAdapter.add(list.get(i));
+                if(list.get(i).getSchool().toLowerCase().contains(charText)) {
+                    schoolAdapter.addItem(list.get(i));
                 }
             }
         }
-        arrayAdapter.notifyDataSetChanged();
+        schoolAdapter.notifyDataSetChanged();
     }
 
 
