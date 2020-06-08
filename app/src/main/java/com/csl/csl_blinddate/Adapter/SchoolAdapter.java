@@ -81,7 +81,7 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.ViewHolder
                 public void onClick(View view) {
                     int pos = getAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION) {
-                        Intent intent = new Intent(view.getContext(), MailCertifyActivity.class);
+                        Intent intent = new Intent();
                         intent.putExtra("school",school);
                         intent.putExtra("mail",mail);
                         ((Activity)(view.getContext())).setResult(Activity.RESULT_OK,intent);

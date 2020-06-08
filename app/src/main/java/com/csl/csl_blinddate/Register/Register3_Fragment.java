@@ -75,16 +75,19 @@ public class Register3_Fragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_SCHOOL) {
             if(resultCode == RESULT_OK) {
+                certification = false;
                 school = data.getStringExtra("school");
                 mail = data.getStringExtra("mail");
                 register_schoolText.setText(school);
+                register_certificationText.setText("인증 안됨");
                 register_certificationText.setVisibility(View.VISIBLE);
                 register_certifyText.setVisibility(View.VISIBLE);
             }
         }
         else if(requestCode == REQUEST_MAIL) {
             if(resultCode == RESULT_OK) {
-
+                certification = data.getBooleanExtra("certification",false);
+                register_certificationText.setText("인증됨");
             }
         }
     }

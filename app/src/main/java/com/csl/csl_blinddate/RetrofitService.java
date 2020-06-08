@@ -22,7 +22,7 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface RetrofitService {
-    String URL = "http://61.77.118.29/blinddate/";
+    String URL = "http://59.12.172.49/blinddate/";
 
 
     @GET("index.php")
@@ -189,4 +189,10 @@ public interface RetrofitService {
     @POST("ImageUpload.php")
     Call<RetrofitRepo> uploadFile(@Part MultipartBody.Part file
     , @Part("name") RequestBody requestBody);
+
+    @FormUrlEncoded
+    @POST("MailSender.php")
+    Call<RetrofitRepo> MailSender(
+            @FieldMap HashMap<String, Object> param
+    );
 }
