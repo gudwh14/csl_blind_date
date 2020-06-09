@@ -187,12 +187,17 @@ public interface RetrofitService {
 
     @Multipart
     @POST("ImageUpload.php")
-    Call<RetrofitRepo> uploadFile(@Part MultipartBody.Part file
-    , @Part("name") RequestBody requestBody);
+    Call<RetrofitRepo> uploadFile(@Part MultipartBody.Part file);
 
     @FormUrlEncoded
     @POST("MailSender.php")
     Call<RetrofitRepo> MailSender(
+            @FieldMap HashMap<String, Object> param
+    );
+
+    @FormUrlEncoded
+    @POST("Certify.php")
+    Call<RetrofitRepo> Certify(
             @FieldMap HashMap<String, Object> param
     );
 }

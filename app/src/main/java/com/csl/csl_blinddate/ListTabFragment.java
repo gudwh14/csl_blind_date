@@ -74,8 +74,8 @@ public class ListTabFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         listRecyclerView.setLayoutManager(linearLayoutManager);
-
         listRecyclerView.setAdapter(listAdapter);
+
 
         list_newbieCheckBox = view.findViewById(R.id.list_newbieCheckBox);
 
@@ -135,7 +135,6 @@ public class ListTabFragment extends Fragment {
                     listAdapter.addItem(listData);
                 }
                 listAdapter.notifyDataSetChanged();
-                //listRecyclerView.setAdapter(listAdapter);
             }
 
             @Override

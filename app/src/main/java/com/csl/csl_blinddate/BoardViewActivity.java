@@ -118,13 +118,12 @@ public class BoardViewActivity extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         boardView_recyclerView.setLayoutManager(linearLayoutManager);
-        boardView_recyclerView.setAdapter(commentAdapter);
 
         commentAdapter.setOnRefreshChanged(new CommentAdapter.OnRefreshChanged() {
             @Override
             public void onRefreshChanged(boolean refresh) {
                 if(refresh) {
-                    commentRefresh();
+                    commentRefresh(false);
                 }
             }
         });
@@ -187,7 +186,7 @@ public class BoardViewActivity extends AppCompatActivity {
 
         // refresh
         refresh();
-        commentRefresh();
+        commentRefresh(false);
     }
 
     public void refresh() {
@@ -277,7 +276,7 @@ public class BoardViewActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"인터넷 연결을 확인해 주세요",Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        commentRefresh();
+                        commentRefresh(true);
                     }
                 }
 
@@ -289,9 +288,9 @@ public class BoardViewActivity extends AppCompatActivity {
         }
     }
 
-    public void commentRefresh() {
+    public void commentRefresh(final boolean isComment) {
         commentAdapter.clear();
-        commentAdapter.notifyDataSetChanged();
+        //commentAdapter.notifyDataSetChanged();
 
         HashMap<String,Object> data = new HashMap<>();
         data.put("board_id",board_id);
@@ -308,7 +307,11 @@ public class BoardViewActivity extends AppCompatActivity {
                     commentData = new CommentData(title,getIntent().getIntExtra("board_id",0),repo.getId(),repo.getUserID(),repo.getTime(),repo.getUp(),repo.getComment(),repo.isReply(),repo.isAnonymous(),repo.getAnony_count(),repo.isWriter(),repo.isCommentUp());
                     commentAdapter.addItem(commentData);
                 }
-                commentAdapter.notifyDataSetChanged();
+                //commentAdapter.notifyDataSetChanged();
+                boardView_recyclerView.setAdapter(commentAdapter);
+                if(isComment) {
+                    boardView_recyclerView.scrollToPosition(commentAdapter.getItemCount() - 1);
+                }
             }
 
             @Override
@@ -363,7 +366,7 @@ public class BoardViewActivity extends AppCompatActivity {
             case android.R.id.home :
                 finish();
                 break;
-            case R.id.board_remove :
+            case R.id.remove :
                 if(userID.equals(board_userID)) {
                     DetailInert(5, 0, "");
                     finish();
@@ -372,7 +375,7 @@ public class BoardViewActivity extends AppCompatActivity {
                     Toast.makeText(BoardViewActivity.this,"글 작성자가 아닙니다",Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.board_report :
+            case R.id.report :
                 LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
                 View layout = layoutInflater.inflate(R.layout.report,null);
 

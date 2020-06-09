@@ -258,10 +258,13 @@ public class SplashActivity extends AppCompatActivity {
                     editor.putBoolean("auto_login",true);
                     editor.putString("kakaoID",kakaoID);
                     editor.commit();
-                    UserData.getInstance().setUserID(repo.getUserID());
-                    UserData.getInstance().setAge(repo.getAge());
-                    UserData.getInstance().setSchool(repo.getSchool());
-                    UserData.getInstance().setGender(repo.getGender());
+                    UserData userData = UserData.getInstance();
+                    userData.setUserID(repo.getUserID());
+                    userData.setAge(repo.getAge());
+                    userData.setSchool(repo.getSchool());
+                    userData.setGender(repo.getGender());
+                    userData.setMail(repo.getMail());
+                    userData.setCertification(repo.isCertification());
                     startActivity(intent);
                     finish();
 

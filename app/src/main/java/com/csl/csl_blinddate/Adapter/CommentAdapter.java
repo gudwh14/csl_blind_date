@@ -1,13 +1,16 @@
 package com.csl.csl_blinddate.Adapter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ import static com.csl.csl_blinddate.RetrofitService.URL;
 
 public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     long timer = 0;
+    String my_userID = UserData.getInstance().getUserID();
 
     // 인터페이스 작성
     public interface OnRefreshChanged {
@@ -103,6 +107,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView comment_commentText;
         ImageView comment_upImage;
         ImageView comment_replyImage;
+        ImageView comment_menuImage;
         private Drawable drawable;
         boolean anonymous = false;
         int up;
@@ -122,6 +127,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             comment_commentText = itemView.findViewById(R.id.comment_commentText);
             comment_upImage = itemView.findViewById(R.id.comment_upImage);
             comment_replyImage = itemView.findViewById(R.id.comment_replyImage);
+            comment_menuImage = itemView.findViewById(R.id.comment_menuImage);
 
             drawable = itemView.getContext().getResources().getDrawable(R.drawable.heart_icon);
             drawable.setBounds(0,0,40,40);
@@ -132,6 +138,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         void onBind(CommentData data) {
             final int comment_id = data.getComment_id();
             final int board_id = data.getBoard_id();
+            final String userID = data.getUserID();
             if(data.isCommentUp()) {
                 up = 1;
                 comment_upImage.setImageResource(R.drawable.heart_after_icon);
@@ -187,7 +194,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                 HashMap<String, Object> data = new HashMap<>();
                                 data.put("board_id",board_id);
                                 data.put("comment_id",comment_id);
-                                data.put("userID", UserData.getInstance().getUserID());
+                                data.put("userID", my_userID);
                                 data.put("comment",comment);
                                 data.put("anonymous",anonymous);
 
@@ -260,6 +267,127 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 }
             });
+
+            comment_menuImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+                    popupMenu.getMenuInflater().inflate(R.menu.board_toolbar_menu, popupMenu.getMenu());
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch (menuItem.getItemId()) {
+                                case R.id.remove : //댓글 삭제
+                                    if(userID.equals(my_userID)) {
+                                        HashMap<String, Object> data = new HashMap<>();
+                                        data.put("id",comment_id);
+                                        data.put("userID", my_userID);
+                                        data.put("code",7);
+                                        data.put("on",0);
+                                        data.put("reason","");
+
+                                        Call<RetrofitRepo> call = retrofitService.BoardDetailInsert(data);
+                                        call.enqueue(new Callback<RetrofitRepo>() {
+                                            @Override
+                                            public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
+                                                RetrofitRepo repo = response.body();
+                                                if(repo.isSuccess()) {
+                                                    if(onRefreshChanged != null) {
+                                                        onRefreshChanged.onRefreshChanged(true);
+                                                    }
+                                                }
+                                                else {
+                                                    Toast.makeText(view.getContext(),"답글이 달려 댓글을 삭제하실 수 없습니다",Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<RetrofitRepo> call, Throwable t) {
+                                                t.printStackTrace();
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        Toast.makeText(view.getContext(),"댓글 작성자가 아닙니다",Toast.LENGTH_SHORT).show();
+                                    }
+                                    break;
+                                case R.id.report : // 댓글 신고
+                                    LayoutInflater layoutInflater = LayoutInflater.from(view.getContext());
+                                    View layout = layoutInflater.inflate(R.layout.report,null);
+
+                                    final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                                    builder.setView(layout);
+
+                                    final TextView report_1 = layout.findViewById(R.id.report_1);
+                                    final TextView report_2 = layout.findViewById(R.id.report_2);
+                                    final TextView report_3 = layout.findViewById(R.id.report_3);
+                                    final TextView report_4 = layout.findViewById(R.id.report_4);
+
+                                    final AlertDialog alertDialog = builder.create();
+
+                                    View.OnClickListener onClickListener = new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View view) {
+                                            String reason = "";
+                                            switch (view.getId()) {
+                                                case R.id.report_1 :
+                                                    reason = report_1.getText().toString();
+                                                    break;
+                                                case R.id.report_2 :
+                                                    reason = report_2.getText().toString();
+                                                    break;
+                                                case R.id.report_3 :
+                                                    reason = report_3.getText().toString();
+                                                    break;
+                                                case R.id.report_4 :
+                                                    reason = report_4.getText().toString();
+                                                    break;
+                                            }
+                                            HashMap<String, Object> data = new HashMap<>();
+                                            data.put("id",comment_id);
+                                            data.put("userID", my_userID);
+                                            data.put("code",6);
+                                            data.put("on",0);
+                                            data.put("reason",reason);
+                                            Call<RetrofitRepo> call = retrofitService.BoardDetailInsert(data);
+                                            call.enqueue(new Callback<RetrofitRepo>() {
+                                                @Override
+                                                public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
+                                                    RetrofitRepo repo = response.body();
+                                                    if(!repo.isSuccess()) {
+                                                        Toast.makeText(view.getContext(),"이미 신고한 댓글 입니다",Toast.LENGTH_SHORT).show();
+                                                    }
+                                                    else {
+                                                        Toast.makeText(view.getContext(),"신고가 접수되었습니다",Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<RetrofitRepo> call, Throwable t) {
+                                                    t.printStackTrace();
+                                                }
+                                            });
+
+                                            alertDialog.dismiss();
+                                        }
+                                    };
+
+                                    report_1.setOnClickListener(onClickListener);
+                                    report_2.setOnClickListener(onClickListener);
+                                    report_3.setOnClickListener(onClickListener);
+                                    report_4.setOnClickListener(onClickListener);
+
+                                    alertDialog.show();
+                                    break;
+                            }
+                            return true;
+                        }
+                    });
+                    popupMenu.show();
+                }
+            });
+
+            //
         }
     }
 
@@ -269,6 +397,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView reply_upText;
         TextView reply_commentText;
         ImageView reply_upImage;
+        ImageView reply_menuImage;
         private Drawable drawable;
         int up;
         int comment_id;
@@ -288,6 +417,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             reply_upText = itemView.findViewById(R.id.reply_upText);
             reply_commentText = itemView.findViewById(R.id.reply_commentText);
             reply_upImage = itemView.findViewById(R.id.reply_upImage);
+            reply_menuImage = itemView.findViewById(R.id.reply_menuImage);
 
             drawable = itemView.getContext().getResources().getDrawable(R.drawable.heart_icon);
             drawable.setBounds(0,0,40,40);
@@ -295,6 +425,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         void onBind(CommentData data) {
             String[] time = data.getTime().split(" ");
+            final String userID = data.getUserID();
             comment_id = data.getComment_id();
             if(data.isCommentUp()) {
                 up = 1;
@@ -328,7 +459,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     if(System.currentTimeMillis()-timer>=1000) {
                         HashMap<String, Object> data = new HashMap<>();
                         data.put("id",comment_id);
-                        data.put("userID",UserData.getInstance().getUserID());
+                        data.put("userID",my_userID);
                         data.put("code",3);
                         data.put("on",up);
                         data.put("reason","");
@@ -365,6 +496,128 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 }
             });
+
+            reply_menuImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+                    popupMenu.getMenuInflater().inflate(R.menu.board_toolbar_menu, popupMenu.getMenu());
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch (menuItem.getItemId()) {
+                                case R.id.remove : //댓글 삭제
+                                    if(userID.equals(my_userID)) {
+                                        HashMap<String, Object> data = new HashMap<>();
+                                        data.put("id",comment_id);
+                                        data.put("userID", my_userID);
+                                        data.put("code",7);
+                                        data.put("on",0);
+                                        data.put("reason","");
+
+                                        Call<RetrofitRepo> call = retrofitService.BoardDetailInsert(data);
+                                        call.enqueue(new Callback<RetrofitRepo>() {
+                                            @Override
+                                            public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
+                                                RetrofitRepo repo = response.body();
+                                                if(repo.isSuccess()) {
+                                                    if(onRefreshChanged != null) {
+                                                        onRefreshChanged.onRefreshChanged(true);
+                                                    }
+                                                }
+                                                else {
+                                                    Toast.makeText(view.getContext(),"답글이 달려 댓글을 삭제하실 수 없습니다",Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<RetrofitRepo> call, Throwable t) {
+                                                t.printStackTrace();
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        Toast.makeText(view.getContext(),"댓글 작성자가 아닙니다",Toast.LENGTH_SHORT).show();
+                                    }
+                                    break;
+                                case R.id.report : // 댓글 신고
+                                    LayoutInflater layoutInflater = LayoutInflater.from(view.getContext());
+                                    View layout = layoutInflater.inflate(R.layout.report,null);
+
+                                    final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                                    builder.setView(layout);
+
+                                    final TextView report_1 = layout.findViewById(R.id.report_1);
+                                    final TextView report_2 = layout.findViewById(R.id.report_2);
+                                    final TextView report_3 = layout.findViewById(R.id.report_3);
+                                    final TextView report_4 = layout.findViewById(R.id.report_4);
+
+                                    final AlertDialog alertDialog = builder.create();
+
+                                    View.OnClickListener onClickListener = new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View view) {
+                                            String reason = "";
+                                            switch (view.getId()) {
+                                                case R.id.report_1 :
+                                                    reason = report_1.getText().toString();
+                                                    break;
+                                                case R.id.report_2 :
+                                                    reason = report_2.getText().toString();
+                                                    break;
+                                                case R.id.report_3 :
+                                                    reason = report_3.getText().toString();
+                                                    break;
+                                                case R.id.report_4 :
+                                                    reason = report_4.getText().toString();
+                                                    break;
+                                            }
+                                            HashMap<String, Object> data = new HashMap<>();
+                                            data.put("id",comment_id);
+                                            data.put("userID", my_userID);
+                                            data.put("code",6);
+                                            data.put("on",0);
+                                            data.put("reason",reason);
+                                            Call<RetrofitRepo> call = retrofitService.BoardDetailInsert(data);
+                                            call.enqueue(new Callback<RetrofitRepo>() {
+                                                @Override
+                                                public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
+                                                    RetrofitRepo repo = response.body();
+                                                    if(!repo.isSuccess()) {
+                                                        Toast.makeText(view.getContext(),"이미 신고한 댓글 입니다",Toast.LENGTH_SHORT).show();
+                                                    }
+                                                    else {
+                                                        Toast.makeText(view.getContext(),"신고가 접수되었습니다",Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<RetrofitRepo> call, Throwable t) {
+                                                    t.printStackTrace();
+                                                }
+                                            });
+
+                                            alertDialog.dismiss();
+                                        }
+                                    };
+
+                                    report_1.setOnClickListener(onClickListener);
+                                    report_2.setOnClickListener(onClickListener);
+                                    report_3.setOnClickListener(onClickListener);
+                                    report_4.setOnClickListener(onClickListener);
+
+                                    alertDialog.show();
+                                    break;
+                            }
+                            return true;
+                        }
+                    });
+                    popupMenu.show();
+                }
+            });
+
+            //
+
         }
     }
 

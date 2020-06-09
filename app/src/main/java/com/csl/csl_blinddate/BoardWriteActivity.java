@@ -172,16 +172,14 @@ public class BoardWriteActivity extends AppCompatActivity {
 
     public void imageSend() {
         filename = image_path.substring(image_path.lastIndexOf("/")+1);
-        final File file = new File(image_path);
-        final File to = new File(file.getAbsolutePath() + System.currentTimeMillis());
-        file.renameTo(to);
-        to.delete();
+        File file = new File(image_path);
+
 
         MultipartBody.Part body = MultipartBody.Part.createFormData("upload_file",filename, RequestBody.create(MediaType.parse("image/*"),file));
-        RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
+        //RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
 
 
-        Call<RetrofitRepo> call = retrofitService.uploadFile(body,description);
+        Call<RetrofitRepo> call = retrofitService.uploadFile(body);
         call.enqueue(new Callback<RetrofitRepo>() {
             @Override
             public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
