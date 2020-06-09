@@ -188,7 +188,6 @@ public class BoardWriteActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"이미지 업로드성공",Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),"이미지 업로드 실패 ",Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -198,4 +197,5 @@ public class BoardWriteActivity extends AppCompatActivity {
             }
         });
     }
+
 }
