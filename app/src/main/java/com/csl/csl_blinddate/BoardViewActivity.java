@@ -13,6 +13,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,7 +60,7 @@ public class BoardViewActivity extends AppCompatActivity {
     ImageView uploaded_imageView;
     EditText boardView_commentText;
     String userID = UserData.getInstance().getUserID();
-    String board_userID;
+    String board_userID, load_url;
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(URL)
@@ -76,6 +78,10 @@ public class BoardViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_view);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+
         title = getIntent().getStringExtra("title");
         // toolbar
         Toolbar toolbar = findViewById(R.id.boardView_toolbar);
@@ -184,6 +190,16 @@ public class BoardViewActivity extends AppCompatActivity {
             }
         });
 
+        // 클릭시 업로드 이미지 확대하기
+        uploaded_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BoardViewActivity.this, FullScreenImageActivity.class);
+                intent.putExtra("url",load_url);
+                startActivity(intent);
+            }
+        });
+
         // refresh
         refresh();
         commentRefresh(false);
@@ -233,8 +249,9 @@ public class BoardViewActivity extends AppCompatActivity {
                 boardView_timeText.setText(time[1]+" "+time[2]);
 
                 String image_path = repo.getImage_path();
+                load_url = URL+"photos/"+image_path;
                 if( !(image_path.equals("")) ) {
-                    Glide.with(BoardViewActivity.this).load(URL+"photos/"+image_path).into(uploaded_imageView);
+                    Glide.with(BoardViewActivity.this).load(load_url).into(uploaded_imageView);
                     uploaded_imageView.setVisibility(View.VISIBLE);
                 }
                 else {

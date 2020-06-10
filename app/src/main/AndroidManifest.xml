@@ -16,9 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme">
         <activity
+            android:name=".FullScreenImageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_full_screen_image"
+            android:theme="@style/FullscreenTheme"></activity>
+        <activity
             android:name=".Register.MailCertifyActivity"
-            android:theme="@style/PopUpTheme"
-            ></activity>
+            android:theme="@style/PopUpTheme" />
 
         <service
             android:name=".FcmService"
@@ -30,7 +34,9 @@
         </service>
 
         <activity android:name=".CommonBoardActivity" />
-        <activity android:name=".BoardViewActivity" />
+        <activity
+            android:name=".BoardViewActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".SchoolListActivity" />
         <activity android:name=".ApplyListActivity" />
         <activity android:name=".ApplyedListActivity" />
