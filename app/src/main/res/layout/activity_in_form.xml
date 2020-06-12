@@ -28,7 +28,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/view_background_shape"
         android:padding="10dp">
 
 
@@ -53,7 +52,7 @@
                 android:layout_weight="1"
                 android:text="oo님"
                 android:textColor="#000000"
-                android:textSize="15dp" />
+                android:textSize="14dp" />
 
             <TextView
                 android:id="@+id/inform_schoolText"
@@ -61,7 +60,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="xx대학교"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:textSize="11dp"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -234,12 +234,12 @@
 
 
         <TextView
-            android:id="@+id/inform_questionText"
+            android:id="@+id/inform_openSourceText"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="오픈 소스"
+            android:text="오픈소스 라이센스"
             android:textColor="#000000"
             android:background="?attr/selectableItemBackground"/>
 

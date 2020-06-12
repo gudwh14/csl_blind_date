@@ -33,7 +33,7 @@ public class InFormActivity extends AppCompatActivity {
     LinearLayout inform_applyedText;
     LinearLayout inform_applyingText;
     LinearLayout inform_certifyText;
-    TextView inform_questionText;
+    TextView inform_openSourceText;
     TextView inform_appText;
     Intent intent;
 
@@ -53,7 +53,7 @@ public class InFormActivity extends AppCompatActivity {
         inform_applyedText = findViewById(R.id.inform_applyedText);
         inform_applyingText = findViewById(R.id.inform_applyingText);
         inform_certifyText = findViewById(R.id.inform_certifyText);
-        inform_questionText = findViewById(R.id.inform_questionText);
+        inform_openSourceText = findViewById(R.id.inform_openSourceText);
         inform_appText = findViewById(R.id.inform_appText);
 
         inform_nameText.setText(userID);
@@ -97,7 +97,9 @@ public class InFormActivity extends AppCompatActivity {
                             startActivityForResult(intent,REQUEST_MAIL);
                         }
                         break;
-                    case R.id.inform_questionText :
+                    case R.id.inform_openSourceText :
+                        intent = new Intent(InFormActivity.this, OpenSourceActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.inform_appText :
                         break;
@@ -112,7 +114,7 @@ public class InFormActivity extends AppCompatActivity {
         inform_applyedText.setOnClickListener(onClickListener);
         inform_applyingText.setOnClickListener(onClickListener);
         inform_certifyText.setOnClickListener(onClickListener);
-        inform_questionText.setOnClickListener(onClickListener);
+        inform_openSourceText.setOnClickListener(onClickListener);
         inform_appText.setOnClickListener(onClickListener);
 
     }

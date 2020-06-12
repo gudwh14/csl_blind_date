@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.csl.csl_blinddate.Adapter.BoardAdapter;
 import com.csl.csl_blinddate.Data.BoardData;
@@ -36,6 +37,7 @@ public class BoardActivity extends AppCompatActivity {
     MaterialButton Board_WriteButton;
     RecyclerView board_recyclerView;
     BoardAdapter boardAdapter;
+    TextView board_blankView;
     private int REQUEST_WRITE = 1;
     String title;
 
@@ -55,6 +57,7 @@ public class BoardActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // view 초기화
+        board_blankView = findViewById(R.id.board_blankView);
         Board_WriteButton = findViewById(R.id.Board_WriteButton);
         title = getIntent().getStringExtra("title");
 
@@ -134,6 +137,12 @@ public class BoardActivity extends AppCompatActivity {
                 ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
 
                 int size = arrayList.size();
+                if(size == 0) {
+                    board_blankView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    board_blankView.setVisibility(View.INVISIBLE);
+                }
                 for(int temp = 0; temp<size; temp++) {
                     repo = arrayList.get(temp);
                     boardData = new BoardData(repo.getBoard_id(),title,repo.getUserID(),repo.getTitle(),repo.getTime(),repo.getUp(),repo.getComments(),repo.getImage_path());

@@ -19,6 +19,18 @@
         android:layout_height="match_parent"
         android:layout_marginTop="30dp">
 
+        <TextView
+            android:id="@+id/board_blankView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="첫 게시글을 작성해 보세요 !"
+            android:layout_gravity="center"
+            android:textColor="#000000"
+            android:background="@drawable/list_background_shape"
+            android:layout_marginTop="30dp"
+            android:padding="10dp"
+            android:visibility="invisible"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/board_recyclerView"
             android:layout_width="match_parent"

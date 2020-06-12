@@ -15,11 +15,12 @@
         android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme">
+        <activity android:name=".OpenSourceActivity"></activity>
         <activity
             android:name=".FullScreenImageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_full_screen_image"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".Register.MailCertifyActivity"
             android:theme="@style/PopUpTheme" />

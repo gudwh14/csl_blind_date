@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,6 +29,9 @@ import com.google.android.material.button.MaterialButton;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
@@ -55,6 +60,9 @@ public class BoardWriteActivity extends AppCompatActivity {
     Uri selectedImageUri;
     String image_path = "";
     String filename = "";
+    String resize_path = "";
+
+    Context context = BoardWriteActivity.this;
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(URL)
@@ -166,13 +174,16 @@ public class BoardWriteActivity extends AppCompatActivity {
             Log.i("Uri",image_path);
             upload_imageView.setImageURI(selectedImageUri);
 
+            Bitmap bitmap = resize(context,selectedImageUri,500);
+            resize_path = saveBitmapToJpeg(context,bitmap,"resize_image");
+
         }
         
     }
 
     public void imageSend() {
         filename = image_path.substring(image_path.lastIndexOf("/")+1);
-        File file = new File(image_path);
+        File file = new File(resize_path);
 
 
         MultipartBody.Part body = MultipartBody.Part.createFormData("upload_file",filename, RequestBody.create(MediaType.parse("image/*"),file));
@@ -196,6 +207,61 @@ public class BoardWriteActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    private Bitmap resize(Context context,Uri uri,int resize){ // Bitmap 리사이징 함수
+        Bitmap resizeBitmap=null;
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        try {
+            BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options); // 1번
+
+            int width = options.outWidth;
+            int height = options.outHeight;
+            int samplesize = 1;
+
+            while (true) {//2번
+                if (width / 2 < resize || height / 2 < resize)
+                    break;
+                width /= 2;
+                height /= 2;
+                samplesize *= 2;
+            }
+
+            options.inSampleSize = samplesize;
+            Bitmap bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options); //3번
+            resizeBitmap=bitmap;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resizeBitmap;
+    }
+
+    public static String saveBitmapToJpeg(Context context,Bitmap bitmap, String name){ // 비트맵 File로 저장
+
+        File storage = context.getCacheDir(); // 이 부분이 임시파일 저장 경로
+
+        String fileName = name + ".jpg";  // 파일이름은 마음대로!
+
+        File tempFile = new File(storage,fileName);
+
+        try{
+            tempFile.createNewFile();  // 파일을 생성해주고
+
+            FileOutputStream out = new FileOutputStream(tempFile);
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90 , out);  // 넘거 받은 bitmap을 jpeg(손실압축)으로 저장해줌
+
+            out.close(); // 마무리로 닫아줍니다.
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return tempFile.getAbsolutePath();   // 임시파일 저장경로를 리턴해주면 끝!
     }
 
 }
