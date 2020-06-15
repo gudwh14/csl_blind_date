@@ -24,12 +24,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="첫 게시글을 작성해 보세요 !"
+            android:fontFamily="@font/jalnan"
+            android:textSize="20dp"
             android:layout_gravity="center"
-            android:textColor="#000000"
-            android:background="@drawable/list_background_shape"
-            android:layout_marginTop="30dp"
-            android:padding="10dp"
-            android:visibility="invisible"/>
+            android:layout_marginBottom="50dp"
+            android:textColor="#B1A4A4"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/board_recyclerView"
