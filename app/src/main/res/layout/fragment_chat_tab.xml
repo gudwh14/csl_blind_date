@@ -17,6 +17,18 @@
         android:layout_gravity="center_horizontal"
         android:paddingStart="5dp"/>
 
+    <TextView
+        android:id="@+id/chatList_blankView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="미팅을 신청해 보세요"
+        android:fontFamily="@font/jalnan"
+        android:textSize="25dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:textColor="#B1A4A4"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatlistRecyclerView"
         android:layout_width="match_parent"

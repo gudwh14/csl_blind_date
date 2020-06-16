@@ -23,11 +23,11 @@
             android:id="@+id/board_blankView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="첫 게시글을 작성해 보세요 !"
+            android:text="첫 게시글을 작성해 보세요"
             android:fontFamily="@font/jalnan"
-            android:textSize="20dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="50dp"
+            android:textSize="25dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="100dp"
             android:textColor="#B1A4A4"
             />
 

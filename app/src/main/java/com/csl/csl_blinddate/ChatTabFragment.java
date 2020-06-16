@@ -3,6 +3,8 @@ package com.csl.csl_blinddate;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.csl.csl_blinddate.Adapter.ChatListAdapter;
 import com.csl.csl_blinddate.Data.ChatListData;
@@ -39,6 +42,7 @@ public class ChatTabFragment extends Fragment {
     ChatListData chatListData;
 
     RetrofitRepo repo;
+    TextView chatList_blankView;
 
     public ChatTabFragment() {
         // Required empty public constructor
@@ -62,6 +66,9 @@ public class ChatTabFragment extends Fragment {
 
         chatListAdapter = new ChatListAdapter();
         chatlistRecyclerView.setAdapter(chatListAdapter);
+        chatList_blankView = view.findViewById(R.id.chatList_blankView);
+
+        //
 
 
         return view;
@@ -86,6 +93,12 @@ public class ChatTabFragment extends Fragment {
             public void onResponse(Call<RetrofitRepoList> call, Response<RetrofitRepoList> response) {
                 ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
                 int size = arrayList.size();
+                if(size == 0 ) {
+                    chatList_blankView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    chatList_blankView.setVisibility(View.INVISIBLE);
+                }
                 for(int temp = 0; temp<size; temp++) {
                     repo = arrayList.get(temp);
                     chatListData = new ChatListData(repo.getMeeting_id(),repo.getSchool(),repo.getUserID(),repo.getMember());
