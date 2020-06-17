@@ -61,8 +61,6 @@ public class SplashActivity extends AppCompatActivity {
     boolean auto_login;
     String kakaoID;
 
-    FcmService fcmService;
-
     private ISessionCallback sessionCallback = new ISessionCallback() {
         @Override
         public void onSessionOpened() {
@@ -172,7 +170,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         // preferences
-        fcmService = new FcmService();
         pref = getSharedPreferences("auto_login",MODE_PRIVATE);
         editor = pref.edit();
         auto_login = pref.getBoolean("auto_login",false);

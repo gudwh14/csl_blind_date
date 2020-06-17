@@ -13,11 +13,14 @@ import android.os.IBinder;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class FcmService extends FirebaseMessagingService {
+    private final String GROUP_KEY = "FCM_KEY";
+
     @Override
     public void onNewToken(String s) {
         super.onNewToken(s);
@@ -47,18 +50,23 @@ public class FcmService extends FirebaseMessagingService {
         else if (flag == 1) {
             intent = new Intent(this,ApplyListActivity.class);
         }
-        else {
-            intent = new Intent(this,ChatTabFragment.class);
+        else if (flag == 2){
+            intent = new Intent(this,MainActivity.class);
+            intent.putExtra("fragment","chat");
         }
-
+        else {
+            intent = new Intent();
+        }
         PendingIntent pendingIntent = PendingIntent.getActivity(this, (int)System.currentTimeMillis()/1000, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             String channel = "채널";
             String channel_nm = "채널명";
+            //NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
             NotificationManager notichannel = (android.app.NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
             NotificationChannel channelMessage = new NotificationChannel(channel, channel_nm,
                     android.app.NotificationManager.IMPORTANCE_DEFAULT);
             channelMessage.setDescription("채널에 대한 설명.");
@@ -68,6 +76,16 @@ public class FcmService extends FirebaseMessagingService {
             channelMessage.setVibrationPattern(new long[]{1000, 1000});
             notichannel.createNotificationChannel(channelMessage);
 
+            NotificationCompat.Builder groupBuilder =
+                    new NotificationCompat.Builder(this, channel)
+                            .setSmallIcon(R.drawable.ic_launcher_background)
+                            .setContentTitle("Group")
+                            .setContentText("group test")
+                            .setGroupSummary(true)
+                            .setChannelId(channel)
+                            .setGroup(GROUP_KEY)
+                            .setContentIntent(pendingIntent);
+
             //푸시알림을 Builder를 이용하여 만듭니다.
             NotificationCompat.Builder notificationBuilder =
                     new NotificationCompat.Builder(this, channel)
@@ -75,29 +93,39 @@ public class FcmService extends FirebaseMessagingService {
                             .setContentTitle(title)//푸시알림의 제목
                             .setContentText(message)//푸시알림의 내용
                             .setChannelId(channel)
-                            .setAutoCancel(true)//선택시 자동으로 삭제되도록 설정.
-                            .setContentIntent(pendingIntent)//알림을 눌렀을때 실행할 인텐트 설정.
+                            .setGroup(GROUP_KEY)
+                            .setContentIntent(pendingIntent)
+                            .setAutoCancel(true)
                             .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
 
-            NotificationManager notificationManager =
-                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-            notificationManager.notify((int)System.currentTimeMillis()/1000, notificationBuilder.build());
+            NotificationManagerCompat manager = NotificationManagerCompat.from(this);
+            manager.notify(1,groupBuilder.build());
+            manager.notify((int)System.currentTimeMillis()/1000,notificationBuilder.build());
 
         } else {
+            NotificationCompat.Builder groupBuilder =
+                    new NotificationCompat.Builder(this, "")
+                            .setSmallIcon(R.drawable.ic_launcher_background)
+                            .setContentTitle("Group")
+                            .setContentText("group test")
+                            .setGroupSummary(true)
+                            .setGroup(GROUP_KEY)
+                            .setContentIntent(pendingIntent);
+
+            //푸시알림을 Builder를 이용하여 만듭니다.
             NotificationCompat.Builder notificationBuilder =
                     new NotificationCompat.Builder(this, "")
                             .setSmallIcon(R.drawable.ic_launcher_background)
-                            .setContentTitle(title)
-                            .setContentText(message)
-                            .setAutoCancel(true)
+                            .setContentTitle(title)//푸시알림의 제목
+                            .setContentText(message)//푸시알림의 내용
+                            .setGroup(GROUP_KEY)
                             .setContentIntent(pendingIntent)
+                            .setAutoCancel(true)
                             .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
 
-            NotificationManager notificationManager =
-                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-            notificationManager.notify((int)System.currentTimeMillis()/1000, notificationBuilder.build());
+            NotificationManagerCompat manager = NotificationManagerCompat.from(this);
+            manager.notify(1,groupBuilder.build());
+            manager.notify((int)System.currentTimeMillis()/1000,notificationBuilder.build());
 
         }
     }

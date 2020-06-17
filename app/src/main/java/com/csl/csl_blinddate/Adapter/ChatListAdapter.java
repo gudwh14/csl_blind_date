@@ -88,6 +88,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                         Intent intent = new Intent(view.getContext(), ChatActivity.class);
                         intent.putExtra("title",title);
                         intent.putExtra("meeting_id",meeting_id);
+                        intent.putExtra("chat_userID",userID);
                         view.getContext().startActivity(intent);
                     }
                 }

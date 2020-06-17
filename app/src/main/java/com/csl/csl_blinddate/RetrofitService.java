@@ -96,8 +96,8 @@ public interface RetrofitService {
     );
 
     @FormUrlEncoded
-    @POST("ChatInsert.php")
-    Call<RetrofitRepo> ChatInsert(
+    @POST("ChatFcm.php")
+    Call<RetrofitRepo> ChatFcm(
             @FieldMap HashMap<String, Object> param
     );
 

@@ -37,8 +37,15 @@ public class MainActivity extends AppCompatActivity {
         chatTabFragment = new ChatTabFragment();
 
         // 제일 처음 띄울 fragment 뷰 설정
-        getSupportFragmentManager().beginTransaction().replace(R.id.MainFrameLayout, homeTabFragment).commitAllowingStateLoss();
-
+        String fragment = getIntent().getStringExtra("fragment");
+        if(fragment != null) {
+            if(fragment.equals("chat")) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.MainFrameLayout, chatTabFragment).commitAllowingStateLoss();
+            }
+        }
+        else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.MainFrameLayout, homeTabFragment).commitAllowingStateLoss();
+        }
         // BottomNavigationView 아이콘 선택 리스너
         BottomNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

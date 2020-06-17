@@ -45,19 +45,28 @@ import static com.csl.csl_blinddate.RetrofitService.URL;
 
 public class ChatActivity extends AppCompatActivity {
 
+    //
     EditText chat_msgText;
     ImageView chat_sendButton;
     RecyclerView chatRecyclerView;
     ChatAdapter chatAdapter;
     String userID = UserData.getInstance().getUserID();
     int meeting_id;
+    String chat_userID,title;
     LinearLayout chat_layout;
 
-
+    //
     private AtomicInteger verticalScrollOffset = new AtomicInteger(0);
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef;
+    // Retrofit 정의
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
+    RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +74,16 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         // toolbar init
+        title = getIntent().getStringExtra("title");
         Toolbar chat_toolbar = findViewById(R.id.chat_toolbar);
         setSupportActionBar(chat_toolbar);
 
-        getSupportActionBar().setTitle(getIntent().getStringExtra("title"));
+        getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // view init
         meeting_id = getIntent().getIntExtra("meeting_id",0);
+        chat_userID = getIntent().getStringExtra("chat_userID");
         myRef = database.getReference("chat_log").child(meeting_id+"");
         chat_msgText = findViewById(R.id.chat_msgText);
         chat_sendButton = findViewById(R.id.chat_sendButton);
@@ -80,7 +91,7 @@ public class ChatActivity extends AppCompatActivity {
         chatAdapter = new ChatAdapter();
         chat_layout = findViewById(R.id.chat_layout);
 
-        if(getIntent().getStringExtra("title") == null) {
+        if(getIntent().getStringExtra("title") == null) { // 상대방이 채팅을 나갔을때
             chat_layout.setVisibility(View.INVISIBLE);
         }
 
@@ -97,9 +108,6 @@ public class ChatActivity extends AppCompatActivity {
                 send();
             }
         });
-
-        //refresh
-        refresh();
 
         //
         chatRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
@@ -194,17 +202,29 @@ public class ChatActivity extends AppCompatActivity {
             chat_msgText.setText("");
         }
         else {
-            Date today = new Date();
-            SimpleDateFormat timeNow = new SimpleDateFormat("a K:mm");
-            myRef.push().setValue(new ChatVo(meeting_id,userID,MSG, timeNow.format(today)));
-            chat_msgText.setText("");
+            Date today = new Date(); // 현재 시각 불러오기
+            SimpleDateFormat timeNow = new SimpleDateFormat("a h:mm");
+            myRef.push().setValue(new ChatVo(meeting_id,userID,MSG, timeNow.format(today))); // FireBase 에 Chatdata 삽입
+
+            HashMap<String, Object> data = new HashMap<>();   // Retrofit 통신할 HashMap 생성
+            data.put("userID",chat_userID);  // HashMap 에 data 넣어주기
+            data.put("MSG",MSG);
+            data.put("title",title);
+            Call<RetrofitRepo> call = retrofitService.ChatFcm(data); // Retrofit call
+            call.enqueue(new Callback<RetrofitRepo>() {
+                @Override
+                public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<RetrofitRepo> call, Throwable t) {
+                    t.printStackTrace(); // 실패했을때 오류 출력
+                }
+            });
+            chat_msgText.setText(""); // 채팅 editText 초기화
         }
 
-    }
-
-    public void refresh() {
-        chatAdapter.clear();
-        chatAdapter.notifyDataSetChanged();
     }
 
 
@@ -227,11 +247,6 @@ public class ChatActivity extends AppCompatActivity {
                                 HashMap<String, Object> data = new HashMap<>();
                                 data.put("id",meeting_id);
                                 data.put("userID",userID);
-                                Retrofit retrofit = new Retrofit.Builder()
-                                        .baseUrl(URL)
-                                        .addConverterFactory(GsonConverterFactory.create())
-                                        .build();
-                                RetrofitService retrofitService = retrofit.create(RetrofitService.class);
                                 Call<RetrofitRepo> call = retrofitService.ChatRemove(data);
                                 call.enqueue(new Callback<RetrofitRepo>() {
                                     @Override

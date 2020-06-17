@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ public class ChatTabFragment extends Fragment {
     RetrofitRepo repo;
     TextView chatList_blankView;
 
+    FcmCheckLogin fcmCheckLogin;
+
     public ChatTabFragment() {
         // Required empty public constructor
     }
@@ -68,9 +71,9 @@ public class ChatTabFragment extends Fragment {
         chatlistRecyclerView.setAdapter(chatListAdapter);
         chatList_blankView = view.findViewById(R.id.chatList_blankView);
 
+        fcmCheckLogin  = new FcmCheckLogin(getContext());
         //
-
-
+        //fcmCheckLogin.checkUser();
         return view;
     }
 
