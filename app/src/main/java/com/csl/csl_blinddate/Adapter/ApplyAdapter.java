@@ -109,7 +109,7 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
             apply_acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(),R.style.PopUpTheme);
                     builder.setMessage("수락시 미팅이 '닫힘'상태로 전환됩니다")
                             .setPositiveButton("수락", new DialogInterface.OnClickListener() {
                                 @Override

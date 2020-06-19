@@ -45,13 +45,15 @@ public class FcmService extends FirebaseMessagingService {
 
         Intent intent;
         if(flag == 0) {
-            intent = new Intent(this,ApplyedListActivity.class);
+            intent = new Intent(this,FcmLoadingActivity.class);
+            intent.putExtra("fragment","applyed");
         }
         else if (flag == 1) {
-            intent = new Intent(this,ApplyListActivity.class);
+            intent = new Intent(this,FcmLoadingActivity.class);
+            intent.putExtra("fragment","apply");
         }
         else if (flag == 2){
-            intent = new Intent(this,MainActivity.class);
+            intent = new Intent(this,FcmLoadingActivity.class);
             intent.putExtra("fragment","chat");
         }
         else {

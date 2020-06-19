@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.csl.csl_blinddate.Adapter.BoardAdapter;
 import com.csl.csl_blinddate.Data.BoardData;
@@ -29,6 +31,7 @@ import static com.csl.csl_blinddate.RetrofitService.URL;
 public class CommonBoardActivity extends AppCompatActivity {
     RecyclerView common_recyclerView;
     BoardAdapter boardAdapter;
+    TextView common_blankView;
 
     RetrofitRepo repo;
     BoardData boardData;
@@ -39,14 +42,17 @@ public class CommonBoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_common_board);
 
         int code = getIntent().getIntExtra("code",999);
+        common_blankView = findViewById(R.id.common_blankView);
 
         // toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         if(code == 0) {
             toolbar.setTitle("즐겨찾기");
+            common_blankView.setText("즐겨찾기를 등록해 보세요");
         }
         else if(code == 1) {
             toolbar.setTitle("내가 쓴 글");
+            common_blankView.setText("글을 작성해 보세요");
         }
         setSupportActionBar(toolbar);
 
@@ -84,6 +90,12 @@ public class CommonBoardActivity extends AppCompatActivity {
             public void onResponse(Call<RetrofitRepoList> call, Response<RetrofitRepoList> response) {
                 ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
                 int size = arrayList.size();
+                if (size == 0) {
+                    common_blankView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    common_blankView.setVisibility(View.INVISIBLE);
+                }
                 for(int temp = 0; temp<size; temp++) {
                     repo = arrayList.get(temp);
                     boardData = new BoardData(repo.getBoard_id(),repo.getBoard_title(),repo.getUserID(),repo.getTitle(),repo.getTime(),repo.getUp(),repo.getComments(),repo.getImage_path());

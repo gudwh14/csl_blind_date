@@ -27,6 +27,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="100dp"
         android:textColor="#B1A4A4"
+        android:visibility="invisible"
         />
 
     <androidx.recyclerview.widget.RecyclerView

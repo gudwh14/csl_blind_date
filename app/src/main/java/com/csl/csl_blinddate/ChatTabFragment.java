@@ -45,7 +45,6 @@ public class ChatTabFragment extends Fragment {
     RetrofitRepo repo;
     TextView chatList_blankView;
 
-    FcmCheckLogin fcmCheckLogin;
 
     public ChatTabFragment() {
         // Required empty public constructor
@@ -71,9 +70,6 @@ public class ChatTabFragment extends Fragment {
         chatlistRecyclerView.setAdapter(chatListAdapter);
         chatList_blankView = view.findViewById(R.id.chatList_blankView);
 
-        fcmCheckLogin  = new FcmCheckLogin(getContext());
-        //
-        //fcmCheckLogin.checkUser();
         return view;
     }
 

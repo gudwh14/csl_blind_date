@@ -16,11 +16,31 @@
         android:theme="?attr/actionBarTheme"
         app:titleTextAppearance="@style/ToolbarTitleText"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/common_recyclerView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="20dp"/>
+        android:layout_height="match_parent" >
+
+
+        <TextView
+            android:id="@+id/common_blankView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="100dp"
+            android:fontFamily="@font/jalnan"
+            android:text=""
+            android:textColor="#B1A4A4"
+            android:textSize="25dp"
+            android:visibility="invisible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/common_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp" >
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </FrameLayout>
 
 
 </LinearLayout>

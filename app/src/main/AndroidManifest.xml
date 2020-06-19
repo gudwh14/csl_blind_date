@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme">
-        <activity android:name=".OpenSourceActivity"></activity>
+        <activity android:name=".FcmLoadingActivity"></activity>
+        <activity android:name=".OpenSourceActivity" />
         <activity
             android:name=".FullScreenImageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

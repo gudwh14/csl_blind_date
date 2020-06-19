@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         if(fragment != null) {
             if(fragment.equals("chat")) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.MainFrameLayout, chatTabFragment).commitAllowingStateLoss();
+                BottomNavView.setSelectedItemId(R.id.tab3);
             }
         }
         else {
