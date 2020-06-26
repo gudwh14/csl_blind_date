@@ -1,7 +1,6 @@
 package com.csl.csl_blinddate.Adapter;
 
-import android.app.Activity;
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -27,7 +26,6 @@ import com.csl.csl_blinddate.Data.RetrofitRepo;
 import com.csl.csl_blinddate.Data.UserData;
 import com.csl.csl_blinddate.R;
 import com.csl.csl_blinddate.RetrofitService;
-import com.csl.csl_blinddate.SplashActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;

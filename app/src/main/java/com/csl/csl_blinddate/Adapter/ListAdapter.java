@@ -1,6 +1,6 @@
 package com.csl.csl_blinddate.Adapter;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.csl.csl_blinddate.Data.ListData;
 import com.csl.csl_blinddate.Data.UserData;
 import com.csl.csl_blinddate.ListInformActivity;
-import com.csl.csl_blinddate.ListTabFragment;
 import com.csl.csl_blinddate.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;

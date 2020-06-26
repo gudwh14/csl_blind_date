@@ -40,8 +40,8 @@
             android:name=".BoardViewActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".SchoolListActivity" />
-        <activity android:name=".ApplyListActivity" />
-        <activity android:name=".ApplyedListActivity" />
+        <activity android:name=".ApplyListActivity"/>
+        <activity android:name=".ApplyedListActivity"/>
         <activity
             android:name=".ChatActivity"
             android:windowSoftInputMode="adjustResize" />

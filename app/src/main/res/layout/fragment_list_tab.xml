@@ -65,6 +65,5 @@
         android:layout_gravity="center_horizontal|bottom"
         android:layout_margin="10dp"
         android:text="미팅 등록"
-        app:cornerRadius="20dp"
-        app:rippleColor="#FF0000" />
+        app:cornerRadius="20dp" />
 </FrameLayout>

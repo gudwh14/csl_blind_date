@@ -3,9 +3,11 @@ package com.csl.csl_blinddate;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,7 +46,13 @@ public class InFormActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_form);
-        // View 초기화
+        // toolbar init
+        Toolbar toolbar = findViewById(R.id.inform_toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setTitle("내 정보");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // View Binding
 
         inform_nameText = findViewById(R.id.inform_nameText);
         inform_schoolText = findViewById(R.id.inform_schoolText);
@@ -161,5 +169,17 @@ public class InFormActivity extends AppCompatActivity {
             }
         }
         //
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home :
+                finish();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -32,9 +32,10 @@
             android:layout_height="match_parent"
             android:layout_weight="1.5"
             android:text="미팅 작성"
+            android:textSize="14dp"
             android:textStyle="bold"
             android:textColor="#000000"
-            android:gravity="center_vertical"/>
+            android:gravity="center"/>
 
         <Space
             android:layout_width="wrap_content"

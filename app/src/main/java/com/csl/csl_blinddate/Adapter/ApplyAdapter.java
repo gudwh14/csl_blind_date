@@ -1,6 +1,6 @@
 package com.csl.csl_blinddate.Adapter;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -109,7 +109,7 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ViewHolder> 
             apply_acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(),R.style.PopUpTheme);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                     builder.setMessage("수락시 미팅이 '닫힘'상태로 전환됩니다")
                             .setPositiveButton("수락", new DialogInterface.OnClickListener() {
                                 @Override
