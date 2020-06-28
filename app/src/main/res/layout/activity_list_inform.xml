@@ -199,9 +199,8 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/listInForm_applyButton"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="신청"
                     app:cornerRadius="20dp"
                     app:rippleColor="#FF0000" />

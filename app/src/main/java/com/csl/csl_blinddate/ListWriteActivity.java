@@ -166,7 +166,6 @@ public class ListWriteActivity extends AppCompatActivity {
                 switch (i) {
                     case R.id.memberChip_2 :
                         member = 2;
-                        Toast.makeText(ListWriteActivity.this,member+"명",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.memberChip_3:
                         member = 3;
