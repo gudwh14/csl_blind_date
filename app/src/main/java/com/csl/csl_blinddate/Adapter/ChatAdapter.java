@@ -25,9 +25,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_my_view,parent,false);
             return new my_ViewHolder(view);
         }
-        else {
+        else if(viewType == 0){
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_view,parent,false);
             return new ViewHolder(view);
+        }
+        else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_exit_view,parent,false);
+            return new exit_ViewHolder(view);
         }
     }
 
@@ -37,8 +41,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if(holder instanceof my_ViewHolder) {
             ((my_ViewHolder)holder).onBind(data.get(position));
         }
-        else {
+        else if(holder instanceof ViewHolder){
             ((ViewHolder)holder).onBind(data.get(position));
+        }
+        else {
+            ((exit_ViewHolder)holder).onBind(data.get(position));
         }
     }
 
@@ -50,7 +57,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if(data.get(position).getUserID().equals(userID)) {
+        if(data.get(position).isExit()) {
+            return 2;
+        }
+        else if(data.get(position).getUserID().equals(userID)) {
             return 1;
         }
         else {
@@ -105,6 +115,18 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         void onBind(ChatVo data) {
             chat_timeText.setText(data.getTime());
             chatMsg.setText(data.getChatMsg());
+        }
+    }
+
+    class exit_ViewHolder extends RecyclerView.ViewHolder {
+
+        exit_ViewHolder(final View itemView) {
+            super(itemView);
+
+        }
+
+        void onBind(ChatVo data) {
+
         }
     }
 }

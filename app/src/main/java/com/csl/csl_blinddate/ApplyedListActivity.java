@@ -92,7 +92,9 @@ public class ApplyedListActivity extends AppCompatActivity {
             public void onResponse(Call<RetrofitRepoList> call, Response<RetrofitRepoList> response) {
                 ArrayList<RetrofitRepo> arrayList = response.body().getRepoArrayList();
 
-                if(arrayList.isEmpty()) {
+
+                int size = arrayList.size();
+                if(size == 0) {
                     applyedList_isEmptyText.setVisibility(View.VISIBLE);
                     applyRecyclerView.setVisibility(View.INVISIBLE);
                 }
@@ -100,8 +102,6 @@ public class ApplyedListActivity extends AppCompatActivity {
                     applyRecyclerView.setVisibility(View.VISIBLE);
                     applyedList_isEmptyText.setVisibility(View.INVISIBLE);
                 }
-
-                int size = arrayList.size();
                 for (int temp = 0 ; temp < size; temp ++) {
                     repo = arrayList.get(temp);
                     applyData = new ApplyData(repo.getApply_id(),repo.getAge(),repo.getSchool(),repo.isCertification(),repo.getComment());

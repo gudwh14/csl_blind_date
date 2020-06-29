@@ -5,6 +5,7 @@ public class ChatVo {
     private String userID;
     private String chatMsg;
     private String time;
+    private boolean exit = false;
 
     public ChatVo(){}
 
@@ -29,5 +30,13 @@ public class ChatVo {
 
     public int getMeeting_id() {
         return meeting_id;
+    }
+
+    public boolean isExit() {
+        return exit;
+    }
+
+    public void setExit(boolean exit) {
+        this.exit = exit;
     }
 }

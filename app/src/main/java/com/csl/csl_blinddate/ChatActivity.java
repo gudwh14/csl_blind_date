@@ -60,6 +60,7 @@ public class ChatActivity extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef;
+    DatabaseReference exit_ref;
     // Retrofit 정의
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(URL)
@@ -85,6 +86,7 @@ public class ChatActivity extends AppCompatActivity {
         meeting_id = getIntent().getIntExtra("meeting_id",0);
         chat_userID = getIntent().getStringExtra("chat_userID");
         myRef = database.getReference("chat_log").child(meeting_id+"");
+        exit_ref = database.getReference("chat_exit").child(meeting_id+"");
         chat_msgText = findViewById(R.id.chat_msgText);
         chat_sendButton = findViewById(R.id.chat_sendButton);
         chatRecyclerView = findViewById(R.id.chatRecyclerView);
@@ -193,6 +195,41 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+
+        exit_ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String value = dataSnapshot.getValue().toString();
+                if(value.equals("true")) { // 상대방이 채팅방 나갔을때
+                    chat_layout.setVisibility(View.INVISIBLE); // 채팅입력 레이아웃 안보이게 하기
+                    ChatVo chatVo = new ChatVo();
+                    chatVo.setExit(true);
+                    chatAdapter.addItem(chatVo);
+                    chatAdapter.notifyDataSetChanged();
+                    chatRecyclerView.scrollToPosition(chatAdapter.getItemCount()-1);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void send() {
@@ -253,6 +290,7 @@ public class ChatActivity extends AppCompatActivity {
                                     public void onResponse(Call<RetrofitRepo> call, Response<RetrofitRepo> response) {
                                         RetrofitRepo repo = response.body();
                                         if(repo.isSuccess()) {
+                                            exit_ref.push().setValue("true");
                                             finish();
                                         }
                                     }
