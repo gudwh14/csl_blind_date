@@ -218,6 +218,7 @@ public class BoardViewActivity extends AppCompatActivity {
                 boardView_titleText.setText(repo.getTitle());
                 if((getIntent().getStringExtra("title")).equals("익명게시판")) {
                     boardView_userText.setText("익명");
+                    board_userID = repo.getUserID();
                 }
                 else {
                     board_userID = repo.getUserID();

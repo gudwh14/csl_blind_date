@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,7 +60,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         private TextView list_ageText;
         private Chip ListMember_Chip;
         private ImageView ListGender_Image;
-        private MaterialButton ListOpen_Button;
+        private Button ListOpen_Button;
         private Drawable drawable;
 
 
@@ -112,11 +113,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
             if(!open) {
                 ListOpen_Button.setText("신청");
-                ListOpen_Button.setBackgroundTintList(itemView.getResources().getColorStateList(R.color.pink2));
+                ListOpen_Button.setBackgroundResource(R.drawable.round_button_blue);
             }
             else {
                 ListOpen_Button.setText("닫힘");
-                ListOpen_Button.setBackgroundTintList(itemView.getResources().getColorStateList(R.color.grey));
+                ListOpen_Button.setBackgroundResource(R.drawable.round_button_red);
             }
 
             ListOpen_Button.setOnClickListener(new View.OnClickListener() {
