@@ -80,11 +80,11 @@
 
                 <android.widget.Button
                     android:id="@+id/ListOpen_Button"
-                    android:layout_width="45dp"
+                    android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:text="Open"
                     android:layout_gravity="center"
-                    android:textSize="12dp"
+                    android:textSize="11dp"
                     android:textColor="#fff"
                     android:background="@drawable/round_button_blue"/>
             </LinearLayout>

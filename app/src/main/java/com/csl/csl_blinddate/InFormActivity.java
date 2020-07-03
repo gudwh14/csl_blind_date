@@ -28,7 +28,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.csl.csl_blinddate.RetrofitService.URL;
 
 public class InFormActivity extends AppCompatActivity {
-    TextView inform_nameText;
+    TextView inform_ageText;
+    TextView inform_sexText;
     TextView inform_schoolText;
     LinearLayout inform_favoriteText;
     LinearLayout inform_myWritingText;
@@ -41,6 +42,7 @@ public class InFormActivity extends AppCompatActivity {
 
     private int REQUEST_MAIL = 1;
     String userID  = UserData.getInstance().getUserID();
+    UserData userData = UserData.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,8 @@ public class InFormActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // View Binding
 
-        inform_nameText = findViewById(R.id.inform_nameText);
+        inform_ageText = findViewById(R.id.inform_ageText);
+        inform_sexText = findViewById(R.id.inform_sexText);
         inform_schoolText = findViewById(R.id.inform_schoolText);
         inform_favoriteText = findViewById(R.id.inform_favoriteText);
         inform_myWritingText = findViewById(R.id.inform_myWritingText);
@@ -64,8 +67,14 @@ public class InFormActivity extends AppCompatActivity {
         inform_openSourceText = findViewById(R.id.inform_openSourceText);
         inform_appText = findViewById(R.id.inform_appText);
 
-        inform_nameText.setText(userID);
-        inform_schoolText.setText(UserData.getInstance().getSchool());
+        if(userData.getGender().equals("M")) {
+            inform_sexText.setText("남자");
+        }
+        else {
+            inform_sexText.setText("여자");
+        }
+        inform_ageText.setText(userData.getAge()+"세");
+        inform_schoolText.setText(userData.getSchool());
 
 
         View.OnClickListener onClickListener = new View.OnClickListener() {

@@ -25,42 +25,49 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:orientation="vertical"
+        android:background="@drawable/grey_background_shape"
+        android:padding="15dp">
 
+        <TextView
+            android:id="@+id/inform_schoolText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xx대학교"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:layout_gravity="center"/>
 
-        <ImageView
-            android:id="@+id/imageView11"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/user_icon" />
+        <androidx.legacy.widget.Space
+            android:id="@+id/space3"
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="10dp">
-
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/inform_nameText"
-                android:layout_width="wrap_content"
+                android:id="@+id/inform_ageText"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="oo님"
+                android:text="xx세"
                 android:textColor="#000000"
-                android:textSize="14dp" />
+                android:textSize="14dp"
+                android:gravity="center"/>
 
             <TextView
-                android:id="@+id/inform_schoolText"
-                android:layout_width="match_parent"
+                android:id="@+id/inform_sexText"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="xx대학교"
-                android:textColor="#000000"
-                android:textSize="11dp"/>
-
+                android:text="TextView"
+                android:gravity="center"
+                android:textSize="14dp"
+                android:textColor="#000000"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -74,7 +81,7 @@
         android:layout_height="0dp"
         android:layout_weight="5"
         android:orientation="vertical"
-        android:background="@drawable/view_background_shape"
+        android:background="@drawable/grey_background_shape"
         android:padding="10dp">
 
         <LinearLayout
@@ -226,7 +233,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
-        android:background="@drawable/view_background_shape"
+        android:background="@drawable/grey_background_shape"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -247,7 +254,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="앱 버전"
+            android:text="회원 탈퇴"
             android:textColor="#000000"
             android:background="?attr/selectableItemBackground"/>
 

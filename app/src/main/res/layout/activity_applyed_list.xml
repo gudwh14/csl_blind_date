@@ -53,17 +53,17 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"/>
 
+
     <TextView
         android:id="@+id/applyedList_isEmptyText"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="\n\n들어온 신청이 없습니다\n\n"
-        android:textSize="15dp"
-        android:background="@drawable/view_background_shape"
-        android:textColor="#DB4455"
-        android:gravity="center"
-        android:layout_marginTop="100dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="150dp"
+        android:fontFamily="@font/jalnan"
+        android:text="신청받은 미팅이 없습니다"
+        android:textColor="#B1A4A4"
+        android:textSize="25dp"
+        android:visibility="invisible" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -4,12 +4,10 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.os.IBinder;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -81,10 +79,7 @@ public class FcmService extends FirebaseMessagingService {
             NotificationCompat.Builder groupBuilder =
                     new NotificationCompat.Builder(this, channel)
                             .setSmallIcon(R.drawable.ic_launcher_background)
-                            .setContentTitle("Group")
-                            .setContentText("group test")
                             .setGroupSummary(true)
-                            .setChannelId(channel)
                             .setGroup(GROUP_KEY)
                             .setContentIntent(pendingIntent);
 

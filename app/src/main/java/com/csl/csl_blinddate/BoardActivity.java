@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.csl.csl_blinddate.Adapter.BoardAdapter;
@@ -34,7 +35,7 @@ import static com.csl.csl_blinddate.RetrofitService.URL;
 
 public class BoardActivity extends AppCompatActivity {
 
-    MaterialButton Board_WriteButton;
+    Button Board_WriteButton;
     RecyclerView board_recyclerView;
     BoardAdapter boardAdapter;
     TextView board_blankView;
