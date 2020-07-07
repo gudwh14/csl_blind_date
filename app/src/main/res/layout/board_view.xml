@@ -76,7 +76,8 @@
         android:layout_height="10dp" />
 
     <View
+        android:id="@+id/board_divisionView"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#66bdbdbd"/>
+        android:background="#66bdbdbd" />
 </LinearLayout>

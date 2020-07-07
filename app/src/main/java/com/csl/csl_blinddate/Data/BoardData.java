@@ -1,5 +1,7 @@
 package com.csl.csl_blinddate.Data;
 
+import android.content.Context;
+
 public class BoardData {
     private int board_id;
     private String board_title;
@@ -9,6 +11,7 @@ public class BoardData {
     private String image_path;
     private int up;
     private int comments;
+    private boolean hot = false;
 
     public BoardData(int board_id,String board_title,String userID,String title,String time,int up, int comments, String image_path) {
         this.board_id = board_id;
@@ -51,5 +54,13 @@ public class BoardData {
 
     public String getImage_path() {
         return image_path;
+    }
+
+    public void setHot(boolean hot) {
+        this.hot = hot;
+    }
+
+    public boolean isHot() {
+        return hot;
     }
 }

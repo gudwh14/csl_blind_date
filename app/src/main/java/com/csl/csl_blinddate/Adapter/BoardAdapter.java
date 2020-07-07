@@ -20,6 +20,8 @@ import com.csl.csl_blinddate.ChatActivity;
 import com.csl.csl_blinddate.Data.ApplyData;
 import com.csl.csl_blinddate.Data.BoardData;
 import com.csl.csl_blinddate.Data.RetrofitRepo;
+import com.csl.csl_blinddate.MainActivity;
+import com.csl.csl_blinddate.MainBoardFragment;
 import com.csl.csl_blinddate.R;
 import com.csl.csl_blinddate.RetrofitService;
 import com.csl.csl_blinddate.SplashActivity;
@@ -78,6 +80,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         TextView board_upText;
         TextView board_commentsText;
         ImageView board_imageView;
+        View board_divisionView;
         Context context;
 
         private Drawable up_drawable;
@@ -94,6 +97,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             board_upText = itemView.findViewById(R.id.board_upText);
             board_commentsText = itemView.findViewById(R.id.board_commentsText);
             board_imageView = itemView.findViewById(R.id.board_imageView);
+            board_divisionView = itemView.findViewById(R.id.board_divisionView);
 
             up_drawable = context.getResources().getDrawable(R.drawable.heart_icon);
             comments_drawable = context.getResources().getDrawable(R.drawable.comments_icon);
@@ -151,6 +155,13 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
                     }
                 }
             });
+
+            if(data.isHot()) {
+                board_divisionView.setVisibility(View.INVISIBLE);
+            }
+            else {
+                board_divisionView.setVisibility(View.VISIBLE);
+            }
         }
 
     }

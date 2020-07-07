@@ -223,6 +223,7 @@ public class MainBoardFragment extends Fragment {
                 for(int temp = 0; temp<size; temp++) {
                     repo = arrayList.get(temp);
                     boardData = new BoardData(repo.getBoard_id(),repo.getBoard_title(),repo.getUserID(),repo.getTitle(),repo.getTime(),repo.getUp(),repo.getComments(),repo.getImage_path());
+                    boardData.setHot(true);
                     boardAdapter.addItem(boardData);
                 }
                 boardAdapter.notifyDataSetChanged();
